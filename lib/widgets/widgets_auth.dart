@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/view/auth/signin_screen_one.dart';
+import 'package:school_post/view/screens/home_screen.dart';
 
 // Déclaration des widgets
 Widget header(BuildContext context) {
@@ -74,7 +75,9 @@ class InputFieldState extends State<InputField> {
         ),
         const SizedBox(height: 10),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+          },
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 16),
             backgroundColor: yellowColor,
