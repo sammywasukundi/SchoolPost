@@ -5,6 +5,8 @@ import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/view/auth/login_screen.dart';
 import 'package:school_post/widgets/widget%20_title.dart';
 
+import '../../model/auth_classes/institution_data.dart';
+
 class SigninScreenTwo extends StatefulWidget {
   const SigninScreenTwo({super.key});
 
@@ -13,8 +15,11 @@ class SigninScreenTwo extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SigninScreenTwo> {
-  String _selectedOption =
-      "Personnel"; // Par défaut, l'option sélectionnée est "Personnel"
+  String _selectedOption = "Personnel"; // Par défaut : Personnel
+  String? _selectedInstitution;
+  String? _selectedField;
+  String? _selectedPromotion;
+
   final TextEditingController matriculeController = TextEditingController();
   final TextEditingController promotionController = TextEditingController();
 
@@ -42,64 +47,94 @@ class _SignInScreenState extends State<SigninScreenTwo> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: 10),
-                    TextField(
+                    // Dropdown pour sélectionner une institution
+                    DropdownButtonFormField<String>(
+                      value: _selectedInstitution,
                       decoration: InputDecoration(
                         hintText: "Institution",
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none),
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
                         fillColor: greyColor,
                         filled: true,
                         prefixIcon: const Icon(Icons.school),
                       ),
-                      obscureText: true,
+                      items: InstitutionData.institutions.keys
+                          .map((institution) => DropdownMenuItem(
+                                value: institution,
+                                child: Text(institution),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedInstitution = value;
+                          _selectedField = null;
+                        });
+                      },
                     ),
                     const SizedBox(height: 10),
-                    TextField(
+                    // Dropdown pour sélectionner une filière ou faculté
+                    if (_selectedInstitution != null)
+                      DropdownButtonFormField<String>(
+                        value: _selectedField,
+                        decoration: InputDecoration(
+                          hintText: "Faculté ou Filière",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          fillColor: greyColor,
+                          filled: true,
+                          prefixIcon: const Icon(Icons.book),
+                        ),
+                        items:
+                            InstitutionData.institutions[_selectedInstitution]!
+                                .map((field) => DropdownMenuItem(
+                                      value: field,
+                                      child: Text(field),
+                                    ))
+                                .toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedField = value;
+                          });
+                        },
+                      ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    // Dropdown pour sélectionner Étudiant ou Personnel
+                    DropdownButtonFormField<String>(
+                      padding: EdgeInsets.symmetric(horizontal: 2),
+                      borderRadius: BorderRadius.circular(12),
+                      value: _selectedOption,
                       decoration: InputDecoration(
-                        hintText: "Faculté ou filière",
+                        // labelText: "Fonction",
+                        // labelStyle: TextStyle(color: blackColor,fontWeight: FontWeight.w500),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide.none),
                         fillColor: greyColor,
                         filled: true,
-                        prefixIcon: const Icon(Icons.settings),
                       ),
-                      obscureText: true,
-                    ),
-                    // Dropdown pour sélectionner Étudiant ou Personnel
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: DropdownButtonFormField<String>(
-                        borderRadius: BorderRadius.circular(12),
-                        value: _selectedOption,
-                        decoration: InputDecoration(
-                          labelText: "Fonction",
-                          labelStyle: TextStyle(color: blackColor,fontWeight: FontWeight.w500),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none),
-                          fillColor: greyColor,
-                          filled: true,
+                      items: const [
+                        DropdownMenuItem(
+                          value: "Étudiant",
+                          child: Text("Étudiant"),
                         ),
-                        items: const [
-                          DropdownMenuItem(
-                            value: "Étudiant",
-                            child: Text("Étudiant"),
-                          ),
-                          DropdownMenuItem(
-                            value: "Personnel",
-                            child: Text("Personnel"),
-                          ),
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedOption = value!;
-                          });
-                        },
-                      ),
+                        DropdownMenuItem(
+                          value: "Personnel",
+                          child: Text("Personnel"),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedOption = value!;
+                        });
+                      },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
 
                     // Champs supplémentaires pour Étudiant
                     if (_selectedOption == "Étudiant") ...[
@@ -116,20 +151,36 @@ class _SignInScreenState extends State<SigninScreenTwo> {
                             prefixIcon: Icon(Icons.tag)),
                       ),
                       const SizedBox(height: 10),
-                      TextField(
-                        controller: promotionController,
-                        decoration: InputDecoration(
-                            //labelText: "Promotion",
-                            hintText: "Promotion",
+                      if (_selectedField != null) ...[
+                        DropdownButtonFormField<String>(
+                          value:
+                              _selectedPromotion, 
+                          decoration: InputDecoration(
+                            hintText: "Sélectionnez une promotion",
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide.none),
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none,
+                            ),
                             fillColor: greyColor,
                             filled: true,
-                            prefixIcon: Icon(Icons.bookmark)),
-                      ),
+                          ),
+                          items: InstitutionData.promotions[_selectedField]
+                                  ?.map((promotion) {
+                                return DropdownMenuItem(
+                                  value: promotion,
+                                  child: Text(promotion),
+                                );
+                              }).toList() ??
+                              [], 
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedPromotion = value;
+                            });
+                          },
+                        ),
+                      ]
                     ],
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     Container(
                         padding: const EdgeInsets.only(top: 0, left: 3),
                         child: ElevatedButton(
