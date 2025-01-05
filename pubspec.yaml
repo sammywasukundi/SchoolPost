@@ -38,6 +38,8 @@ dependencies:
   flutter_load_kit: ^0.0.2
   heroicons: ^0.11.0
   icons_plus: ^5.0.0
+  panara_dialogs: ^0.1.5
+  awesome_dialog: ^3.2.1
 
 dev_dependencies:
   flutter_test:

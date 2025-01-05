@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
+import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/view/screens/add_screen.dart';
 import 'package:school_post/view/screens/communicate_screen.dart';
 import 'package:school_post/view/screens/dash_screen.dart';
@@ -50,21 +51,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: const Icon(Icons.person),
                 title: const Text('Mon compte'),
                 onTap: () {
-                  Navigator.pop(context);
+                  showSuccess(context, 'title', 'content');
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.info),
                 title: const Text('À propos'),
                 onTap: () {
-                  Navigator.pop(context);
+                  showError(context, 'title', 'content');
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.logout),
                 title: const Text('Déconnexion'),
                 onTap: () {
-                  Navigator.pop(context);
+                  showInfo(context, 'Déconnexion', 'Voulez-vous vraiment vous déconnecter ?');
                 },
               ),
             ],
