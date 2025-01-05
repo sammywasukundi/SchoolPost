@@ -51,21 +51,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: const Icon(Icons.person),
                 title: const Text('Mon compte'),
                 onTap: () {
-                  showSuccess(context, 'title', 'content');
+                  Navigator.pop(context);
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.info),
                 title: const Text('À propos'),
                 onTap: () {
-                  showError(context, 'title', 'content');
+                  Navigator.pop(context);
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.logout),
                 title: const Text('Déconnexion'),
                 onTap: () {
-                  showInfo(context, 'Déconnexion', 'Voulez-vous vraiment vous déconnecter ?');
+                  showQuestion(context, 'Déconnexion', 'Voulez-vous vraiment vous déconnecter ?');
                 },
               ),
             ],
