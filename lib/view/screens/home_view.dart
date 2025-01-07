@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
-import 'package:school_post/view/screens/add_screen.dart';
-import 'package:school_post/view/screens/communicate_screen.dart';
-import 'package:school_post/view/screens/dash_screen.dart';
+import 'package:school_post/view/screens/add_view.dart';
+import 'package:school_post/view/screens/communicate_view.dart';
+import 'package:school_post/view/screens/dash_view.dart';
 import 'package:school_post/widgets/widget%20_title.dart';
 
 class HomeScreen extends StatefulWidget {

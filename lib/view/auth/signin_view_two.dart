@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
-import 'package:school_post/view/auth/login_screen.dart';
+import 'package:school_post/view/auth/login_view.dart';
 import 'package:school_post/widgets/widget%20_title.dart';
 
 import '../../model/auth_classes/institution_data.dart';
