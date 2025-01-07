@@ -5,6 +5,9 @@ import 'package:school_post/view/screens/add_view.dart';
 import 'package:school_post/view/screens/communicate_view.dart';
 import 'package:school_post/view/screens/dash_view.dart';
 import 'package:school_post/widgets/widget%20_title.dart';
+import 'package:school_post/widgets/widget_notificationButton.dart';
+import 'package:school_post/widgets/widget_profilButton.dart';
+import 'package:school_post/widgets/widget_searchButton.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,27 +29,35 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: true,
-          //automaticallyImplyLeading: true,
-          elevation: 0.0,
-          shadowColor: bgColor,
           title: SchoolPostTitle(
             blueColor: blueColor,
             yellowColor: yellowColor,
           ),
+          actions: [
+            SearchButton(
+              iconColor: blueColor,
+              onPressed: () {},
+            ),
+            NotificationsButton(
+              iconColor: blueColor,
+              notificationCount: 3,
+              onPressed: () {},
+            ),
+            ProfileButton(
+              iconColor: blueColor,
+              onPressed: () {},
+            ),
+          ],
         ),
         drawer: Drawer(
-
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
-                decoration: BoxDecoration(
-                  color: whiteColor,
-                  borderRadius: BorderRadius.zero
-                ),
-                child: SchoolPostTitle(blueColor: blueColor, yellowColor: yellowColor)
-              ),
+                  decoration: BoxDecoration(
+                      color: whiteColor, borderRadius: BorderRadius.zero),
+                  child: SchoolPostTitle(
+                      blueColor: blueColor, yellowColor: yellowColor)),
               ListTile(
                 leading: const Icon(Icons.person),
                 title: const Text('Mon compte'),
@@ -65,7 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: const Icon(Icons.logout),
                 title: const Text('Déconnexion'),
                 onTap: () {
-                  showQuestion(context, 'Déconnexion', 'Voulez-vous vraiment vous déconnecter ?');
+                  showQuestion(context, 'Déconnexion',
+                      'Voulez-vous vraiment vous déconnecter ?');
                 },
               ),
             ],

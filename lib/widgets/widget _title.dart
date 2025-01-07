@@ -16,7 +16,8 @@ class SchoolPostTitle extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-         Brand(Brands.homeadvisor),
+        Brand(Brands.homeadvisor),
+        const SizedBox(width: 5),
         Text(
           "School",
           style: TextStyle(
@@ -37,3 +38,4 @@ class SchoolPostTitle extends StatelessWidget {
     );
   }
 }
+
