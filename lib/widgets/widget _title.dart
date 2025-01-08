@@ -23,7 +23,7 @@ class SchoolPostTitle extends StatelessWidget {
           style: TextStyle(
             color: blueColor,
             fontWeight: FontWeight.w600,
-            fontSize: 28,
+            fontSize: 24,
           ),
         ),
         Text(
@@ -31,7 +31,7 @@ class SchoolPostTitle extends StatelessWidget {
           style: TextStyle(
             color: yellowColor,
             fontWeight: FontWeight.bold,
-            fontSize: 28,
+            fontSize: 24,
           ),
         ),
       ],

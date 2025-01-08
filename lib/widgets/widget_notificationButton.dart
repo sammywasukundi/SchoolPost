@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../theme/app_colors.dart';
+
 class NotificationsButton extends StatelessWidget {
   final Color iconColor;
   final int notificationCount;
@@ -26,8 +28,8 @@ class NotificationsButton extends StatelessWidget {
         ),
         if (notificationCount > 0)
           Positioned(
-            right: 4,
-            top: -4,
+            right: 6,
+            top: 4,
             child: Container(
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
@@ -36,8 +38,8 @@ class NotificationsButton extends StatelessWidget {
               ),
               child: Text(
                 "$notificationCount",
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: whiteColor,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),

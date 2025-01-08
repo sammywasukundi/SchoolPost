@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/view/auth/signin_view_one.dart';
-import 'package:school_post/view/screens/home_view.dart';
+import 'package:school_post/view/bottom_nav/home_view.dart';
 
 // Déclaration des widgets
 Widget header(BuildContext context) {

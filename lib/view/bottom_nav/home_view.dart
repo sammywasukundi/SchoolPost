@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
-import 'package:school_post/view/screens/add_view.dart';
-import 'package:school_post/view/screens/communicate_view.dart';
-import 'package:school_post/view/screens/dash_view.dart';
+import 'package:school_post/view/bottom_nav/add_view.dart';
+import 'package:school_post/view/bottom_nav/communicate_view.dart';
+import 'package:school_post/view/bottom_nav/dash_view.dart';
+import 'package:school_post/view/drawer/about_view.dart';
+import 'package:school_post/view/drawer/account_view.dart';
 import 'package:school_post/widgets/widget%20_title.dart';
 import 'package:school_post/widgets/widget_notificationButton.dart';
 import 'package:school_post/widgets/widget_profilButton.dart';
 import 'package:school_post/widgets/widget_searchButton.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,6 +20,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   int _currentIndex = 0;
   final List<Widget> _children = [
     const DashScreen(),
@@ -29,14 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: SchoolPostTitle(
-            blueColor: blueColor,
-            yellowColor: yellowColor,
-          ),
           actions: [
-            SearchButton(
-              iconColor: blueColor,
-              onPressed: () {},
+            SizedBox(
+              width: 40,
+              child: SearchButton(
+                iconColor: blueColor,
+                searchController: searchController,
+              ),
             ),
             NotificationsButton(
               iconColor: blueColor,
@@ -57,19 +67,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: BoxDecoration(
                       color: whiteColor, borderRadius: BorderRadius.zero),
                   child: SchoolPostTitle(
-                      blueColor: blueColor, yellowColor: yellowColor)),
+                    blueColor: blueColor,
+                    yellowColor: yellowColor,
+                  )),
               ListTile(
                 leading: const Icon(Icons.person),
                 title: const Text('Mon compte'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountScreen()));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.info),
                 title: const Text('À propos'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()));
                 },
               ),
               ListTile(

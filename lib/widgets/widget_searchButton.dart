@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class SearchButton extends StatelessWidget {
   final Color iconColor;
-  final VoidCallback onPressed;
+  final TextEditingController searchController;
 
   const SearchButton({
     super.key,
     required this.iconColor,
-    required this.onPressed,
+    required this.searchController,
   });
 
   @override
@@ -15,7 +15,10 @@ class SearchButton extends StatelessWidget {
     return IconButton(
       icon: const Icon(Icons.search),
       color: iconColor,
-      onPressed: onPressed,
+      onPressed: () {
+        //print('object');
+      },
     );
   }
 }
+
