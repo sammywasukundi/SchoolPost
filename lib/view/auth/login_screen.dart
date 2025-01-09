@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:school_post/widgets/widget%20_title.dart';
+import 'package:school_post/widgets/widget_title.dart';
 import 'package:school_post/widgets/widgets_auth.dart';
 
 import '../../theme/app_colors.dart';

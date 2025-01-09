@@ -28,8 +28,18 @@ class Etudiant {
     required this.email,
     required this.pwd,
   });
-  
-   Map<String, dynamic> toMap() {
+
+  Etudiant.fromMap(Map<String, dynamic> item)
+      : id = item["id"],
+        nom = item["nom"],
+        pnom = item["pnom"],
+        mention = item["mention"],
+        promotion = item["promotion"],
+        matricule = item["matricule"],
+        email = item["email"],
+        pwd = item["pwd"];
+
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
       'nom': nom,

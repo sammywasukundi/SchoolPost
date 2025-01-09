@@ -3,7 +3,7 @@ import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/view/screens/add_screen.dart';
 import 'package:school_post/view/screens/communicate_screen.dart';
 import 'package:school_post/view/screens/dash_screen.dart';
-import 'package:school_post/widgets/widget%20_title.dart';
+import 'package:school_post/widgets/widget_title.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
