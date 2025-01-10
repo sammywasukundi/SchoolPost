@@ -24,4 +24,31 @@ class Horaire {
     required this.savedAt,
     required this.updatedAt,
   });
+  Horaire.fromMap(Map<String, dynamic> item)
+      : id = item["id"],
+        etat = item["etat"],
+        dateDebut = item["dateDebut"],
+        dateFin = item["dateFin"],
+        enseignant = item["enseignant"],
+        auditoire = item["auditoire"],
+        cours = item["cours"],
+        type = item["type"],
+        fichier = item["fichier"],
+        savedAt = item["savedAt"],
+        updatedAt = item["updatedAt"];
+
+    Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'etat': etat,
+      'dateDebut': dateDebut,
+      'enseignant': enseignant,
+      'auditoire': auditoire,
+      'cours': cours,
+      'type': type,
+      'fichier': fichier,
+      'savedAt': savedAt,
+      'updatedAt': updatedAt
+    };
+    }
 }

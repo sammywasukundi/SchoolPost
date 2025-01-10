@@ -11,7 +11,6 @@ import 'package:school_post/widgets/widget_notificationButton.dart';
 import 'package:school_post/widgets/widget_profilButton.dart';
 import 'package:school_post/widgets/widget_searchButton.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 

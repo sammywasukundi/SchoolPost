@@ -128,13 +128,13 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                     child: Text(
-                      "Notifications",
+                      "Géneral",
                       style: TextStyle(color: blueColor),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(2.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(

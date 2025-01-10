@@ -21,3 +21,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+// https://youtu.be/T6B6sj6ZfqU configuration //
+//https://youtu.be/qyP1NOXT9GU crud firebase// https://youtu.be/qyP1NOXT9GU?list=TLPQMDEwMTIwMjVWlxzR5uErGQ
+

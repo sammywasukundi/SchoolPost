@@ -31,4 +31,30 @@ class Communique {
     required this.savedAt,
     required this.updatedAt,
   });
+
+  Communique.fromMap(Map<String, dynamic> item)
+      : id = item["id"],
+        titreCmq = item["titreCmq"],
+        contenu = item["contenu"],
+        avatar = item["avatar"],
+        service = item["service"],
+        type = item["type"],
+        concerne = item["concerne"],
+        savedAt = item["savedAt"],
+        updatedAt = item["updatedAt"];
+      
+    Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'titreCmq': titreCmq,
+      'contenu': contenu,
+      'avatar': avatar,
+      'service': service,
+      'type': type,
+      'concerne': concerne,
+      'savedAt': savedAt,
+      'updatedAt': updatedAt,
+     
+    };
+  }
 }

@@ -10,4 +10,5 @@ class Faculte {
     required this.fileAvatar,
     required this.idInst,
   });
+  
 }
