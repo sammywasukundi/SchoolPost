@@ -6,10 +6,10 @@ import 'package:school_post/view/bottom_nav/communicate_view.dart';
 import 'package:school_post/view/bottom_nav/dash_view.dart';
 import 'package:school_post/view/drawer/about_view.dart';
 import 'package:school_post/view/drawer/account_view.dart';
-import 'package:school_post/widgets/widget%20_title.dart';
-import 'package:school_post/widgets/widget_notificationButton.dart';
-import 'package:school_post/widgets/widget_profilButton.dart';
-import 'package:school_post/widgets/widget_searchButton.dart';
+import 'package:school_post/widgets/widget_notification_button.dart';
+import 'package:school_post/widgets/widget_profil_button.dart';
+import 'package:school_post/widgets/widget_search_button.dart';
+import 'package:school_post/widgets/widget_title.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     const DashScreen(),
-    const AddScreen(),
+    AddScrenn(),
     const CommunicateScreen()
   ];
 
@@ -39,6 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4)
+          ),
+          elevation: 2.0,
+          backgroundColor: bgColor,
+          shadowColor: bgColor,
           actions: [
             SizedBox(
               width: 40,
@@ -96,14 +102,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: _children[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: blueColor,
-          selectedItemColor: yellowColor,
+          //elevation: 6,
+          backgroundColor: bgColor,
+          selectedItemColor: blueColor,
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: false,
           currentIndex: _currentIndex,
           items: [
-            _bottomNavItem(Icons.dashboard, 'Tableau de bord'),
-            _bottomNavItem(Icons.add, 'Ajouter'),
+            _bottomNavItem(Icons.home, 'Accueil'),
+            _bottomNavItem(Icons.dashboard_customize, 'Posts'),
             _bottomNavItem(Icons.comment, 'Communications')
           ],
           onTap: onTabTapped,
@@ -116,11 +123,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return BottomNavigationBarItem(
       icon: Icon(
         icon,
-        color: yellowColor,
+        color: blueColor,
       ),
       activeIcon: Icon(
         icon,
-        color: yellowColor,
+        color: blueColor,
       ),
       label: title,
     );

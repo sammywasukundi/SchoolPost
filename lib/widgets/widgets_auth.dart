@@ -37,19 +37,30 @@ class InputFieldState extends State<InputField> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TextField(
+          keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            hintText: "Nom d'utilisateur",
+            hintText: "Adresse mail",
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(18),
               borderSide: BorderSide.none,
             ),
             fillColor: greyColor,
             filled: true,
-            prefixIcon: const Icon(Icons.person),
+            prefixIcon: const Padding(
+              padding: EdgeInsets.only(top:8.0,left: 10.0),
+              child: Text(
+                '@',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22
+                ),
+              ),
+            ),
           ),
         ),
         const SizedBox(height: 10),
         TextField(
+          keyboardType: TextInputType.text,
           obscureText: _obscureText,
           decoration: InputDecoration(
             hintText: "Mot de passe",

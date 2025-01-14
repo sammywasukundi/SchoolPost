@@ -2,13 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
-<<<<<<< HEAD:lib/view/auth/signin_view_one.dart
 import 'package:school_post/view/auth/signin_view_two.dart';
-import 'package:school_post/widgets/widget%20_title.dart';
-=======
-import 'package:school_post/view/auth/signin_screen_two.dart';
 import 'package:school_post/widgets/widget_title.dart';
->>>>>>> 05a6dfad186b0a13a57597f4469b8c3732402f74:lib/view/auth/signin_screen_one.dart
 
 class SigninScreenOne extends StatefulWidget {
   const SigninScreenOne({super.key});
@@ -31,7 +26,6 @@ class _SignInScreenState extends State<SigninScreenOne> {
             centerTitle: true,
             automaticallyImplyLeading: true,
             elevation: 0.0,
-            //backgroundColor: greyColor,
             shadowColor: bgColor,
             title: SchoolPostTitle(
                 blueColor: blueColor, yellowColor: yellowColor)),
@@ -88,6 +82,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                   Column(
                     children: <Widget>[
                       TextField(
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             hintText: "Nom",
                             border: OutlineInputBorder(
@@ -99,6 +94,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                       ),
                       const SizedBox(height: 10),
                       TextField(
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             hintText: "Postnom",
                             border: OutlineInputBorder(
@@ -110,17 +106,27 @@ class _SignInScreenState extends State<SigninScreenOne> {
                       ),
                       const SizedBox(height: 10),
                       TextField(
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                            hintText: "Adresse mail",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide.none),
-                            fillColor: greyColor,
-                            filled: true,
-                            prefixIcon: const Icon(Icons.email)),
+                          hintText: "Adresse mail",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: BorderSide.none),
+                          fillColor: greyColor,
+                          filled: true,
+                          prefixIcon: const Padding(
+                            padding: EdgeInsets.only(top: 8.0, left: 10.0),
+                            child: Text(
+                              '@',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 22),
+                            ),
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 10),
                       TextField(
+                        keyboardType: TextInputType.visiblePassword,
                         obscureText: _obscureText,
                         decoration: InputDecoration(
                           hintText: "Mot de passe",
@@ -148,6 +154,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                       ),
                       const SizedBox(height: 10),
                       TextField(
+                        keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
                           hintText: "Confirmez le mot de passe",
                           border: OutlineInputBorder(

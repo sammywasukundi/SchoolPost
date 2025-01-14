@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
+import 'package:school_post/theme/app_dialog.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -74,7 +75,9 @@ class _AccountScreenState extends State<AccountScreen> {
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                updateUser(context);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: blueColor,
                 shape: RoundedRectangleBorder(

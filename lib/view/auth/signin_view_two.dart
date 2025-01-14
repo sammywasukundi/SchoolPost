@@ -2,15 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
-<<<<<<< HEAD:lib/view/auth/signin_view_two.dart
 import 'package:school_post/view/auth/login_view.dart';
-import 'package:school_post/widgets/widget%20_title.dart';
-=======
-import 'package:school_post/view/auth/login_screen.dart';
 import 'package:school_post/widgets/widget_title.dart';
->>>>>>> 05a6dfad186b0a13a57597f4469b8c3732402f74:lib/view/auth/signin_screen_two.dart
 
-import '../../models/auth_classes/institution_data.dart';
+import '../../models/other_classes/institution_data.dart';
 
 class SigninScreenTwo extends StatefulWidget {
   const SigninScreenTwo({super.key});
@@ -63,7 +58,7 @@ class _SignInScreenState extends State<SigninScreenTwo> {
                         ),
                         fillColor: greyColor,
                         filled: true,
-                        prefixIcon: const Icon(Icons.school),
+                        //prefixIcon: const Icon(Icons.school),
                       ),
                       items: InstitutionData.institutions.keys
                           .map((institution) => DropdownMenuItem(
@@ -74,6 +69,19 @@ class _SignInScreenState extends State<SigninScreenTwo> {
                       onChanged: (value) {
                         setState(() {
                           _selectedInstitution = value;
+
+                          // Mettre à jour le champ matricule avec un préfixe en fonction de l'institution
+                          if (value == "UNILUK") {
+                            matriculeController.text = "#";
+                          } else if (value == "ISTM") {
+                            matriculeController.text = "T";
+                          } else if (value == "ISTA") {
+                            matriculeController.text = "B";
+                          } else {
+                            matriculeController
+                                .clear(); 
+                          }
+
                           _selectedField = null;
                         });
                       },
@@ -91,7 +99,6 @@ class _SignInScreenState extends State<SigninScreenTwo> {
                           ),
                           fillColor: greyColor,
                           filled: true,
-                          prefixIcon: const Icon(Icons.book),
                         ),
                         items:
                             InstitutionData.institutions[_selectedInstitution]!
@@ -115,8 +122,6 @@ class _SignInScreenState extends State<SigninScreenTwo> {
                       borderRadius: BorderRadius.circular(12),
                       value: _selectedOption,
                       decoration: InputDecoration(
-                        // labelText: "Fonction",
-                        // labelStyle: TextStyle(color: blackColor,fontWeight: FontWeight.w500),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: BorderSide.none),
@@ -144,22 +149,22 @@ class _SignInScreenState extends State<SigninScreenTwo> {
                     // Champs supplémentaires pour Étudiant
                     if (_selectedOption == "Étudiant") ...[
                       TextField(
+                        keyboardType: TextInputType.number,
                         controller: matriculeController,
                         decoration: InputDecoration(
-                            //labelText: "Matricule",
-                            hintText: "Matricule",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide.none),
-                            fillColor: greyColor,
-                            filled: true,
-                            prefixIcon: Icon(Icons.tag)),
+                          hintText: "Matricule",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          fillColor: greyColor,
+                          filled: true,
+                        ),
                       ),
                       const SizedBox(height: 10),
                       if (_selectedField != null) ...[
                         DropdownButtonFormField<String>(
-                          value:
-                              _selectedPromotion, 
+                          value: _selectedPromotion,
                           decoration: InputDecoration(
                             hintText: "Sélectionnez une promotion",
                             border: OutlineInputBorder(
@@ -176,7 +181,7 @@ class _SignInScreenState extends State<SigninScreenTwo> {
                                   child: Text(promotion),
                                 );
                               }).toList() ??
-                              [], 
+                              [],
                           onChanged: (value) {
                             setState(() {
                               _selectedPromotion = value;
