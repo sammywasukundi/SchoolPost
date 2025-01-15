@@ -6,8 +6,8 @@ import 'package:school_post/view/bottom_nav/communicate_view.dart';
 import 'package:school_post/view/bottom_nav/dash_view.dart';
 import 'package:school_post/view/drawer/about_view.dart';
 import 'package:school_post/view/drawer/account_view.dart';
-import 'package:school_post/widgets/widget%20_title.dart';
 import 'package:school_post/widgets/widget_notificationButton.dart';
+import 'package:school_post/widgets/widget_title.dart';
 import 'package:school_post/widgets/widget_profilButton.dart';
 import 'package:school_post/widgets/widget_searchButton.dart';
 
