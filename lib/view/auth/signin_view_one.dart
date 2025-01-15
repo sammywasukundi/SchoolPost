@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/view/auth/signin_view_two.dart';
+import 'package:school_post/widgets/widget%20_title.dart';
+=======
+import 'package:school_post/view/auth/signin_screen_two.dart';
 import 'package:school_post/widgets/widget_title.dart';
 
 class SigninScreenOne extends StatefulWidget {
