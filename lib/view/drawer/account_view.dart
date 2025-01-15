@@ -49,7 +49,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   onPressed: () {},
                   backgroundColor: blueColor,
                   child: Icon(
-                    Icons.camera_alt,
+                    Icons.camera_alt_outlined,
                     color: greyColor,
                     size: 20,
                   ),
@@ -87,7 +87,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
               ),
               icon: Icon(
-                Icons.edit,
+                Icons.edit_outlined,
                 color: greyColor,
               ),
               label: Text(
@@ -146,7 +146,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
-                    child: Icon(Icons.arrow_circle_right,color: blueColor,)
+                    child: Icon(Icons.arrow_circle_right_outlined,color: blueColor,)
                   ),
                 ),
               ],

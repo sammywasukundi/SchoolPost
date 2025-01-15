@@ -6,10 +6,10 @@ import 'package:school_post/view/bottom_nav/communicate_view.dart';
 import 'package:school_post/view/bottom_nav/dash_view.dart';
 import 'package:school_post/view/drawer/about_view.dart';
 import 'package:school_post/view/drawer/account_view.dart';
-import 'package:school_post/widgets/widget%20_title.dart';
-import 'package:school_post/widgets/widget_notificationButton.dart';
-import 'package:school_post/widgets/widget_profilButton.dart';
-import 'package:school_post/widgets/widget_searchButton.dart';
+import 'package:school_post/widgets/widget_notification_button.dart';
+import 'package:school_post/widgets/widget_profil_button.dart';
+import 'package:school_post/widgets/widget_search_button.dart';
+import 'package:school_post/widgets/widget_title.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -76,21 +76,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     yellowColor: yellowColor,
                   )),
               ListTile(
-                leading: const Icon(Icons.person),
+                leading: const Icon(Icons.person_outline),
                 title: const Text('Mon compte'),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountScreen()));
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.info),
+                leading: const Icon(Icons.info_outline),
                 title: const Text('À propos'),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()));
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.logout),
+                leading: const Icon(Icons.logout_outlined),
                 title: const Text('Déconnexion'),
                 onTap: () {
                   showQuestion(context, 'Déconnexion',
@@ -109,9 +109,9 @@ class _HomeScreenState extends State<HomeScreen> {
           showUnselectedLabels: false,
           currentIndex: _currentIndex,
           items: [
-            _bottomNavItem(Icons.home, 'Accueil'),
-            _bottomNavItem(Icons.dashboard_customize, 'Posts'),
-            _bottomNavItem(Icons.comment, 'Communications')
+            _bottomNavItem(Icons.home_outlined, 'Accueil'),
+            _bottomNavItem(Icons.dashboard_customize_outlined, 'Posts'),
+            _bottomNavItem(Icons.comment_outlined, 'Communications')
           ],
           onTap: onTabTapped,
         ),

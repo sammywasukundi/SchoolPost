@@ -13,7 +13,7 @@ class ProfileButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.account_circle),
+      icon: const Icon(Icons.account_circle_outlined),
       color: iconColor,
       onPressed: onPressed,
     );

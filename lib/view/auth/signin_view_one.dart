@@ -3,9 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/view/auth/signin_view_two.dart';
-import 'package:school_post/widgets/widget%20_title.dart';
-=======
-import 'package:school_post/view/auth/signin_screen_two.dart';
 import 'package:school_post/widgets/widget_title.dart';
 
 class SigninScreenOne extends StatefulWidget {
@@ -55,7 +52,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                                 ? NetworkImage(imageUrl!)
                                 : null,
                             child: imageUrl == null
-                                ? Icon(Icons.person,
+                                ? Icon(Icons.person_2_outlined,
                                     size: 100, color: yellowColor)
                                 : null,
                           ),
@@ -75,7 +72,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                           top: 12,
                           child: GestureDetector(
                             onTap: () {},
-                            child: Icon(Icons.camera_alt,
+                            child: Icon(Icons.camera_alt_outlined,
                                 color: yellowColor, size: 30),
                           ),
                         ),
@@ -93,7 +90,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                                 borderSide: BorderSide.none),
                             fillColor: greyColor,
                             filled: true,
-                            prefixIcon: const Icon(Icons.person)),
+                            prefixIcon: const Icon(Icons.person_outlined)),
                       ),
                       const SizedBox(height: 10),
                       TextField(
@@ -105,7 +102,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                                 borderSide: BorderSide.none),
                             fillColor: greyColor,
                             filled: true,
-                            prefixIcon: const Icon(Icons.person)),
+                            prefixIcon: const Icon(Icons.person_outlined)),
                       ),
                       const SizedBox(height: 10),
                       TextField(
@@ -139,12 +136,12 @@ class _SignInScreenState extends State<SigninScreenOne> {
                           ),
                           fillColor: greyColor,
                           filled: true,
-                          prefixIcon: const Icon(Icons.lock),
+                          prefixIcon: const Icon(Icons.lock_outlined),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _obscureText
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
                               color: blackColor,
                             ),
                             onPressed: () {
@@ -165,12 +162,12 @@ class _SignInScreenState extends State<SigninScreenOne> {
                               borderSide: BorderSide.none),
                           fillColor: greyColor,
                           filled: true,
-                          prefixIcon: const Icon(Icons.lock),
+                          prefixIcon: const Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _obscureText
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
                               color: blackColor,
                             ),
                             onPressed: () {

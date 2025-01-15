@@ -70,10 +70,10 @@ class InputFieldState extends State<InputField> {
             ),
             fillColor: greyColor,
             filled: true,
-            prefixIcon: const Icon(Icons.lock),
+            prefixIcon: const Icon(Icons.lock_outlined),
             suffixIcon: IconButton(
               icon: Icon(
-                _obscureText ? Icons.visibility_off : Icons.visibility,
+                _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
                 color: blackColor,
               ),
               onPressed: () {

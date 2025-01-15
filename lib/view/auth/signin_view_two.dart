@@ -1,12 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:school_post/models/other_classes/institution_data.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/view/auth/login_view.dart';
 import 'package:school_post/widgets/widget_title.dart';
->>>>>>> 05a6dfad186b0a13a57597f4469b8c3732402f74:lib/view/auth/signin_screen_two.dart
-
-import '../../models/auth_classes/institution_data.dart';
 
 class SigninScreenTwo extends StatefulWidget {
   const SigninScreenTwo({super.key});

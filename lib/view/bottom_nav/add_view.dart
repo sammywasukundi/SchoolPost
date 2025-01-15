@@ -3,12 +3,36 @@ import 'package:school_post/theme/app_colors.dart';
 
 class AddScrenn extends StatelessWidget {
   final List<MenuItem> menuItems = [
-    MenuItem(icon: Icons.schedule_sharp, text: 'Horaire', onTap: () {}, ),
-    MenuItem(icon: Icons.info, text: 'Communication', onTap: () {},),
-    MenuItem(icon: Icons.settings, text: 'Paramètres', onTap: () {},),
-    MenuItem(icon: Icons.notifications, text: 'Notifications', onTap: () {},),
-    MenuItem(icon: Icons.message, text: 'Messages', onTap: () {},),
-    MenuItem(icon: Icons.camera, text: 'Camera', onTap: () {},),
+    MenuItem(
+      icon: Icons.schedule_outlined,
+      text: 'Horaire',
+      onTap: () {} ,
+    ),
+    MenuItem(
+      icon: Icons.info_outlined,
+      text: 'Communication',
+      onTap: () {},
+    ),
+    MenuItem(
+      icon: Icons.settings_outlined,
+      text: 'Paramètres',
+      onTap: () {},
+    ),
+    MenuItem(
+      icon: Icons.notifications_outlined,
+      text: 'Notifications',
+      onTap: () {},
+    ),
+    MenuItem(
+      icon: Icons.message_outlined,
+      text: 'Messages',
+      onTap: () {},
+    ),
+    MenuItem(
+      icon: Icons.camera_outlined,
+      text: 'Camera',
+      onTap: () {},
+    ),
   ];
 
   AddScrenn({super.key});
@@ -20,7 +44,7 @@ class AddScrenn extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, 
+            crossAxisCount: 2,
             crossAxisSpacing: 18.0,
             mainAxisSpacing: 18.0,
           ),
@@ -39,7 +63,7 @@ class AddScrenn extends StatelessWidget {
       onTap: item.onTap,
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6),
+          borderRadius: BorderRadius.circular(4),
         ),
         elevation: 4,
         child: Column(
@@ -54,10 +78,7 @@ class AddScrenn extends StatelessWidget {
             Text(
               item.text,
               style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: blueColor
-              ),
+                  fontSize: 16, fontWeight: FontWeight.w600, color: blueColor),
               textAlign: TextAlign.center,
             ),
           ],
@@ -78,5 +99,3 @@ class MenuItem {
     required this.onTap,
   });
 }
-
-

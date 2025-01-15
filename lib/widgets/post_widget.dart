@@ -1,46 +1,49 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:school_post/theme/app_colors.dart';
 
 class PostWidget extends StatelessWidget {
-  PostWidget({Key? key}) : super(key: key);
+  PostWidget({super.key});
 
   final List post_items = [
     {
       "pseudo": "andrew",
-      "photo": "images/post/1.png",
-      "photProfil": "images/photo/4.jpg",
+      "photo": "assets/images/post/1.png",
+      "photProfil": "assets/images/photo/4.jpg",
       "description": "New travel",
     },
     {
       "pseudo": "Jacob",
-      "photo": "images/post/2.jpg",
-      "photProfil": "images/photo/2.jpg",
+      "photo": "assets/images/post/2.jpg",
+      "photProfil": "assets/images/photo/2.jpg",
       "description": "New travel",
     },
     {
       "pseudo": "Majaliwa",
-      "photo": "images/post/3.jpg",
-      "photProfil": "images/photo/7.jpg",
+      "photo": "assets/images/post/3.jpg",
+      "photProfil": "assets/images/photo/7.jpg",
       "description": "New travel",
     },
     {
       "pseudo": "andrew",
-      "photo": "images/post/3.jpg",
-      "photProfil": "images/photo/4.jpg",
+      "photo": "assets/images/post/3.jpg",
+      "photProfil": "assets/images/photo/4.jpg",
       "description": "New travel lorem djejkfbejkfbkejqbfkbfejbjkbfejbj",
     },
     {
       "pseudo": "andrew",
-      "photo": "images/post/10.jfif",
-      "photProfil": "images/photo/3.jpg",
+      "photo": "assets/images/post/10.jfif",
+      "photProfil": "assets/images/photo/3.jpg",
       "description": "New travel",
     },
     {
       "pseudo": "andrew",
-      "photo": "images/post/11.jpg",
-      "photProfil": "images/photo/1.jpg",
+      "photo": "assets/images/post/11.jpg",
+      "photProfil": "assets/images/photo/1.jpg",
       "description": "New travel",
     },
-  ]; 
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +67,7 @@ class PostWidget extends StatelessWidget {
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(width: 5),
-                    Image.asset('images/profil/instagram-logo.png',
+                    Image.asset('assets/images/profil/instagram-logo.png',
                         height: 13),
                     Expanded(child: Container()),
                     IconButton(
@@ -90,12 +93,17 @@ class PostWidget extends StatelessWidget {
               child: Row(
                 children: [
                   IconButton(
+                    color: blueColor,
                       onPressed: () {}, icon: Icon(Icons.favorite_outline)),
                   IconButton(
+                    color: blueColor,
                       onPressed: () {}, icon: Icon(Icons.message_outlined)),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.send_outlined)),
+                  IconButton(
+                    color: blueColor,
+                    onPressed: () {}, icon: Icon(Icons.send_outlined)),
                   Expanded(child: Container()),
                   IconButton(
+                    color: blueColor,
                       onPressed: () {}, icon: Icon(Icons.bookmark_outline)),
                 ],
               ),
@@ -153,8 +161,7 @@ class PostWidget extends StatelessWidget {
                       Text(
                         'See more',
                         style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey.shade400),
+                            fontWeight: FontWeight.w600, color: greyColor),
                       ),
                     ],
                   ),
@@ -163,16 +170,13 @@ class PostWidget extends StatelessWidget {
                     'Voir tous les 123 commentaires',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade400,
+                      color: greyColor,
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     'Translate',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                   ),
                 ],
               ),
