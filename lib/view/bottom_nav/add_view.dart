@@ -1,87 +1,69 @@
 import 'package:flutter/material.dart';
-import 'package:school_post/theme/app_colors.dart';
+import 'package:school_post/widgets/widget_forms.dart';
+import 'package:school_post/widgets/widget_gridview.dart';
 
-class AddScrenn extends StatelessWidget {
+class AddScrenn extends StatefulWidget {
+  const AddScrenn({super.key});
+
+  @override
+  _AddScrennState createState() => _AddScrennState();
+}
+
+class _AddScrennState extends State<AddScrenn> {
   final List<MenuItem> menuItems = [
     MenuItem(
       icon: Icons.schedule_outlined,
       text: 'Horaire',
-      onTap: () {} ,
+      onTap: (BuildContext context) {
+        FormHoraire().showFormHoraire(context);
+      },
     ),
     MenuItem(
       icon: Icons.info_outlined,
       text: 'Communication',
-      onTap: () {},
+      onTap: (BuildContext context) {
+        FormHoraire.showFormCommunication(context);
+      },
     ),
     MenuItem(
       icon: Icons.settings_outlined,
       text: 'Paramètres',
-      onTap: () {},
+      onTap: (BuildContext context) {},
     ),
     MenuItem(
       icon: Icons.notifications_outlined,
       text: 'Notifications',
-      onTap: () {},
+      onTap: (BuildContext context) {},
     ),
     MenuItem(
       icon: Icons.message_outlined,
       text: 'Messages',
-      onTap: () {},
+      onTap: (BuildContext context) {},
     ),
     MenuItem(
       icon: Icons.camera_outlined,
       text: 'Camera',
-      onTap: () {},
+      onTap: (BuildContext context) {},
     ),
   ];
-
-  AddScrenn({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(vertical: 50.0,horizontal: 20.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 18.0,
-            mainAxisSpacing: 18.0,
+            crossAxisSpacing: 20.0,
+            mainAxisSpacing: 20.0,
           ),
           itemCount: menuItems.length,
           itemBuilder: (context, index) {
             final item = menuItems[index];
-            return _gridMenuCard(item);
+            return buildButtonBudget(context, item.icon, item.text,
+                onTap: () => item.onTap(context));
           },
-        ),
-      ),
-    );
-  }
-
-  Widget _gridMenuCard(MenuItem item) {
-    return GestureDetector(
-      onTap: item.onTap,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4),
-        ),
-        elevation: 4,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              item.icon,
-              size: 30,
-              color: blueColor,
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              item.text,
-              style: TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.w600, color: blueColor),
-              textAlign: TextAlign.center,
-            ),
-          ],
         ),
       ),
     );
@@ -91,8 +73,7 @@ class AddScrenn extends StatelessWidget {
 class MenuItem {
   final IconData icon;
   final String text;
-  final VoidCallback onTap;
-
+  final Function(BuildContext) onTap;
   MenuItem({
     required this.icon,
     required this.text,
