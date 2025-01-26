@@ -21,13 +21,13 @@ Widget buildButtonBudget(BuildContext context, IconData icon, String label,
       children: [
         Icon(
           icon,
-          size: 40,
+          size: 32,
           color: blueColor,
         ),
         SizedBox(height: 10),
         Text(label,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               color: blueColor,
             )),
       ],

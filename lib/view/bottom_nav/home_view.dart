@@ -6,6 +6,7 @@ import 'package:school_post/view/bottom_nav/communicate_view.dart';
 import 'package:school_post/view/bottom_nav/dash_view.dart';
 import 'package:school_post/view/drawer/about_view.dart';
 import 'package:school_post/view/drawer/account_view.dart';
+import 'package:school_post/widgets/widget_forms.dart';
 import 'package:school_post/widgets/widget_notification_button.dart';
 import 'package:school_post/widgets/widget_profil_button.dart';
 import 'package:school_post/widgets/widget_search_button.dart';
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     const DashScreen(),
-    AddScrenn(),
+    const AddScrenn(),
     const CommunicateScreen()
   ];
 
@@ -56,11 +57,14 @@ class _HomeScreenState extends State<HomeScreen> {
             NotificationsButton(
               iconColor: blueColor,
               notificationCount: 3,
-              onPressed: () {},
+              onPressed: () {
+                FormHoraire.showListDialog(context);
+              },
             ),
             ProfileButton(
               iconColor: blueColor,
               onPressed: () {
+                FormHoraire.showProfileDialog(context);
               },
             ),
           ],
