@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:school_post/models/other_classes/institution_data.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
+import 'package:school_post/view/drawer/account_view.dart';
 
 class FormHoraire {
   static final String _selectedPromotion =
@@ -128,7 +129,8 @@ class FormHoraire {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        showQuestion(context, 'Enregistrement',
+                            'Voulez-vous vraiment enregistrer ces informations ?');
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 15),
@@ -152,7 +154,7 @@ class FormHoraire {
     });
   }
 
-  static void showFormCommunication(BuildContext context) {
+  static void showFormCours(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showModalBottomSheet(
         context: context,
@@ -163,30 +165,224 @@ class FormHoraire {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
-                  'Ajoutez un communiqué',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  'Ajouter un cours',
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      color: blueColor),
                 ),
                 SizedBox(height: 16),
                 TextField(
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    labelText: 'Field 1',
-                    border: OutlineInputBorder(),
-                  ),
+                      hintText: "Intitulé du cours",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide.none,
+                      ),
+                      hoverColor: blackColor,
+                      fillColor: whiteColor,
+                      filled: true,
+                      prefixIcon: Icon(Icons.book_outlined)),
                 ),
-                SizedBox(height: 16),
-                TextField(
+                SizedBox(height: 15),
+                DropdownButtonFormField<String>(
                   decoration: InputDecoration(
-                    labelText: 'Field 2',
-                    border: OutlineInputBorder(),
+                    labelText: 'Unité d\'enseignement',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    fillColor: whiteColor,
+                    filled: true,
                   ),
-                ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle form submission
-                    Navigator.pop(context);
+                  items: <String>['UE 1', 'UE 2', 'UE 3'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    // Handle cours selection
                   },
-                  child: Text('Submit'),
+                ),
+                SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        showQuestion(context, 'Enregistrement',
+                            'Voulez-vous vraiment enregistrer ces informations ?');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        backgroundColor: blueColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        "Ajouter",
+                        style: TextStyle(color: whiteColor),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    });
+  }
+
+  static void showFormUE(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  'Ajouter une unité d\'enseignement',
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      color: blueColor),
+                ),
+                SizedBox(height: 16),
+                TextField(
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                      hintText: "Nom de l'unité d'enseignement",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide.none,
+                      ),
+                      hoverColor: blackColor,
+                      fillColor: whiteColor,
+                      filled: true,
+                      prefixIcon: Icon(Icons.school_outlined)),
+                ),
+                SizedBox(height: 15),
+                TextField(
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                      hintText: "Description de l'unité d'enseignement",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide.none,
+                      ),
+                      hoverColor: blackColor,
+                      fillColor: whiteColor,
+                      filled: true,
+                      prefixIcon: Icon(Icons.description_outlined)),
+                ),
+                SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        showQuestion(context, 'Enregistrement',
+                            'Voulez-vous vraiment enregistrer ces informations ?');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        backgroundColor: blueColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        "Ajouter",
+                        style: TextStyle(color: whiteColor),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    });
+  }
+
+  static void showFormSalle(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  'Ajouter une salle',
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      color: blueColor),
+                ),
+                SizedBox(height: 16),
+                TextField(
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                      hintText: "Nom de la salle",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide.none,
+                      ),
+                      hoverColor: blackColor,
+                      fillColor: whiteColor,
+                      filled: true,
+                      prefixIcon: Icon(Icons.room_outlined)),
+                ),
+                SizedBox(height: 15),
+                TextField(
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                      hintText: "Description de la salle",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide.none,
+                      ),
+                      hoverColor: blackColor,
+                      fillColor: whiteColor,
+                      filled: true,
+                      prefixIcon: Icon(Icons.description_outlined)),
+                ),
+                SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        showQuestion(context, 'Enregistrement',
+                            'Voulez-vous vraiment enregistrer ces informations ?');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        backgroundColor: blueColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        "Ajouter",
+                        style: TextStyle(color: whiteColor),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -248,15 +444,17 @@ class FormHoraire {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    showQuestion(context, 'Attention',
-                        'Voulez-vous vraiment modifier votre profil ?');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AccountScreen()));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     shadowColor: Colors.transparent,
                   ),
                   child: Text(
-                    'Modifier',
+                    'Voir mes info',
                     style: TextStyle(
                       color: blueColor,
                     ),
@@ -271,7 +469,7 @@ class FormHoraire {
                     shadowColor: Colors.transparent,
                   ),
                   child: Text(
-                    'Annuler',
+                    'Retour',
                     style: TextStyle(
                       color: blueColor,
                     ),
@@ -285,118 +483,39 @@ class FormHoraire {
     ).show();
   }
 
-  static void showListDialog(BuildContext context) {
-    var nbrNotifications = 12;
+  void showSearchDialog(
+      BuildContext context, TextEditingController searchController) {
     AwesomeDialog(
       context: context,
       dialogType: DialogType.noHeader,
       animType: AnimType.bottomSlide,
-      body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 1),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Notifications $nbrNotifications',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      dialogBackgroundColor: Colors.transparent,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(0),
+          margin: const EdgeInsets.all(0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: searchController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: greyColor, // Set the fill color of the TextField
+                  hintText: 'Rechercher',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
+                  prefixIcon: Icon(Icons.search),
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                  ),
-                  onPressed: () {
-                    // Handle "Voir tout" action
-                  },
-                  child: Text(
-                    'Voir tout',
-                    style: TextStyle(
-                        color: blueColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500),
-                  ),
-                )
-              ],
-            ),
-            Divider(),
-            SizedBox(height: 10),
-            SizedBox(
-              //width: double.infinity,
-              height: 600, // Adjust the height as needed
-              child: ListView.builder(
-                itemCount: 10, // Adjust the item count as needed
-                itemBuilder: (context, index) {
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                    elevation: 4,
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 30,
-                          backgroundImage: AssetImage('assets/images/post/1.png'), // Replace with your profile image asset
-                        ),
-                        title: Text(
-                          'Communication $index',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: const [
-                                Icon(Icons.calendar_today_outlined, size: 16),
-                                SizedBox(width: 5),
-                                Text('Today, 10:00 AM'),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.transparent,
-                                    shadowColor: Colors.transparent,
-                                  ),
-                                  onPressed: () {
-                                    // Handle action
-                                  },
-                                  child: Text(
-                                    'Lue',
-                                    style: TextStyle(color: blueColor),
-                                  ),
-                                ),
-                                //SizedBox(width: 2),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.transparent,
-                                    shadowColor: Colors.transparent,
-                                  ),
-                                  onPressed: () {
-                                    // Handle action
-                                  },
-                                  child: Text(
-                                    'Not',
-                                    style: TextStyle(color: blueColor),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                onChanged: (value) {
+                  // Handle search input
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     ).show();

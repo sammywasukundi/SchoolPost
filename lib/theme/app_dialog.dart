@@ -177,7 +177,8 @@ void updateUser(BuildContext context) {
               alignment: Alignment.centerRight,
               child: ElevatedButton(
                 onPressed: () {
-                  // Action à exécuter lors de la mise à jour
+                  showQuestion(context, 'Attention',
+                      'Voulez-vous vraiment modifier vos informations ?');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: blueColor,

@@ -19,30 +19,34 @@ class _AddScrennState extends State<AddScrenn> {
       },
     ),
     MenuItem(
-      icon: Icons.info_outlined,
-      text: 'Communication',
+      icon: Icons.book_outlined,
+      text: 'Cours',
       onTap: (BuildContext context) {
-        FormHoraire.showFormCommunication(context);
+        FormHoraire.showFormCours(context);
       },
     ),
     MenuItem(
-      icon: Icons.settings_outlined,
-      text: 'Paramètres',
+      icon: Icons.school_outlined,
+      text: 'Unité d\'enseignement',
+      onTap: (BuildContext context) {
+        FormHoraire.showFormUE(context);
+      },
+    ),
+    MenuItem(
+      icon: Icons.room_outlined,
+      text: 'Salle',
+      onTap: (BuildContext context) {
+        FormHoraire.showFormSalle(context);
+      },
+    ),
+    MenuItem(
+      icon: Icons.domain_outlined,
+      text: 'Dommaine',
       onTap: (BuildContext context) {},
     ),
     MenuItem(
-      icon: Icons.notifications_outlined,
-      text: 'Notifications',
-      onTap: (BuildContext context) {},
-    ),
-    MenuItem(
-      icon: Icons.message_outlined,
-      text: 'Messages',
-      onTap: (BuildContext context) {},
-    ),
-    MenuItem(
-      icon: Icons.camera_outlined,
-      text: 'Camera',
+      icon: Icons.post_add_outlined,
+      text: 'Post',
       onTap: (BuildContext context) {},
     ),
   ];

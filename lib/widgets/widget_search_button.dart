@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school_post/widgets/widget_forms.dart';
 
 class SearchButton extends StatelessWidget {
   final Color iconColor;
@@ -16,7 +17,7 @@ class SearchButton extends StatelessWidget {
       icon: const Icon(Icons.search_outlined),
       color: iconColor,
       onPressed: () {
-        //print('object');
+        FormHoraire().showSearchDialog(context, searchController);
       },
     );
   }

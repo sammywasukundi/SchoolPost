@@ -7,6 +7,7 @@ import 'package:school_post/view/bottom_nav/dash_view.dart';
 import 'package:school_post/view/drawer/about_view.dart';
 import 'package:school_post/view/drawer/account_view.dart';
 import 'package:school_post/widgets/widget_forms.dart';
+import 'package:school_post/widgets/widget_notification.dart';
 import 'package:school_post/widgets/widget_notification_button.dart';
 import 'package:school_post/widgets/widget_profil_button.dart';
 import 'package:school_post/widgets/widget_search_button.dart';
@@ -58,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
               iconColor: blueColor,
               notificationCount: 3,
               onPressed: () {
-                FormHoraire.showListDialog(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
               },
             ),
             ProfileButton(
