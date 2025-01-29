@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
+import 'package:school_post/widgets/post_detail.dart';
 
 class PostWidget extends StatelessWidget {
   PostWidget({super.key});
@@ -74,37 +75,46 @@ class PostWidget extends StatelessWidget {
                         onPressed: () {}, icon: const Icon(Icons.more_horiz)),
                   ],
                 )),
-            Container(
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PostDetail(post: post),
+                  ),
+                );
+              },
+              child: Container(
                 height: 300,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(post["photo"]),
                     fit: BoxFit.cover,
                   ),
-                )
-
-                // color: Colors.red,
-                // margin: EdgeInsets.only(top: 10),
-                // child: Image.asset(
-                //   post["photo"],),
                 ),
+              ),
+            ),
             SizedBox(
               height: 50,
               child: Row(
                 children: [
                   IconButton(
-                    color: blueColor,
-                      onPressed: () {}, icon: Icon(Icons.favorite_outline)),
+                      color: blueColor,
+                      onPressed: () {},
+                      icon: Icon(Icons.favorite_outline)),
                   IconButton(
-                    color: blueColor,
-                      onPressed: () {}, icon: Icon(Icons.message_outlined)),
+                      color: blueColor,
+                      onPressed: () {},
+                      icon: Icon(Icons.message_outlined)),
                   IconButton(
-                    color: blueColor,
-                    onPressed: () {}, icon: Icon(Icons.send_outlined)),
+                      color: blueColor,
+                      onPressed: () {},
+                      icon: Icon(Icons.send_outlined)),
                   Expanded(child: Container()),
                   IconButton(
-                    color: blueColor,
-                      onPressed: () {}, icon: Icon(Icons.bookmark_outline)),
+                      color: blueColor,
+                      onPressed: () {},
+                      icon: Icon(Icons.bookmark_outline)),
                 ],
               ),
             ),
