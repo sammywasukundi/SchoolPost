@@ -53,7 +53,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                                 : null,
                             child: imageUrl == null
                                 ? Icon(Icons.person_2_outlined,
-                                    size: 100, color: yellowColor)
+                                    size: 100, color: blueColor)
                                 : null,
                           ),
                         ),
@@ -73,7 +73,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                           child: GestureDetector(
                             onTap: () {},
                             child: Icon(Icons.camera_alt_outlined,
-                                color: yellowColor, size: 30),
+                                color: blueColor, size: 30),
                           ),
                         ),
                       ],
@@ -194,11 +194,11 @@ class _SignInScreenState extends State<SigninScreenOne> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          backgroundColor: yellowColor,
+                          backgroundColor: blueColor,
                         ),
                         child: Text(
                           "Suivant",
-                          style: TextStyle(color: blackColor),
+                          style: TextStyle(color: whiteColor),
                         ),
                       )),
                 ],

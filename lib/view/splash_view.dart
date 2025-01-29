@@ -29,7 +29,7 @@ class _SplashSreenState extends State<SplashScreen> {
           height: 40.0,
           width: 40.0,
           child: LoadKitLineChase(
-            color: yellowColor,
+            color: blueColor,
           ),
         ),
       ),

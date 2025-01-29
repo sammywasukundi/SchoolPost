@@ -72,7 +72,12 @@ class PostWidget extends StatelessWidget {
                         height: 13),
                     Expanded(child: Container()),
                     IconButton(
-                        onPressed: () {}, icon: const Icon(Icons.more_horiz)),
+                        onPressed: () {
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => IconButtonWithPopup()));
+                        }, icon: const Icon(Icons.more_horiz)),
                   ],
                 )),
             GestureDetector(

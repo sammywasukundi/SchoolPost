@@ -91,14 +91,14 @@ class InputFieldState extends State<InputField> {
           },
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            backgroundColor: yellowColor,
+            backgroundColor: blueColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
           ),
           child: Text(
             "Se connecter",
-            style: TextStyle(color: blackColor),
+            style: TextStyle(color: whiteColor),
           ),
         ),
         const SizedBox(
@@ -152,7 +152,7 @@ Widget forgotPassword(BuildContext context) {
     onPressed: () {},
     child: Text(
       "Mot de passe oublié ?",
-      style: TextStyle(color: yellowColor),
+      style: TextStyle(color: blueColor),
     ),
   );
 }
@@ -174,7 +174,7 @@ Widget signup(BuildContext context) {
         },
         child: Text(
           "S'inscrire",
-          style: TextStyle(color: yellowColor),
+          style: TextStyle(color: blueColor),
         ),
       ),
     ],

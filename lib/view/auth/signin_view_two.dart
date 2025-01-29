@@ -77,8 +77,7 @@ class _SignInScreenState extends State<SigninScreenTwo> {
                           } else if (value == "ISTA") {
                             matriculeController.text = "B";
                           } else {
-                            matriculeController
-                                .clear(); 
+                            matriculeController.clear();
                           }
 
                           _selectedField = null;
@@ -198,11 +197,11 @@ class _SignInScreenState extends State<SigninScreenTwo> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(vertical: 16),
-                            backgroundColor: yellowColor,
+                            backgroundColor: blueColor,
                           ),
                           child: Text(
                             "S'enregistrer",
-                            style: TextStyle(color: blackColor),
+                            style: TextStyle(color: whiteColor),
                           ),
                         )),
                     SizedBox(
@@ -222,7 +221,7 @@ class _SignInScreenState extends State<SigninScreenTwo> {
                             },
                             child: Text(
                               "Se connecter",
-                              style: TextStyle(color: yellowColor),
+                              style: TextStyle(color: blueColor),
                             ))
                       ],
                     )
