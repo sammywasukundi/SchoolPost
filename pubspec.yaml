@@ -42,6 +42,7 @@ dependencies:
   awesome_dialog: ^3.2.1
   modal_bottom_sheet: ^3.0.0
   intl: ^0.20.1
+  comment_sheet: ^0.0.1
 
 dev_dependencies:
   flutter_test:
