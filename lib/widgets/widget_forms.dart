@@ -489,10 +489,12 @@ class FormHoraire {
       context: context,
       dialogType: DialogType.noHeader,
       animType: AnimType.bottomSlide,
-      dialogBackgroundColor: Colors.transparent,
+      //dialogBackgroundColor: Colors.transparent,
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.all(0),
+          //height: 70,
+          width: double.infinity,
+          padding: const EdgeInsets.only(bottom: 14.0),
           margin: const EdgeInsets.all(0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -502,7 +504,7 @@ class FormHoraire {
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: greyColor, // Set the fill color of the TextField
+                  fillColor: Colors.transparent, // Set the fill color of the TextField
                   hintText: 'Rechercher',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),

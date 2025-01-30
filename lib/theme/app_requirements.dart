@@ -5,6 +5,7 @@ String? uValidator({
   bool isEmail = false,
   int? minLength,
   String? match,
+  DateTime? minDate,
 }) {                                                   
   if (isRequired) {
     if (value.isEmpty) {
@@ -30,6 +31,12 @@ String? uValidator({
       return 'mêmes mots de passes';
     }
                                                                                                                  
+  }
+
+  if (minDate != null) {
+    if (DateTime.parse(value).isBefore(minDate)) {
+      return 'Date invalide';
+    }
   }
 
   return null;
