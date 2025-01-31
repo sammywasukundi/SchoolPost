@@ -1,7 +1,7 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
+import 'package:school_post/widgets/post_detail.dart';
+import 'package:school_post/widgets/comment_sheet.dart'; // Ajoute cette ligne
 
 class PostWidget extends StatelessWidget {
   PostWidget({super.key});
@@ -19,30 +19,6 @@ class PostWidget extends StatelessWidget {
       "photProfil": "assets/images/photo/2.jpg",
       "description": "New travel",
     },
-    {
-      "pseudo": "Majaliwa",
-      "photo": "assets/images/post/3.jpg",
-      "photProfil": "assets/images/photo/7.jpg",
-      "description": "New travel",
-    },
-    {
-      "pseudo": "andrew",
-      "photo": "assets/images/post/3.jpg",
-      "photProfil": "assets/images/photo/4.jpg",
-      "description": "New travel lorem djejkfbejkfbkejqbfkbfejbjkbfejbj",
-    },
-    {
-      "pseudo": "andrew",
-      "photo": "assets/images/post/10.jfif",
-      "photProfil": "assets/images/photo/3.jpg",
-      "description": "New travel",
-    },
-    {
-      "pseudo": "andrew",
-      "photo": "assets/images/post/11.jpg",
-      "photProfil": "assets/images/photo/1.jpg",
-      "description": "New travel",
-    },
   ];
 
   @override
@@ -51,68 +27,90 @@ class PostWidget extends StatelessWidget {
       children: post_items.map((post) {
         return Column(
           children: [
+            // HEADER DU POST
             Container(
-                height: 50,
-                // color: Colors.grey,
-                margin: const EdgeInsets.only(top: 10),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage(post['photProfil']),
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      post['pseudo'],
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(width: 5),
-                    Image.asset('assets/images/profil/instagram-logo.png',
-                        height: 13),
-                    Expanded(child: Container()),
-                    IconButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => IconButtonWithPopup()));
-                        }, icon: const Icon(Icons.more_horiz)),
-                  ],
-                )),
-            Container(
+              height: 50,
+              margin: const EdgeInsets.only(top: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage(post['photProfil']),
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    post['pseudo'],
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Expanded(child: Container()),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.more_horiz),
+                  ),
+                ],
+              ),
+            ),
+
+            // IMAGE DU POST
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PostDetail(post: post, title: post['pseudo']),
+                  ),
+                );
+              },
+              child: Container(
                 height: 300,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(post["photo"]),
                     fit: BoxFit.cover,
                   ),
-                )
-
-                // color: Colors.red,
-                // margin: EdgeInsets.only(top: 10),
-                // child: Image.asset(
-                //   post["photo"],),
                 ),
+              ),
+            ),
+
+            // ICONES D'ACTION (Like, Commentaire, Partage, Sauvegarde)
             SizedBox(
               height: 50,
               child: Row(
                 children: [
                   IconButton(
                     color: blueColor,
-                      onPressed: () {}, icon: Icon(Icons.favorite_outline)),
+                    onPressed: () {},
+                    icon: Icon(Icons.favorite_outline),
+                  ),
                   IconButton(
                     color: blueColor,
-                      onPressed: () {}, icon: Icon(Icons.message_outlined)),
+                    onPressed: () {
+                      // OUVRIR LE COMMENT SHEET ICI
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) => CommentSheet(),
+                      );
+                    },
+                    icon: Icon(Icons.message_outlined),
+                  ),
                   IconButton(
                     color: blueColor,
-                    onPressed: () {}, icon: Icon(Icons.send_outlined)),
+                    onPressed: () {},
+                    icon: Icon(Icons.send_outlined),
+                  ),
                   Expanded(child: Container()),
                   IconButton(
                     color: blueColor,
-                      onPressed: () {}, icon: Icon(Icons.bookmark_outline)),
+                    onPressed: () {},
+                    icon: Icon(Icons.bookmark_outline),
+                  ),
                 ],
               ),
             ),
+
+            // SECTION LIKES ET COMMENTAIRES
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
@@ -124,24 +122,28 @@ class PostWidget extends StatelessWidget {
                   const SizedBox(width: 10),
                   RichText(
                     text: TextSpan(
-                        text: 'Aimé par ',
-                        style: DefaultTextStyle.of(context).style,
-                        children: [
-                          TextSpan(
-                            text: post['pseudo'],
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(text: ' et '),
-                          TextSpan(
-                            text: '123 autres personnes',
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                        ]),
+                      text: 'Aimé par ',
+                      style: DefaultTextStyle.of(context).style,
+                      children: [
+                        TextSpan(
+                          text: post['pseudo'],
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(text: ' et '),
+                        TextSpan(
+                          text: '123 autres personnes',
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
+
             const SizedBox(height: 15),
+
+            // DESCRIPTION DU POST
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Column(
@@ -171,11 +173,21 @@ class PostWidget extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    'Voir tous les 123 commentaires',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: greyColor,
+                  GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) => CommentSheet(),
+                      );
+                    },
+                    child: Text(
+                      'Voir tous les 123 commentaires',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: greyColor,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
