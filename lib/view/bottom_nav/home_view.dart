@@ -71,10 +71,18 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         drawer: Drawer(
+          width: 250,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(5),
+              bottomRight: Radius.circular(5),
+            ),
+          ),
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
+                curve: Curves.easeInOut,
                   decoration: BoxDecoration(
                       color: whiteColor, borderRadius: BorderRadius.zero),
                   child: SchoolPostTitle(

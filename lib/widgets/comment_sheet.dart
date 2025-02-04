@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:school_post/theme/app_colors.dart';
 
 class CommentSheet extends StatefulWidget {
+  const CommentSheet({super.key});
+
   @override
   _CommentSheetState createState() => _CommentSheetState();
 }
@@ -50,7 +53,7 @@ class _CommentSheetState extends State<CommentSheet> {
       setState(() {
         comments[index]["replies"].add({
           "user": "Vous",
-          "avatar": "assets/images/photo/default.jpg",
+          "avatar": "assets/images/photo/1.jpg",
           "comment": replyText,
         });
       });
@@ -60,19 +63,19 @@ class _CommentSheetState extends State<CommentSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        color: whiteColor,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
+          const Text(
             "Commentaires",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          Divider(),
+          const Divider(),
           Expanded(
             child: ListView.builder(
               itemCount: comments.length,
@@ -87,29 +90,29 @@ class _CommentSheetState extends State<CommentSheet> {
                       ),
                       title: Text(
                         comment["user"],
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(comment["comment"]),
                     ),
                     Row(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.thumb_up_alt_outlined, color: Colors.blue),
+                          icon: Icon(Icons.thumb_up_alt_outlined, color: blueColor),
                           onPressed: () => _likeComment(index),
                         ),
                         Text("${comment["likes"]}"),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         IconButton(
-                          icon: Icon(Icons.favorite_border, color: Colors.red),
+                          icon: const Icon(Icons.favorite_border, color: Colors.red),
                           onPressed: () => _loveComment(index),
                         ),
                         Text("${comment["loved"]}"),
-                        Spacer(),
+                        const Spacer(),
                         TextButton(
                           onPressed: () {
                             _showReplyDialog(context, index);
                           },
-                          child: Text("Répondre", style: TextStyle(color: Colors.blue)),
+                          child: Text("Répondre", style: TextStyle(color: blueColor)),
                         ),
                       ],
                     ),
@@ -123,13 +126,13 @@ class _CommentSheetState extends State<CommentSheet> {
                                 backgroundImage: AssetImage(reply["avatar"]),
                                 radius: 15,
                               ),
-                              title: Text(reply["user"], style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                              title: Text(reply["user"], style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                               subtitle: Text(reply["comment"]),
                             );
                           }).toList(),
                         ),
                       ),
-                    Divider(),
+                    const Divider(),
                   ],
                 );
               },
@@ -147,10 +150,11 @@ class _CommentSheetState extends State<CommentSheet> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Répondre au commentaire"),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          title: const Text("Répondre au commentaire", style: TextStyle(fontSize: 20)),
           content: TextField(
             controller: replyController,
-            decoration: InputDecoration(hintText: "Votre réponse..."),
+            decoration: const InputDecoration(hintText: "Votre réponse..."),
           ),
           actions: [
             TextButton(
@@ -158,7 +162,7 @@ class _CommentSheetState extends State<CommentSheet> {
                 _replyToComment(index, replyController.text);
                 Navigator.pop(context);
               },
-              child: Text("Envoyer"),
+              child: Text("Envoyer", style: TextStyle(color: blueColor)),
             ),
           ],
         );
