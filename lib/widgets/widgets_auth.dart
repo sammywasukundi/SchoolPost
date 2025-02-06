@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:school_post/theme/app_colors.dart';
+import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/theme/app_requirements.dart';
 import 'package:school_post/view/auth/signin_view_one.dart';
 import 'package:school_post/view/bottom_nav/home_view.dart';
@@ -133,7 +134,9 @@ class InputFieldState extends State<InputField> {
             height: 25,
           ),
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              showError(context, 'Oh damn !!', 'Service indisponible');
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: greyColor,
               shape: RoundedRectangleBorder(
