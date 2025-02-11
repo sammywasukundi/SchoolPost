@@ -1,6 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
+//import 'dart:io';
+
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/view/auth/signin_view_two.dart';
 import 'package:school_post/widgets/widget_title.dart';
@@ -13,9 +19,70 @@ class SigninScreenOne extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SigninScreenOne> {
+  final _nameController = TextEditingController();
+  final _postnomController = TextEditingController();
+  final _mailController = TextEditingController();
+  final _pwdController = TextEditingController();
+  final _confirmpwdController = TextEditingController();
+
+  final ImagePicker _imagePicker = ImagePicker();
   bool _obscureText = true;
   String? imageUrl;
   bool isLoading = false;
+
+  // Fonction pour choisir une image depuis la galerie
+  Future<void> pickImage() async {
+    try {
+      XFile? res = await _imagePicker.pickImage(source: ImageSource.gallery);
+      if (res != null) {
+        await uploadImageToFirebase(File(res.path));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Échec lors du chargement de l\'image: $e'),
+        ),
+      );
+    }
+  }
+
+  // Fonction pour uploader l'image sur Firebase Storage
+  Future<void> uploadImageToFirebase(File image) async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      // Référence à l'emplacement où l'image sera stockée
+      Reference reference = FirebaseStorage.instance
+          .ref()
+          .child("image/${DateTime.now().microsecondsSinceEpoch}.png");
+
+      // Téléchargement du fichier dans Firebase Storage
+      await reference.putFile(image).whenComplete(() {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 2),
+            content: Text('Image chargée avec succès'),
+          ),
+        );
+      });
+
+      // Récupération de l'URL de l'image
+      imageUrl = await reference.getDownloadURL();
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Échec lors du chargement de l\'image: $e'),
+        ),
+      );
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +149,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                   Column(
                     children: <Widget>[
                       TextField(
+                        controller: _nameController,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             hintText: "Nom",
@@ -94,6 +162,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                       ),
                       const SizedBox(height: 10),
                       TextField(
+                        controller: _postnomController,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                             hintText: "Postnom",
@@ -106,6 +175,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                       ),
                       const SizedBox(height: 10),
                       TextField(
+                        controller: _mailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           hintText: "Adresse mail",
@@ -126,6 +196,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                       ),
                       const SizedBox(height: 10),
                       TextField(
+                        controller: _pwdController,
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: _obscureText,
                         decoration: InputDecoration(
@@ -154,6 +225,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
                       ),
                       const SizedBox(height: 10),
                       TextField(
+                        controller: _confirmpwdController,
                         keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
                           hintText: "Confirmez le mot de passe",
