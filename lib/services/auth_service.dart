@@ -10,8 +10,13 @@ class AuthService {
   // Function to handle user signup
   Future<String?> signup({
     required String name,
+    required String postname,
     required String email,
     required String password,
+    required String institution,
+    required String faculty,
+    required String matricule,
+    required String promotion,
     required String role,
   }) async {
     try {

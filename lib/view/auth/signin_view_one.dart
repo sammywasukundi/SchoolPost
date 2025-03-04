@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/view/auth/signin_view_two.dart';
 import 'package:school_post/widgets/widget_title.dart';
+import 'package:image_editor_plus/image_editor_plus.dart';
 
 class SigninScreenOne extends StatefulWidget {
   const SigninScreenOne({super.key});
@@ -25,17 +26,25 @@ class _SignInScreenState extends State<SigninScreenOne> {
   final _pwdController = TextEditingController();
   final _confirmpwdController = TextEditingController();
 
+  //File? _selectedImage;
+  bool isLoading = false;
   final ImagePicker _imagePicker = ImagePicker();
   bool _obscureText = true;
   String? imageUrl;
-  bool isLoading = false;
 
   // Fonction pour choisir une image depuis la galerie
   Future<void> pickImage() async {
     try {
       XFile? res = await _imagePicker.pickImage(source: ImageSource.gallery);
       if (res != null) {
-        await uploadImageToFirebase(File(res.path));
+        File imageFile = File(res.path);
+
+        // Appel de processImage pour rogner l'image
+        File? croppedImage = await processImage(imageFile);
+
+        if (croppedImage != null) {
+          await uploadImageToFirebase(croppedImage);
+        }
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -56,7 +65,7 @@ class _SignInScreenState extends State<SigninScreenOne> {
       // Référence à l'emplacement où l'image sera stockée
       Reference reference = FirebaseStorage.instance
           .ref()
-          .child("image/${DateTime.now().microsecondsSinceEpoch}.png");
+          .child("images/${DateTime.now().microsecondsSinceEpoch}.png");
 
       // Téléchargement du fichier dans Firebase Storage
       await reference.putFile(image).whenComplete(() {
@@ -113,21 +122,26 @@ class _SignInScreenState extends State<SigninScreenOne> {
                       children: [
                         Center(
                           child: CircleAvatar(
-                            radius: 60,
-                            backgroundColor: greyColor,
-                            backgroundImage: imageUrl != null
-                                ? NetworkImage(imageUrl!)
-                                : null,
-                            child: imageUrl == null
-                                ? Icon(Icons.person_2_outlined,
-                                    size: 100, color: blueColor)
-                                : null,
-                          ),
+                              backgroundColor: bgColor,
+                              radius: 50,
+                              child: imageUrl == null
+                                  ? Icon(
+                                      Icons.person_outline,
+                                      size: 80,
+                                      color: blueColor,
+                                    )
+                                  : SizedBox(
+                                      height: 200,
+                                      child: ClipOval(
+                                          child: Image.network(
+                                        imageUrl!,
+                                        fit: BoxFit.cover,
+                                      )))),
                         ),
                         if (isLoading)
                           Positioned(
-                            top: 70,
-                            right: 190,
+                            top: 35,
+                            right: 135,
                             child: Center(
                               child: CircularProgressIndicator(
                                 color: whiteColor,
@@ -135,10 +149,12 @@ class _SignInScreenState extends State<SigninScreenOne> {
                             ),
                           ),
                         Positioned(
-                          right: 90,
-                          top: 12,
+                          right: 100,
+                          top: 10,
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              pickImage();
+                            },
                             child: Icon(Icons.camera_alt_outlined,
                                 color: blueColor, size: 30),
                           ),
@@ -280,5 +296,22 @@ class _SignInScreenState extends State<SigninScreenOne> {
         ),
       ),
     );
+  }
+
+  Future<File?> processImage(File image) async {
+    final editedImage = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ImageCropper(
+          image: image.readAsBytesSync(), // <-- Uint8List of image
+        ),
+      ),
+    );
+
+    if (editedImage != null && editedImage is List<int>) {
+      await image.writeAsBytes(editedImage);
+      return image;
+    }
+    return null;
   }
 }
