@@ -109,12 +109,13 @@ class _SignInScreenState extends State<SigninScreenOne> {
         SchedulerBinding.instance.addPostFrameCallback((_) {
           showSuccess(context, 'Succès', 'Enregistrement réussi');
         });
+        await Future.delayed(Duration(seconds: 4));
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => const LoginScreen()),
         );
       } else {
-        showError(context, 'Erreur', 'Echec d\'enregistrement');
+        showError(context, 'Erreur', 'l\'addresse mail est déjà utilisée');
       }
     } catch (e) {
       setState(() {

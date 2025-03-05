@@ -83,14 +83,35 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              DrawerHeader(
+                DrawerHeader(
                 curve: Curves.easeInOut,
                   decoration: BoxDecoration(
-                      color: whiteColor, borderRadius: BorderRadius.zero),
+                    color: whiteColor, borderRadius: BorderRadius.zero),
                   child: SchoolPostTitle(
-                    blueColor: blueColor,
-                    yellowColor: yellowColor,
+                  blueColor: blueColor,
+                  yellowColor: yellowColor,
                   )),
+                ListTile(
+                leading: const Icon(Icons.home_outlined),
+                title: const Text('Accueil'),
+                onTap: () {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const DashScreen()));
+                },
+                ),
+              ListTile(
+                leading: const Icon(Icons.dashboard_customize_outlined),
+                title: const Text('Posts'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AddScrenn()));
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.comment_outlined),
+                title: const Text('Communications'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CommunicateScreen()));
+                },
+              ),
               ListTile(
                 leading: const Icon(Icons.person_outline),
                 title: const Text('Mon compte'),
@@ -234,6 +255,13 @@ class _UserScreenState extends State<UserScreen> {
                     blueColor: blueColor,
                     yellowColor: yellowColor,
                   )),
+              ListTile(
+                leading: const Icon(Icons.home_outlined),
+                title: const Text('Accueil'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const DashScreen()));
+                },
+              ),
               ListTile(
                 leading: const Icon(Icons.person_outline),
                 title: const Text('Mon compte'),

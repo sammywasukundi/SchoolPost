@@ -9,7 +9,8 @@ import '../view/auth/login_view.dart';
 
 final AuthService _authService = AuthService();
 
-void showSuccess(BuildContext context, String title, String content) {
+void showSuccess(BuildContext? context, String title, String content) {
+  if (context == null) return;
   AwesomeDialog(
     context: context,
     dialogType: DialogType.success,
