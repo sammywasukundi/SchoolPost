@@ -14,10 +14,11 @@ class AuthService {
     required String email,
     required String password,
     required String institution,
-    required String faculty,
     required String matricule,
     required String promotion,
     required String role,
+    String? imageUrl,
+    String? field,
   }) async {
     try {
       // Create user in Firebase Authentication with email and password
@@ -30,6 +31,12 @@ class AuthService {
       // Save additional user data (name, role) in Firestore
       await _firestore.collection('users').doc(userCredential.user!.uid).set({
         'name': name.trim(),
+        'postname': postname.trim(),
+        'institution': institution.trim(),
+        'matricule': matricule.trim(),
+        'promotion': promotion.trim(),
+        'field': field?.trim(),
+        //'imageUrl': imageUrl,
         'email': email.trim(),
         'role': role, // Role determines if user is Admin or User
       });

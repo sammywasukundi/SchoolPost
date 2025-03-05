@@ -4,6 +4,7 @@ String? uValidator({
   bool isRequired = false,
   bool isEmail = false,
   int? minLength,
+  int? lengthMatri,
   String? match,
   DateTime? minDate,
 }) {                                                   
@@ -31,6 +32,13 @@ String? uValidator({
       return 'mêmes mots de passes';
     }
                                                                                                                  
+  }
+
+  if (lengthMatri != null) {
+    if (value.length != 4) {
+      return 'Tapez un matricule de 4 chiffres ';
+    }
+    
   }
 
   if (minDate != null) {

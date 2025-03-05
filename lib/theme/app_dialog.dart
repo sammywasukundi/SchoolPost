@@ -4,6 +4,11 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
 
+import '../services/auth_service.dart';
+import '../view/auth/login_view.dart';
+
+final AuthService _authService = AuthService();
+
 void showSuccess(BuildContext context, String title, String content) {
   AwesomeDialog(
     context: context,
@@ -22,7 +27,7 @@ void showSuccess(BuildContext context, String title, String content) {
       },
       child: Text(
         "Ok",
-        style: TextStyle(color: Colors.green[500], fontWeight: FontWeight.w600),
+        style: TextStyle(color: Colors.green.shade500, fontWeight: FontWeight.w600),
       ),
     ),
   ).show();
@@ -75,7 +80,13 @@ void showQuestion(BuildContext context, String title, String content) {
     ),
     btnOk: TextButton(
       onPressed: () {
-        Navigator.pop(context);
+        _authService.signOut();
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const LoginScreen(),
+          ),
+        );
       },
       child: Text(
         "Oui",
