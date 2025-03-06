@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
-  // Firebase Authentication instance
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // Firestore instance
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Function to handle user signup

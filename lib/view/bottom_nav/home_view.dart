@@ -95,21 +95,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: const Icon(Icons.home_outlined),
                 title: const Text('Accueil'),
                 onTap: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const DashScreen()));
+                  setState(() {
+                    _currentIndex = 0; // Update to the index of the DashScreen
+                  });
+                  Navigator.pop(context); // Close the drawer
                 },
                 ),
               ListTile(
                 leading: const Icon(Icons.dashboard_customize_outlined),
                 title: const Text('Posts'),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AddScrenn()));
+                  setState(() {
+                    _currentIndex = 1; // Update to the index of the AddScrenn
+                  });
+                  Navigator.pop(context); // Close the drawer
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.comment_outlined),
                 title: const Text('Communications'),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const CommunicateScreen()));
+                  setState(() {
+                    _currentIndex = 2; // Update to the index of the CommunicateScreen
+                  });
+                  Navigator.pop(context); // Close the drawer
                 },
               ),
               ListTile(
@@ -259,7 +268,20 @@ class _UserScreenState extends State<UserScreen> {
                 leading: const Icon(Icons.home_outlined),
                 title: const Text('Accueil'),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const DashScreen()));
+                  setState(() {
+                    _currentIndex = 0; // Update to the index of the DashScreen
+                  });
+                  Navigator.pop(context); // Close the drawer
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.comment_outlined),
+                title: const Text('Communications'),
+                onTap: () {
+                  setState(() {
+                    _currentIndex = 1; // Update to the index of the DashScreen
+                  });
+                  Navigator.pop(context); // Close the drawer
                 },
               ),
               ListTile(
@@ -297,7 +319,6 @@ class _UserScreenState extends State<UserScreen> {
           currentIndex: _currentIndex,
           items: [
             _bottomNavItem(Icons.home_outlined, 'Accueil'),
-            //_bottomNavItem(Icons.dashboard_customize_outlined, 'Posts'),
             _bottomNavItem(Icons.comment_outlined, 'Communications')
           ],
           onTap: onTabTapped,
@@ -312,10 +333,6 @@ class _UserScreenState extends State<UserScreen> {
         icon,
         color: blueColor,
       ),
-      // activeIcon: Icon(
-      //   icon,
-      //   color: blueColor,
-      // ),
       label: title,
     );
   }
