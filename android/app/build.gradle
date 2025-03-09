@@ -8,6 +8,7 @@ plugins {
 android {
     namespace = "com.example.school_post"
     compileSdk = flutter.compileSdkVersion
+    // ndkVersion = "28.0.12916984"
     ndkVersion = "25.1.8937393"
 
     compileOptions {
