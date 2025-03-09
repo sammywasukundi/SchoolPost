@@ -27,7 +27,7 @@ class NotificationScreen extends StatelessWidget {
                 'Notifications',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
               ),
-              SizedBox(width: 80),
+              SizedBox(width: 55),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
@@ -91,11 +91,11 @@ class NotificationScreen extends StatelessWidget {
                     color: greyColor,
                     shadowColor: blackColor,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(2),
                     ),
                     margin:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                    elevation: 1,
+                        const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+                    elevation: 0.5,
                     child: Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: ListTile(
@@ -115,20 +115,23 @@ class NotificationScreen extends StatelessWidget {
                             Row(
                               children: [
                                 const Icon(Icons.calendar_today_outlined, size: 16),
-                                const SizedBox(width: 5),
+                                const SizedBox(width: 2),
                                 const Text('Today, 10:00 AM'),
-                                SizedBox(width: 30,),
-                                IconButton(
-                                  onPressed: () {
-                                    // Handle action
-                                  },
-                                  icon: Icon(Icons.visibility_outlined),
+                                //SizedBox(width: 10,),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 1.0),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      // Handle action
+                                    },
+                                    icon: Icon(Icons.visibility_outlined,color: blueColor,),
+                                  ),
                                 ),
                                 IconButton(
                                   onPressed: () {
                                     // Handle action
                                   },
-                                  icon: Icon(Icons.check_outlined),
+                                  icon: Icon(Icons.check_outlined,color: blueColor,),
                                 )
                               ],
                             ),

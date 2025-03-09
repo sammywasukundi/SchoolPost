@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "827582492974",
+    "project_id": "schoolpost-e5f75",
+    "storage_bucket": "schoolpost-e5f75.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827582492974:android:e0cf50e484de1683c90abf",
+        "android_client_info": {
+          "package_name": "com.example.school_post"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLaH32UggY69RROw6ZMzbnMyHDM76NbAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

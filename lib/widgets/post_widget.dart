@@ -1,6 +1,8 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
-import 'package:school_post/widgets/post_detail.dart';
+import 'package:school_post/view/bottom_nav/add_view.dart';
 import 'package:school_post/widgets/comment_sheet.dart'; // Ajoute cette ligne
 
 class PostWidget extends StatelessWidget {
@@ -31,7 +33,7 @@ class PostWidget extends StatelessWidget {
             Container(
               height: 50,
               margin: const EdgeInsets.only(top: 10),
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Row(
                 children: [
                   CircleAvatar(
@@ -57,7 +59,7 @@ class PostWidget extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PostDetail(post: post, title: post['pseudo']),
+                    builder: (context) => const AddScrenn(),
                   ),
                 );
               },
@@ -80,7 +82,7 @@ class PostWidget extends StatelessWidget {
                   IconButton(
                     color: blueColor,
                     onPressed: () {},
-                    icon: Icon(Icons.favorite_outline),
+                    icon: const Icon(Icons.favorite_outline),
                   ),
                   IconButton(
                     color: blueColor,
@@ -93,18 +95,18 @@ class PostWidget extends StatelessWidget {
                         builder: (context) => CommentSheet(),
                       );
                     },
-                    icon: Icon(Icons.message_outlined),
+                    icon: const Icon(Icons.message_outlined),
                   ),
                   IconButton(
                     color: blueColor,
                     onPressed: () {},
-                    icon: Icon(Icons.send_outlined),
+                    icon: const Icon(Icons.send_outlined),
                   ),
                   Expanded(child: Container()),
                   IconButton(
                     color: blueColor,
                     onPressed: () {},
-                    icon: Icon(Icons.bookmark_outline),
+                    icon: const Icon(Icons.bookmark_outline),
                   ),
                 ],
               ),
@@ -112,7 +114,7 @@ class PostWidget extends StatelessWidget {
 
             // SECTION LIKES ET COMMENTAIRES
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
                   CircleAvatar(
@@ -129,8 +131,8 @@ class PostWidget extends StatelessWidget {
                           text: post['pseudo'],
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        TextSpan(text: ' et '),
-                        TextSpan(
+                        const TextSpan(text: ' et '),
+                        const TextSpan(
                           text: '123 autres personnes',
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
@@ -145,7 +147,7 @@ class PostWidget extends StatelessWidget {
 
             // DESCRIPTION DU POST
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -156,7 +158,7 @@ class PostWidget extends StatelessWidget {
                         post['pseudo'],
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Expanded(
                         child: Text(
                           post['description'],
@@ -166,9 +168,9 @@ class PostWidget extends StatelessWidget {
                       ),
                       const SizedBox(height: 15),
                       Text(
-                        'See more',
+                        'Voir plus',
                         style: TextStyle(
-                            fontWeight: FontWeight.w600, color: greyColor),
+                            fontWeight: FontWeight.w600, color: blackColor),
                       ),
                     ],
                   ),
@@ -191,7 +193,7 @@ class PostWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
+                  const Text(
                     'Translate',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                   ),

@@ -1,0 +1,2 @@
+D:/Mesdoc/COURS/L4/programmationmobile/projets/SchoolPost/android/app/.cxx/Debug/4w615p3a/x86_64/CMakeFiles/edit_cache.dir
+D:/Mesdoc/COURS/L4/programmationmobile/projets/SchoolPost/android/app/.cxx/Debug/4w615p3a/x86_64/CMakeFiles/rebuild_cache.dir
