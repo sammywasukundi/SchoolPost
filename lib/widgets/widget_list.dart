@@ -61,7 +61,7 @@ class MyListWidget extends StatelessWidget {
         builder: (context) => Scaffold(
           appBar: AppBar(
             title: Text(
-              'Listes d\'horaires',
+              'Listes d\'horaires disponibles ',
               style: TextStyle(
                 color: blueColor,
                 fontSize: 24.0,
@@ -134,10 +134,6 @@ class MyListWidget extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            child: const Icon(Icons.add),
           ),
         ),
       ),
@@ -225,10 +221,6 @@ class MyListWidget extends StatelessWidget {
               ),
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            child: const Icon(Icons.add),
-          ),
         ),
       ),
     );
@@ -314,10 +306,6 @@ class MyListWidget extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            child: const Icon(Icons.add),
           ),
         ),
       ),

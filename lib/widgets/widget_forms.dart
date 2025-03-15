@@ -178,12 +178,23 @@ class FormHoraire {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(
-                  'Ajouter un cours',
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
-                      color: blueColor),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Ajouter un cours',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                          color: blueColor),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        MyListWidget().ListCours(context);
+                      },
+                      icon: Icon(Icons.list_alt_outlined,color: blueColor,),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 16),
                 TextField(
@@ -262,12 +273,23 @@ class FormHoraire {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(
-                  'Ajouter une unité d\'enseignement',
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
-                      color: blueColor),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Ajouter une unité d\'enseignement',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                          color: blueColor),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        MyListWidget().ListUE(context);
+                      },
+                      icon: Icon(Icons.list_alt_outlined,color: blueColor,),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 16),
                 TextField(
@@ -339,12 +361,23 @@ class FormHoraire {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(
-                  'Ajouter une salle',
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
-                      color: blueColor),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Ajouter une salle',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                          color: blueColor),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        MyListWidget().ListSalle(context);
+                      },
+                      icon: Icon(Icons.list_alt_outlined,color: blueColor,),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 16),
                 TextField(
