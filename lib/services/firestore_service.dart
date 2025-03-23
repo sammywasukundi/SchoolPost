@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../models/horaire_model.dart';
+
 class FirestoreService {
   FirestoreService();
 
@@ -8,6 +10,14 @@ class FirestoreService {
 
   FirebaseFirestore get instance => FirebaseFirestore.instance;
 
+  Future<void> addHoraire(Horaire horaire) async {
+    try {
+      await FirebaseFirestore.instance.collection('horaires').add(horaire.toMap());
+    } catch (e) {
+      print('Error adding horaire: $e');
+    }
+  }
+  
   Future<bool> addOrUpdate(String collection, Map<String, dynamic> data) async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {

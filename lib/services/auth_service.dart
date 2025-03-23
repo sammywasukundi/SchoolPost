@@ -19,15 +19,15 @@ class AuthService {
     String? field,
   }) async {
     try {
-      // Create user in Firebase Authentication with email and password
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
       );
+      String uid = userCredential.user!.uid;
 
       // Save additional user data (name, role) in Firestore
-      await _firestore.collection('users').doc(userCredential.user!.uid).set({
+      await _firestore.collection('users').doc(uid).set({
+        'uid': uid,
         'name': name.trim(),
         'postname': postname.trim(),
         'institution': institution.trim(),
@@ -36,12 +36,12 @@ class AuthService {
         'field': field?.trim(),
         //'imageUrl': imageUrl,
         'email': email.trim(),
-        'role': role, // Role determines if user is Admin or User
+        'role': role, // Admin or User
       });
 
-      return null; // Success: no error message
+      return null; 
     } catch (e) {
-      return e.toString(); // Error: return the exception message
+      return e.toString(); 
     }
   }
 

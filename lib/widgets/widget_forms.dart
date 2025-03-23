@@ -2,15 +2,33 @@
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:school_post/models/horaire_model.dart';
 import 'package:school_post/models/other_classes/institution_data.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/view/drawer/account_view.dart';
 import 'package:school_post/widgets/widget_list.dart';
 
+import '../services/firestore_service.dart';
+
 class FormHoraire {
-  static final String _selectedPromotion =
-      InstitutionData.promotions.keys.first;
+  //static final String _selectedPromotion = InstitutionData.promotions.keys.first;
+
+  final _formKey = GlobalKey<FormState>();
+  String? _selectedEtat;
+  String? _selectedCours;
+  final _dateDebut = TextEditingController();
+  final _dateFin = TextEditingController();
+  String? _selectedPromotion;
+  final _enseignantController = TextEditingController();
+
+  Future<void> save(Horaire horaire) async {
+    try {
+      await FirestoreService().addHoraire(horaire);
+    } catch (e) {
+      print('Error adding horaire: $e');
+    }
+  }
 
   void showFormHoraire(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -37,12 +55,57 @@ class FormHoraire {
                         onPressed: () {
                           MyListWidget().ListHoraire(context);
                         },
-                        icon: Icon(Icons.list_alt_outlined,color: blueColor,),
+                        icon: Icon(
+                          Icons.list_alt_outlined,
+                          color: blueColor,
+                        ),
                       ),
                     ],
                   ),
                   SizedBox(height: 16),
-                  TextField(
+                  Form(
+                    key: _formKey,
+                    child: DropdownButtonFormField<String>(
+                      value: _selectedEtat,
+                      decoration: InputDecoration(
+                        labelText: 'Etat',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
+                        fillColor: whiteColor,
+                        filled: true,
+                      ),
+                      items: <String>["pre-programmé", "A-programmer"]
+                          .map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        // Handle promotion selection
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  TextFormField(
+                    controller: _enseignantController,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                        hintText: "Enseignant du cours",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          borderSide: BorderSide.none,
+                        ),
+                        hoverColor: blackColor,
+                        fillColor: whiteColor,
+                        filled: true,
+                        prefixIcon: Icon(Icons.person_outlined)),
+                  ),
+                  SizedBox(height: 15),
+                  TextFormField(
+                    controller: _dateDebut,
                     keyboardType: TextInputType.datetime,
                     decoration: InputDecoration(
                         hintText: "Date de début",
@@ -67,7 +130,8 @@ class FormHoraire {
                     },
                   ),
                   const SizedBox(height: 15),
-                  TextField(
+                  TextFormField(
+                    controller: _dateFin,
                     keyboardType: TextInputType.datetime,
                     decoration: InputDecoration(
                         hintText: "Date de fin",
@@ -93,6 +157,7 @@ class FormHoraire {
                   ),
                   SizedBox(height: 15),
                   DropdownButtonFormField<String>(
+                    value: _selectedPromotion,
                     decoration: InputDecoration(
                       labelText: 'Promotion',
                       border: OutlineInputBorder(
@@ -102,7 +167,8 @@ class FormHoraire {
                       fillColor: whiteColor,
                       filled: true,
                     ),
-                    items: InstitutionData.promotions[_selectedPromotion]!
+                    items: InstitutionData.promotions[_selectedPromotion ??
+                            InstitutionData.promotions.keys.first]!
                         .map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -115,6 +181,7 @@ class FormHoraire {
                   ),
                   SizedBox(height: 16),
                   DropdownButtonFormField<String>(
+                    value: _selectedCours,
                     decoration: InputDecoration(
                       labelText: 'Cours',
                       border: OutlineInputBorder(
@@ -142,8 +209,17 @@ class FormHoraire {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          showQuestion(context, 'Enregistrement',
-                              'Voulez-vous vraiment enregistrer ces informations ?');
+                          if (_formKey.currentState!.validate()) {
+                            final horaire = Horaire.withParam(
+                              id: '',
+                              etat: _selectedEtat ?? '',
+                              dateDebut: DateTime.parse(_dateDebut.text),
+                              dateFin: DateTime.parse(_dateFin.text),
+                              enseignant: _enseignantController.text,
+                              cours: _selectedCours ?? '',
+                            );
+                            save(horaire);
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 15),
@@ -192,7 +268,10 @@ class FormHoraire {
                       onPressed: () {
                         MyListWidget().ListCours(context);
                       },
-                      icon: Icon(Icons.list_alt_outlined,color: blueColor,),
+                      icon: Icon(
+                        Icons.list_alt_outlined,
+                        color: blueColor,
+                      ),
                     ),
                   ],
                 ),
@@ -287,7 +366,10 @@ class FormHoraire {
                       onPressed: () {
                         MyListWidget().ListUE(context);
                       },
-                      icon: Icon(Icons.list_alt_outlined,color: blueColor,),
+                      icon: Icon(
+                        Icons.list_alt_outlined,
+                        color: blueColor,
+                      ),
                     ),
                   ],
                 ),
@@ -375,7 +457,10 @@ class FormHoraire {
                       onPressed: () {
                         MyListWidget().ListSalle(context);
                       },
-                      icon: Icon(Icons.list_alt_outlined,color: blueColor,),
+                      icon: Icon(
+                        Icons.list_alt_outlined,
+                        color: blueColor,
+                      ),
                     ),
                   ],
                 ),
@@ -551,7 +636,8 @@ class FormHoraire {
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: Colors.transparent, // Set the fill color of the TextField
+                  fillColor:
+                      Colors.transparent, // Set the fill color of the TextField
                   hintText: 'Rechercher',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),

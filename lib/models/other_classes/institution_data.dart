@@ -30,4 +30,8 @@ class InstitutionData {
     "Laboratoire": ["L1", "L2", "L3", "M1", "M2"],
     "Imagerie Médicale": ["L1", "L2", "L3", "M1", "M2"],
   };
+
+  static const Map<String, List<String>> etat = {
+    "Etat": ["pre-programmé", "A-programmer"],
+  };
 }
