@@ -2,6 +2,7 @@
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:school_post/models/horaire_model.dart';
 import 'package:school_post/models/other_classes/institution_data.dart';
 import 'package:school_post/theme/app_colors.dart';
@@ -29,6 +30,21 @@ class FormHoraire {
       print('Error adding horaire: $e');
     }
   }
+
+  // Future<void> _selectDate(BuildContext context, DateTime? initialDate,
+  //     Function(DateTime?) onDateSelected) async {
+  //   final DateTime? picked = await showDatePicker(
+  //     context: context,
+  //     initialDate: initialDate ?? DateTime.now(),
+  //     firstDate: DateTime(2000),
+  //     lastDate: DateTime(2101),
+  //   );
+  //   if (picked != null && picked != initialDate) {
+  //     setState(() {
+  //       onDateSelected(picked);
+  //     });
+  //   }
+  // }
 
   void showFormHoraire(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -206,20 +222,21 @@ class FormHoraire {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 15.0),
                     child: SizedBox(
-                      width: double.infinity,
+                      width: double.infinity, 
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             final horaire = Horaire.withParam(
                               id: '',
                               etat: _selectedEtat ?? '',
-                              dateDebut: DateTime.parse(_dateDebut.text),
-                              dateFin: DateTime.parse(_dateFin.text),
+                              dateDebut: DateFormat('yyyy-MM-dd').parse(_dateDebut.text),
+                              dateFin: DateFormat('yyyy-MM-dd').parse(_dateFin.text),
                               enseignant: _enseignantController.text,
                               cours: _selectedCours ?? '',
                             );
                             save(horaire);
-                          }
+                          };
+                          showSuccess(context, "Succès", "Enregistrement avec réussi avec succès");
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 15),
