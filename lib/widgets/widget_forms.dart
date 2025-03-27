@@ -31,20 +31,6 @@ class FormHoraire {
     }
   }
 
-  // Future<void> _selectDate(BuildContext context, DateTime? initialDate,
-  //     Function(DateTime?) onDateSelected) async {
-  //   final DateTime? picked = await showDatePicker(
-  //     context: context,
-  //     initialDate: initialDate ?? DateTime.now(),
-  //     firstDate: DateTime(2000),
-  //     lastDate: DateTime(2101),
-  //   );
-  //   if (picked != null && picked != initialDate) {
-  //     setState(() {
-  //       onDateSelected(picked);
-  //     });
-  //   }
-  // }
 
   void showFormHoraire(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
