@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_load_kit/flutter_load_kit.dart';
 import 'package:school_post/theme/app_colors.dart';
-
 import 'auth/login_view.dart';
 
 class SplashScreen extends StatefulWidget {

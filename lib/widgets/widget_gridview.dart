@@ -7,10 +7,10 @@ Widget buildButtonBudget(BuildContext context, IconData icon, String label,
     {VoidCallback? onTap}) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
-      shadowColor: blackColor,
-      elevation: 2.0,
+      shadowColor: blueColor,
+      elevation: 5.0,
       padding: EdgeInsets.all(20),
-      backgroundColor: whiteColor,
+      backgroundColor: blueColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
       ),
@@ -22,13 +22,14 @@ Widget buildButtonBudget(BuildContext context, IconData icon, String label,
         Icon(
           icon,
           size: 32,
-          color: blueColor,
+          color: whiteColor,
         ),
         SizedBox(height: 10),
         Text(label,
+        textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14,
-              color: blueColor,
+              color: whiteColor,
             )),
       ],
     ),

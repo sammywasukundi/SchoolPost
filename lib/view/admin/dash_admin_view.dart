@@ -6,6 +6,7 @@ import 'package:school_post/widgets/widget_filiere.dart';
 import 'package:school_post/widgets/widget_gridview.dart';
 import 'package:school_post/widgets/widget_institution.dart';
 import 'package:school_post/widgets/widget_promotion.dart';
+import 'package:school_post/widgets/widget_publication.dart';
 
 class DashAdminView extends StatefulWidget {
   const DashAdminView({super.key});
@@ -17,21 +18,21 @@ class DashAdminView extends StatefulWidget {
 class _AddScrennState extends State<DashAdminView> {
   final List<MenuItem> menuItems = [
     MenuItem(
-      icon: Icons.schedule_outlined,
+      icon: Icons.people_outline,
       text: 'Promotion',
       onTap: (BuildContext context) {
         FormPromotion().showFormPromotion(context);
       },
     ),
     MenuItem(
-      icon: Icons.book_outlined,
+      icon: Icons.class_outlined,
       text: 'Filière',
       onTap: (BuildContext context) {
         FormFiliere().showFormFiliere(context);
       },
     ),
     MenuItem(
-      icon: Icons.school_outlined,
+      icon: Icons.domain_outlined,
       text: 'Domaine',
       onTap: (BuildContext context) {
         FormDomaine().showFormDomaine(context);
@@ -45,15 +46,29 @@ class _AddScrennState extends State<DashAdminView> {
       },
     ),
     MenuItem(
-      icon: Icons.domain_outlined,
+      icon: Icons.date_range_outlined,
       text: 'Année Académique',
       onTap: (BuildContext context) {
         FormAnneeAcademique().showFormAnnee(context);
       },
     ),
     MenuItem(
-      icon: Icons.add_outlined,
+      icon: Icons.post_add_outlined,
       text: 'Publication',
+      onTap: (BuildContext context) {
+        FormPublication().showFormPublication(context);
+      },
+    ),
+    MenuItem(
+      icon: Icons.type_specimen_outlined,
+      text: 'Type de publication',
+      onTap: (BuildContext context) {
+        
+      },
+    ),
+    MenuItem(
+      icon: Icons.comment_outlined,
+      text: 'Type de commentaire',
       onTap: (BuildContext context) {
         
       },
@@ -64,12 +79,12 @@ class _AddScrennState extends State<DashAdminView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 50.0,horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(vertical: 45.0,horizontal: 15.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 20.0,
-            mainAxisSpacing: 20.0,
+            crossAxisSpacing: 8.0,
+            mainAxisSpacing: 8.0,
           ),
           itemCount: menuItems.length,
           itemBuilder: (context, index) {
