@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school_post/widgets/post_widget.dart';
 
 class DashScreen extends StatefulWidget {
   const DashScreen({super.key});
@@ -10,6 +11,14 @@ class DashScreen extends StatefulWidget {
 class _DashScreenState extends State<DashScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: SingleChildScrollView(
+          child: Column(
+            children: [
+              PostWidget(),
+            ],
+          ),
+        ),
+    );
   }
 }
