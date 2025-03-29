@@ -69,7 +69,7 @@ class _WidgetListAnneeState extends State<WidgetListAnnee> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            FormAnneeAcademique().showFormAnnee(context);
+                            FormAnneeAcademique().showFormAnnee(context, annee: annee);
                           },
                           leading: Icon(Icons.edit),
                           title: Text("Modifier"),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/view/admin/dash_admin_view.dart';
+import 'package:school_post/view/admin/permission_view.dart';
 import 'package:school_post/view/bottom_nav/add_view.dart';
 import 'package:school_post/view/bottom_nav/communicate_view.dart';
 import 'package:school_post/view/bottom_nav/dash_view.dart';
@@ -210,7 +211,7 @@ class _AdminScreenState extends State<AdminScreen> {
   final List<Widget> _children = [
     const DashScreen(),
     const DashAdminView(),
-    const CommunicateScreen()
+    const PermissionView()
   ];
 
   @override
@@ -287,7 +288,7 @@ class _AdminScreenState extends State<AdminScreen> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.comment_outlined),
+                leading: const Icon(Icons.admin_panel_settings_outlined),
                 title: const Text('Permissions'),
                 onTap: () {
                   setState(() {
@@ -332,7 +333,7 @@ class _AdminScreenState extends State<AdminScreen> {
           items: [
             _bottomNavItem(Icons.home_outlined, 'Accueil'),
             _bottomNavItem(Icons.settings_accessibility_outlined, 'Paremètres'),
-            _bottomNavItem(Icons.comment_outlined, 'Communications')
+            _bottomNavItem(Icons.admin_panel_settings_outlined, 'Permissions')
           ],
           onTap: onTabTapped,
         ),
