@@ -72,6 +72,13 @@ class InputFieldState extends State<InputField> {
           builder: (_) => const UserScreen(),
         ),
       );
+    } else if (_emailController.text =='administrateur@gmail.com' && _passwordController.text == 'administrateur') {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const AdminScreen(),
+        ),
+      );
     } else {
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       //   content: Text('Login Failed: $result'), // Show error message

@@ -18,6 +18,13 @@ class DashAdminView extends StatefulWidget {
 class _AddScrennState extends State<DashAdminView> {
   final List<MenuItem> menuItems = [
     MenuItem(
+      icon: Icons.date_range_outlined,
+      text: 'Année Académique',
+      onTap: (BuildContext context) {
+        FormAnneeAcademique().showFormAnnee(context);
+      },
+    ),
+    MenuItem(
       icon: Icons.people_outline,
       text: 'Promotion',
       onTap: (BuildContext context) {
@@ -43,13 +50,6 @@ class _AddScrennState extends State<DashAdminView> {
       text: 'Institution',
       onTap: (BuildContext context) {
         FormInstitution().showFormInstitution(context);
-      },
-    ),
-    MenuItem(
-      icon: Icons.date_range_outlined,
-      text: 'Année Académique',
-      onTap: (BuildContext context) {
-        FormAnneeAcademique().showFormAnnee(context);
       },
     ),
     MenuItem(
@@ -79,18 +79,19 @@ class _AddScrennState extends State<DashAdminView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 45.0,horizontal: 15.0),
+        padding: const EdgeInsets.all(10.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
+            crossAxisSpacing: 6.0,
+            mainAxisSpacing: 6.0,
+            childAspectRatio: 1.25, // Adjust the aspect ratio to reduce size
           ),
           itemCount: menuItems.length,
           itemBuilder: (context, index) {
             final item = menuItems[index];
             return buildButtonBudget(context, item.icon, item.text,
-                onTap: () => item.onTap(context));
+          onTap: () => item.onTap(context));
           },
         ),
       ),

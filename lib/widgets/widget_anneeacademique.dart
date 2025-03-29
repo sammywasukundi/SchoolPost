@@ -1,12 +1,48 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:school_post/models/AnneeAcadem_model.dart';
 import 'package:school_post/theme/app_dialog.dart';
-import 'package:school_post/widgets/widget_list.dart';
+import 'package:school_post/theme/app_requirements.dart';
+import 'package:school_post/widgets/widget_list_annee.dart';
 
 import '../theme/app_colors.dart';
 
 class FormAnneeAcademique {
   final _formKey = GlobalKey<FormState>();
-  final _nomfiliereController = TextEditingController();
+  final _libelleController = TextEditingController();
+  final _dateDebutController = TextEditingController();
+  final _dateFinController = TextEditingController();
+
+  Future<void> ajouterAnneeAcademique(BuildContext context) async {
+    if (_libelleController.text.isEmpty ||
+        _dateDebutController.text.isEmpty ||
+        _dateFinController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Veuillez remplir tous les champs.")),
+      );
+      return;
+    }
+
+    try {
+      String id =
+          FirebaseFirestore.instance.collection('anneeAcadems').doc().id;
+      AnneeAcadem anneeAcademique = AnneeAcadem(
+        idAnne: id,
+        Libelle: _libelleController.text,
+        DateDebut: _dateDebutController.text,
+        DateFin: _dateFinController.text,
+      );
+      await AnneeAcadem.create(anneeAcademique);
+      if (context.mounted) {
+          showSuccess(
+              context, "Succès", "Année académique enregistrée avec succès");
+
+      }
+    } catch (e) {
+      showError(context, 'Erreur lors de l\'enregistrement', "${e.toString()}");
+      Navigator.pop(context);
+    }
+  }
 
   void showFormAnnee(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -24,16 +60,21 @@ class FormAnneeAcademique {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Ajouter une année académique',
+                              'Année académique',
                               style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w500,
                                   color: blueColor),
                             ),
                             IconButton(
-                              onPressed: () {
-                                MyListWidget().ListHoraire(context);
-                              },
+                                onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                  builder: (context) => WidgetListAnnee(),
+                                  ),
+                                );
+                                },
                               icon: Icon(
                                 Icons.list_alt_outlined,
                                 color: blueColor,
@@ -42,21 +83,27 @@ class FormAnneeAcademique {
                           ],
                         ),
                         TextFormField(
-                          controller: _nomfiliereController,
+                          controller: _libelleController,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                              hintText: "Année académique",
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(18),
-                                borderSide: BorderSide.none,
-                              ),
-                              hoverColor: blackColor,
-                              fillColor: whiteColor,
-                              filled: true,
-                              prefixIcon: Icon(Icons.person_outlined)),
+                            hintText: "Année académique",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
+                              borderSide: BorderSide.none,
+                            ),
+                            hoverColor: blackColor,
+                            fillColor: whiteColor,
+                            filled: true,
+                            prefixIcon: Icon(Icons.person_outlined),
+                          ),
+                          validator: (val) => uValidator(
+                            value: val,
+                            isRequired: true,
+                          ),
                         ),
                         SizedBox(height: 16),
                         TextFormField(
+                          controller: _dateDebutController,
                           decoration: InputDecoration(
                             labelText: 'Date de début',
                             border: OutlineInputBorder(
@@ -76,12 +123,15 @@ class FormAnneeAcademique {
                               lastDate: DateTime(2100),
                             );
                             if (pickedDate != null) {
-                              // Handle the selected date
+                              String formattedDate =
+                                  "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+                              _dateDebutController.text = formattedDate;
                             }
                           },
                         ),
                         SizedBox(height: 16),
                         TextFormField(
+                          controller: _dateFinController,
                           decoration: InputDecoration(
                             labelText: 'Date de fin',
                             border: OutlineInputBorder(
@@ -101,7 +151,9 @@ class FormAnneeAcademique {
                               lastDate: DateTime(2100),
                             );
                             if (pickedDate != null) {
-                              // Handle the selected date
+                              String formattedDate =
+                                  "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+                              _dateFinController.text = formattedDate;
                             }
                           },
                         ),
@@ -112,8 +164,11 @@ class FormAnneeAcademique {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                showSuccess(context, "Succès",
-                                    "Enregistrement avec réussi avec succès");
+                                if (_formKey.currentState == null ||
+                                    !_formKey.currentState!.validate()) {
+                                  return;
+                                }
+                                ajouterAnneeAcademique(context);
                               },
                               style: ElevatedButton.styleFrom(
                                 padding:

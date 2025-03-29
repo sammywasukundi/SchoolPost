@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_dialog.dart';
-import 'package:school_post/widgets/widget_list.dart';
 
 import '../theme/app_colors.dart';
 

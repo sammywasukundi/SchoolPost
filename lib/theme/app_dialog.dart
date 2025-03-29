@@ -25,7 +25,7 @@ void showSuccess(BuildContext? context, String title, String content) {
     btnOk: TextButton(
       onPressed: () {
         Navigator.pop(context);
-      },
+            },
       child: Text(
         "Ok",
         style: TextStyle(color: Colors.green.shade500, fontWeight: FontWeight.w600),
@@ -79,21 +79,44 @@ void showQuestion(BuildContext context, String title, String content) {
         style: TextStyle(color: blackColor, fontWeight: FontWeight.w600),
       ),
     ),
-    btnOk: TextButton(
-      onPressed: () {
-        _authService.signOut();
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => const LoginScreen(),
-          ),
+    btnOk: StatefulBuilder(
+      builder: (context, setState) {
+        bool isLoading = false;
+        return StatefulBuilder(
+          builder: (context, innerSetState) {
+            return TextButton(
+              onPressed: () async {
+                innerSetState(() {
+                  isLoading = true;
+                });
+                await Future.delayed(Duration(seconds: 2)); // Simulate delay
+                _authService.signOut();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const LoginScreen(),
+                  ),
+                );
+              },
+              child: isLoading
+                  ? SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(
+                        color: blueColor,
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : Text(
+                      "Oui",
+                      style: TextStyle(
+                          color: Colors.orange[500],
+                          fontWeight: FontWeight.w600),
+                    ),
+            );
+          },
         );
       },
-      child: Text(
-        "Oui",
-        style:
-            TextStyle(color: Colors.orange[500], fontWeight: FontWeight.w600),
-      ),
     ),
   ).show();
 }
