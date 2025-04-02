@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
-import 'package:school_post/view/bottom_nav/add_view.dart';
 import 'package:school_post/widgets/comment_sheet.dart'; // Ajoute cette ligne
 
 class PostWidget extends StatelessWidget {
@@ -55,14 +54,7 @@ class PostWidget extends StatelessWidget {
 
             // IMAGE DU POST
             GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddScrenn(),
-                  ),
-                );
-              },
+              onTap: () {},
               child: Container(
                 height: 300,
                 decoration: BoxDecoration(

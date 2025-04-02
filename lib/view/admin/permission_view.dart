@@ -12,32 +12,18 @@ class PermissionView extends StatefulWidget {
 class _PermissionViewState extends State<PermissionView> {
   final List<MenuPermission> menuPermissions = [
     MenuPermission(
-      icon: Icons.verified_user_outlined,
+      icon: Icons.supervised_user_circle_outlined,
       text: 'Types d\'utilisateurs',
       onTap: (BuildContext context) {
         WidgetPermission(context);
       }
     ),
     MenuPermission(
-      icon: Icons.key_off_outlined,
-      text: 'Accorder les permissions aux utilisateurs',
+      icon: Icons.comment_outlined,
+      text: 'Commentaire',
       onTap: (BuildContext context) {
-        WidgetPermission(context);
-      }
-    ),
-    MenuPermission(
-      icon: Icons.key_off_outlined,
-      text: 'Accorder les permissions aux utilisateurs',
-      onTap: (BuildContext context) {
-        WidgetPermission(context);
-      }
-    ),
-    MenuPermission(
-      icon: Icons.key_off_outlined,
-      text: 'Accorder les permissions aux utilisateurs',
-      onTap: (BuildContext context) {
-        WidgetPermission(context);
-      }
+        
+      },
     ),
   ];
   @override

@@ -7,6 +7,7 @@ import 'package:school_post/widgets/widget_gridview.dart';
 import 'package:school_post/widgets/widget_institution.dart';
 import 'package:school_post/widgets/widget_promotion.dart';
 import 'package:school_post/widgets/widget_publication.dart';
+import 'package:school_post/widgets/widget_type_pub.dart';
 
 class DashAdminView extends StatefulWidget {
   const DashAdminView({super.key});
@@ -63,14 +64,7 @@ class _AddScrennState extends State<DashAdminView> {
       icon: Icons.type_specimen_outlined,
       text: 'Type de publication',
       onTap: (BuildContext context) {
-        
-      },
-    ),
-    MenuItem(
-      icon: Icons.comment_outlined,
-      text: 'Type de commentaire',
-      onTap: (BuildContext context) {
-        
+        FormTypePub().showFormTypePub(context);
       },
     ),
   ];
