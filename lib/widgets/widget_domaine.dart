@@ -1,14 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:school_post/models/domaine_model.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/widgets/widget_list.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FormDomaine {
   final _nomdomaineController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String? _selectedInstitution;
 
-  void showFormDomaine(BuildContext context) {
+Future<void> ajouterDomaine(BuildContext context) async {
+    if (_nomdomaineController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Veuillez remplir tous les champs.")),
+      );
+      return;
+    }
+
+    try {
+      String id = FirebaseFirestore.instance.collection('domaines').doc().id;
+      Domaine domaine = Domaine(
+        idDomne: id,
+        nomDomne: _nomdomaineController.text,
+        idInstitution: _selectedInstitution,
+       
+      );
+      await Domaine.create(domaine);
+      if (context.mounted) {
+        showSuccess(
+            context, "Succès", "domaine enregistrée avec succès");
+      }
+    } catch (e) {
+      showError(context, 'Erreur lors de l\'enregistrement', "${e.toString()}");
+      Navigator.pop(context);
+    }
+  }
+
+  Future<void> modifierDomaine(BuildContext context, String id) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('domaines')
+          .doc(id)
+          .update({
+        'nomDomne': _nomdomaineController.text,
+        'idInstitution': _selectedInstitution,
+       
+      });
+
+      if (context.mounted) {
+        //Navigator.pop(context);
+        showSuccess(context, "Succès", "informations sur le Domaine modifiées avec succès");
+      }
+    } catch (e) {
+      showError(context, 'Erreur', "Modification échouée: ${e.toString()}");
+    }
+  }
+
+  void showFormDomaine(BuildContext context,{Domaine? nomDomne}) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showModalBottomSheet(
         context: context,
@@ -85,8 +134,18 @@ class FormDomaine {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                showSuccess(context, "Succès",
-                                    "Enregistrement avec réussi avec succès");
+                                  if (_formKey.currentState == null ||
+                                      !_formKey.currentState!.validate()) {
+                                    return;
+                                  }
+                              
+                                  if (nomDomne== null) {
+                                    ajouterDomaine(context);
+                                  } else {
+                                    modifierDomaine(context, nomDomne.nomDomne);
+                                  }
+                                // showSuccess(context, "Succès",
+                                //     "Enregistrement avec réussi avec succès");
                               },
                               style: ElevatedButton.styleFrom(
                                 padding:
@@ -97,7 +156,7 @@ class FormDomaine {
                                 ),
                               ),
                               child: Text(
-                                "Ajouter",
+                                nomDomne == null ? "Ajouter" : "Modifier",
                                 style: TextStyle(color: whiteColor),
                               ),
                             ),

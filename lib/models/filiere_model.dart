@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Filiere {
   String idFlre;
-  String idDomaine;
+  String? idDomaine;
   String Libelle;
 
   Filiere({

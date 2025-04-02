@@ -24,8 +24,7 @@ class FormAnneeAcademique {
     }
 
     try {
-      String id =
-          FirebaseFirestore.instance.collection('anneeAcadems').doc().id;
+      String id = FirebaseFirestore.instance.collection('anneeAcadems').doc().id;
       AnneeAcadem anneeAcademique = AnneeAcadem(
         idAnne: id,
         Libelle: _libelleController.text,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:school_post/models/filiere_model.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:school_post/widgets/widget_list.dart';
 
 class FormFiliere {
@@ -8,7 +10,51 @@ class FormFiliere {
   final _nomfiliereController = TextEditingController();
   String? _selectedDomaine;
 
-  void showFormFiliere(BuildContext context) {
+Future<void> ajouterFiliere(BuildContext context) async {
+    if (_nomfiliereController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Veuillez remplir tous les champs.")),
+      );
+      return;
+    }
+
+    try {
+      String id = FirebaseFirestore.instance.collection('filieres').doc().id;
+      Filiere filiere = Filiere(
+        idFlre: id,
+        idDomaine:_selectedDomaine ,
+        Libelle:_nomfiliereController.text,
+      );
+      await Filiere.create(filiere);
+      if (context.mounted) {
+        showSuccess(
+            context, "Succès", "Institution enregistrée avec succès");
+      }
+    } catch (e) {
+      showError(context, 'Erreur lors de l\'enregistrement', "${e.toString()}");
+      Navigator.pop(context);
+    }
+  }
+
+  Future<void> modifierFiliere(BuildContext context, String id) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('filieres')
+          .doc(id)
+          .update({
+        'Libelle': _nomfiliereController.text,
+        'idDomaine': _selectedDomaine, 
+      });
+
+      if (context.mounted) {
+        //Navigator.pop(context);
+        showSuccess(context, "Succès", "informations sur l'institution  modifiées avec succès");
+      }
+    } catch (e) {
+      showError(context, 'Erreur', "Modification échouée: ${e.toString()}");
+    }
+  }
+  void showFormFiliere(BuildContext context,{Filiere? Libelle}){
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showModalBottomSheet(
         context: context,
@@ -85,8 +131,16 @@ class FormFiliere {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                showSuccess(context, "Succès",
-                                    "Enregistrement avec réussi avec succès");
+                                if (_formKey.currentState == null ||
+                                      !_formKey.currentState!.validate()) {
+                                    return;
+                                  }
+                              
+                                  if (Libelle== null) {
+                                    ajouterFiliere(context);
+                                  } else {
+                                    modifierFiliere(context, Libelle.Libelle);
+                                  }
                               },
                               style: ElevatedButton.styleFrom(
                                 padding:
@@ -97,7 +151,7 @@ class FormFiliere {
                                 ),
                               ),
                               child: Text(
-                                "Ajouter",
+                                Libelle== null ? "Ajouter" : "Modifier",
                                 style: TextStyle(color: whiteColor),
                               ),
                             ),

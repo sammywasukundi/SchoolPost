@@ -2,23 +2,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Domaine {
   String idDomne;
-  String idInstitution;
+  String nomDomne;
+  String? idInstitution;
 
 
   Domaine({
     required this.idDomne,
     required this.idInstitution,
+    required this.nomDomne,
     
   });
 
   Domaine.empty()
       : idDomne = '',
+        nomDomne = '',
         idInstitution = '';
         
         
   Map<String, dynamic> toMap() {
     return {
       'idDomne': idDomne,
+      'nomDomne': nomDomne,
       'idInstitution': idInstitution,
       
     };
@@ -27,6 +31,7 @@ class Domaine {
   factory Domaine.fromMap(Map<String, dynamic> map) {
     return Domaine(
       idDomne: map['idFlre'],
+      nomDomne: map['nomDomne'],
       idInstitution: map['idDomaine'],
 
     );

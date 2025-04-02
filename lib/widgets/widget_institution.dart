@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:school_post/models/institution_model.dart';
 import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/widgets/widget_list.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../theme/app_colors.dart';
 
@@ -10,7 +12,51 @@ class FormInstitution {
   final _formKey = GlobalKey<FormState>();
   final _nominstitutionController = TextEditingController();
 
-  void showFormInstitution(BuildContext context) {
+Future<void> ajouterInstitution(BuildContext context) async {
+    if (_nominstitutionController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Veuillez remplir tous les champs.")),
+      );
+      return;
+    }
+
+    try {
+      String id = FirebaseFirestore.instance.collection('institutions').doc().id;
+      Institution institution = Institution(
+        idInst: id,
+        Libelle: _nominstitutionController.text,
+      );
+      await Institution.create(institution);
+      if (context.mounted) {
+        showSuccess(
+            context, "Succès", "Institution enregistrée avec succès");
+      }
+    } catch (e) {
+      showError(context, 'Erreur lors de l\'enregistrement', "${e.toString()}");
+      Navigator.pop(context);
+    }
+  }
+
+  Future<void> modifierInstitution(BuildContext context, String id) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('institutions')
+          .doc(id)
+          .update({
+        'Libelle': _nominstitutionController.text,
+     
+       
+      });
+
+      if (context.mounted) {
+        //Navigator.pop(context);
+        showSuccess(context, "Succès", "informations sur l'institution  modifiées avec succès");
+      }
+    } catch (e) {
+      showError(context, 'Erreur', "Modification échouée: ${e.toString()}");
+    }
+  }
+  void showFormInstitution(BuildContext context,{Institution? libelle}) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showModalBottomSheet(
         context: context,
@@ -64,8 +110,16 @@ class FormInstitution {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                showSuccess(context, "Succès",
-                                    "Enregistrement avec réussi avec succès");
+                                if (_formKey.currentState == null ||
+                                      !_formKey.currentState!.validate()) {
+                                    return;
+                                  }
+                              
+                                  if (libelle== null) {
+                                    ajouterInstitution(context);
+                                  } else {
+                                    modifierInstitution(context, libelle.Libelle);
+                                  }
                               },
                               style: ElevatedButton.styleFrom(
                                 padding:
@@ -76,7 +130,7 @@ class FormInstitution {
                                 ),
                               ),
                               child: Text(
-                                "Ajouter",
+                                libelle== null ? "Ajouter" : "Modifier",
                                 style: TextStyle(color: whiteColor),
                               ),
                             ),
@@ -85,7 +139,7 @@ class FormInstitution {
                       ],
                     ))),
           );
-        },
+        },                                                                                                                                                                
       );
     });
   }
