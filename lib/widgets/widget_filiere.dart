@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
-import 'package:school_post/widgets/widget_list.dart';
+import 'package:school_post/widgets/widget_list_filiere.dart';
 
 class FormFiliere {
   final _formKey = GlobalKey<FormState>();
@@ -32,7 +32,7 @@ class FormFiliere {
                             ),
                             IconButton(
                               onPressed: () {
-                                MyListWidget().ListHoraire(context);
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => WidgetListFiliere()));
                               },
                               icon: Icon(
                                 Icons.list_alt_outlined,
@@ -45,7 +45,7 @@ class FormFiliere {
                           controller: _nomfiliereController,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                              hintText: "Nom de la promotion",
+                              hintText: "Nom de la filière",
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18),
                                 borderSide: BorderSide.none,
@@ -59,7 +59,7 @@ class FormFiliere {
                         DropdownButtonFormField<String>(
                           value: _selectedDomaine,
                           decoration: InputDecoration(
-                            labelText: 'Filière',
+                            labelText: 'Domaine',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide.none,

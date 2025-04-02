@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
-import 'package:school_post/widgets/widget_list.dart';
+import 'package:school_post/widgets/widget_list_promotion.dart';
 
 class FormPromotion {
   final _formKey = GlobalKey<FormState>();
@@ -32,7 +32,11 @@ class FormPromotion {
                             ),
                             IconButton(
                               onPressed: () {
-                                MyListWidget().ListHoraire(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            WidgetListPromotion()));
                               },
                               icon: Icon(
                                 Icons.list_alt_outlined,

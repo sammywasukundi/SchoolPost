@@ -2,25 +2,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Domaine {
   String idDomne;
+  String Libelle;
   String idInstitution;
-
 
   Domaine({
     required this.idDomne,
+    required this.Libelle,
     required this.idInstitution,
-    
   });
 
   Domaine.empty()
       : idDomne = '',
+        Libelle = '',
         idInstitution = '';
-        
-        
+
   Map<String, dynamic> toMap() {
     return {
       'idDomne': idDomne,
       'idInstitution': idInstitution,
-      
+      'Libelle': Libelle
     };
   }
 
@@ -28,7 +28,7 @@ class Domaine {
     return Domaine(
       idDomne: map['idFlre'],
       idInstitution: map['idDomaine'],
-
+      Libelle: map['Libelle'],
     );
   }
 
@@ -59,6 +59,3 @@ class Domaine {
     await FirebaseFirestore.instance.collection('domaines').doc(id).delete();
   }
 }
-
-
-

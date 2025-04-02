@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_dialog.dart';
-import 'package:school_post/widgets/widget_list.dart';
+import 'package:school_post/widgets/widget_list_institution.dart';
 
 import '../theme/app_colors.dart';
 
@@ -34,7 +34,7 @@ class FormInstitution {
                             ),
                             IconButton(
                               onPressed: () {
-                                MyListWidget().ListHoraire(context);
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => WidgetListInstitution()));
                               },
                               icon: Icon(
                                 Icons.list_alt_outlined,
