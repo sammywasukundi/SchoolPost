@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:school_post/models/publication_model.dart';
 import 'package:school_post/theme/app_dialog.dart';
 
 import '../theme/app_colors.dart';
@@ -10,10 +11,66 @@ class FormPublication {
   DateTime? _dateEnregistrement;
   DateTime? _dateDebut;
   DateTime? _dateFin;
+  String? File;
   String? _typePublication;
-  String? _typePortee;
+  String? _Portee;
   bool _isArchive = false;
   String? _typeCommentaire;
+
+Future<void> ajouterPublication(BuildContext context) async {
+    if (_titreController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Veuillez remplir tous les champs.")),
+      );
+      return;
+    }
+    try {
+      String id = FirebaseFirestore.instance.collection('publications').doc().id;
+      Publication publication = Publication(
+        idPublication: id,
+        Titre: _titreController.text,
+        Contenu: _contenuController.text,
+        File: File,
+        idType: _typePublication,
+        Date: _dateEnregistrement,
+        DateDebut: _dateDebut,
+        DateFin: _dateFin,
+        idPortee: _Portee,
+        Archive: _isArchive,
+        Typecommentaire: _typeCommentaire,
+
+        
+      );
+      await Publication.create(publication);
+      if (context.mounted) {
+        showSuccess(
+            context, "Succès", "publication enregistrée avec succès");
+      }
+    } catch (e) {
+      showError(context, 'Erreur lors de l\'enregistrement', "${e.toString()}");
+      Navigator.pop(context);
+    }
+  }
+
+  Future<void> modifierPublication(BuildContext context, String id) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('publications')
+          .doc(id)
+          .update({
+        'Titre': _titreController.text,
+
+       
+      });
+
+      if (context.mounted) {
+        //Navigator.pop(context);
+        showSuccess(context, "Succès", "informations sur la publication  modifiées avec succès");
+      }
+    } catch (e) {
+      showError(context, 'Erreur', "Modification échouée: ${e.toString()}");
+    }
+  }
 
   void showFormPublication(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
