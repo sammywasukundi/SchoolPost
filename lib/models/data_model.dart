@@ -26,6 +26,8 @@ class Institution {
     required this.nomInst,
     required this.fileAvatar,
   });
+
+  static fromMap(Map<String, dynamic> data) {}
 }
 
 

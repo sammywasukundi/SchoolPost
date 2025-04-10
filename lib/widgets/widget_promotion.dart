@@ -1,14 +1,62 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
-import 'package:school_post/widgets/widget_list.dart';
+import 'package:school_post/widgets/widget_list_promotion.dart';
+import 'package:school_post/models/promotion_model.dart';
 
 class FormPromotion {
   final _formKey = GlobalKey<FormState>();
   String? _selectedFiliere;
   final _nompromotionController = TextEditingController();
 
-  void showFormPromotion(BuildContext context) {
+  Future<void> ajouterPromotion(BuildContext context) async {
+    if (_nompromotionController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Veuillez remplir tous les champs.")),
+      );
+      return;
+    }
+
+    try {
+      String id = FirebaseFirestore.instance.collection('promotions').doc().id;
+      Promotion promotion = Promotion(
+        idProm: id,
+        idFiliere: _selectedFiliere,
+        Libelle: _nompromotionController.text,
+      );
+      await Promotion.create(promotion);
+      if (context.mounted) {
+        showSuccess(
+            context, "Succès", "Ptromotion enregistrée avec succès");
+      }
+    } catch (e) {
+      showError(context, 'Erreur lors de l\'enregistrement', "${e.toString()}");
+      Navigator.pop(context);
+    }
+  }
+
+  Future<void> modifierPromotion(BuildContext context, String id) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('promotions')
+          .doc(id)
+          .update({
+        'Libelle': _nompromotionController.text,
+     
+       
+      });
+
+      if (context.mounted) {
+        //Navigator.pop(context);
+        showSuccess(context, "Succès", "informations sur la promotion  modifiées avec succès");
+      }
+    } catch (e) {
+      showError(context, 'Erreur', "Modification échouée: ${e.toString()}");
+    }
+  }
+
+  void showFormPromotion(BuildContext context,{Promotion? Libelle}) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showModalBottomSheet(
         context: context,
@@ -32,7 +80,11 @@ class FormPromotion {
                             ),
                             IconButton(
                               onPressed: () {
-                                MyListWidget().ListHoraire(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            WidgetListPromotion()));
                               },
                               icon: Icon(
                                 Icons.list_alt_outlined,
@@ -85,8 +137,15 @@ class FormPromotion {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                showSuccess(context, "Succès",
-                                    "Enregistrement avec réussi avec succès");
+                                if (_formKey.currentState == null ||
+                                      !_formKey.currentState!.validate()) {
+                                    return;
+                                  }
+                                  if (Libelle== null) {
+                                    ajouterPromotion(context);
+                                  } else {
+                                    modifierPromotion(context, Libelle.Libelle);
+                                  }
                               },
                               style: ElevatedButton.styleFrom(
                                 padding:
@@ -97,7 +156,7 @@ class FormPromotion {
                                 ),
                               ),
                               child: Text(
-                                "Ajouter",
+                                Libelle== null ? "Ajouter" : "Modifier",
                                 style: TextStyle(color: whiteColor),
                               ),
                             ),

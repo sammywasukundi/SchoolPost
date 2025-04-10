@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:school_post/models/institution_model.dart';
 import 'package:school_post/theme/app_dialog.dart';
-import 'package:school_post/widgets/widget_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:school_post/widgets/widget_list_institution.dart';
 import '../theme/app_colors.dart';
 
 class FormInstitution {
-
 
   final _formKey = GlobalKey<FormState>();
   final _nominstitutionController = TextEditingController();
@@ -80,7 +78,7 @@ Future<void> ajouterInstitution(BuildContext context) async {
                             ),
                             IconButton(
                               onPressed: () {
-                                MyListWidget().ListHoraire(context);
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => WidgetListInstitution()));
                               },
                               icon: Icon(
                                 Icons.list_alt_outlined,

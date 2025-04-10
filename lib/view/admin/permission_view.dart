@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:school_post/widgets/widget_gridview.dart';
+import 'package:school_post/widgets/widget_permission.dart';
 
 class PermissionView extends StatefulWidget {
   const PermissionView({super.key});
@@ -8,20 +10,67 @@ class PermissionView extends StatefulWidget {
 }
 
 class _PermissionViewState extends State<PermissionView> {
+  final List<MenuPermission> menuPermissions = [
+    MenuPermission(
+      icon: Icons.verified_user_outlined,
+      text: 'Types d\'utilisateurs',
+      onTap: (BuildContext context) {
+        WidgetPermission(context);
+      }
+    ),
+    MenuPermission(
+      icon: Icons.key_off_outlined,
+      text: 'Accorder les permissions aux utilisateurs',
+      onTap: (BuildContext context) {
+        WidgetPermission(context);
+      }
+    ),
+    MenuPermission(
+      icon: Icons.key_off_outlined,
+      text: 'Accorder les permissions aux utilisateurs',
+      onTap: (BuildContext context) {
+        WidgetPermission(context);
+      }
+    ),
+    MenuPermission(
+      icon: Icons.key_off_outlined,
+      text: 'Accorder les permissions aux utilisateurs',
+      onTap: (BuildContext context) {
+        WidgetPermission(context);
+      }
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Permissions'),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-      ),
-      body: Center(
-        child: Text(
-          'Gestion des permissions',
-          style: TextStyle(fontSize: 24, color: Colors.blue),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 6.0,
+            mainAxisSpacing: 6.0,
+            childAspectRatio: 1.15, // Adjust the aspect ratio to reduce size
+          ),
+          itemCount: menuPermissions.length,
+          itemBuilder: (context, index) {
+            final item = menuPermissions[index];
+            return buildButtonBudget(context, item.icon, item.text,
+          onTap: () => item.onTap(context));
+          },
         ),
       ),
     );
   }
+}
+
+class MenuPermission {
+  final IconData icon;
+  final String text;
+  final Function(BuildContext) onTap;
+  MenuPermission({
+    required this.icon,
+    required this.text,
+    required this.onTap,
+  });
 }
