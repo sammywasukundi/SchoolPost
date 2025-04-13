@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Promotion {
   String idProm;
-  String idFiliere;
+  String? idFiliere;
   String Libelle;
 
   Promotion({

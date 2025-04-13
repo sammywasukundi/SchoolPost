@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:school_post/models/data_model.dart';
+import 'package:school_post/models/institution_model.dart';
 import 'package:school_post/theme/app_colors.dart';
+import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/widgets/widget_institution.dart';
 
 class WidgetListInstitution extends StatefulWidget {
@@ -29,7 +30,8 @@ class _WidgetListInstitutionState extends State<WidgetListInstitution> {
         iconTheme: IconThemeData(color: blueColor),
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('institutions').snapshots(),
+        stream:
+            FirebaseFirestore.instance.collection('institutions').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -44,7 +46,7 @@ class _WidgetListInstitutionState extends State<WidgetListInstitution> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var doc = snapshot.data!.docs[index];
-              var nomInstitution =
+              var institutions =
                   Institution.fromMap(doc.data() as Map<String, dynamic>);
 
               return Card(
@@ -57,10 +59,11 @@ class _WidgetListInstitutionState extends State<WidgetListInstitution> {
                 elevation: 0.5,
                 child: ListTile(
                   title: Text(
-                    nomInstitution.Libelle,
+                    institutions.Libelle,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
-                  subtitle: Text('L\'institution peut être modifée ou supprimée'),
+                  subtitle:
+                      Text('L\'institution peut être modifée ou supprimée'),
                   trailing: PopupMenuButton(
                     icon: const Icon(Icons.more_vert),
                     itemBuilder: (context) => [
@@ -69,7 +72,7 @@ class _WidgetListInstitutionState extends State<WidgetListInstitution> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            FormInstitution().showFormInstitution(context);
+                            FormInstitution().showFormInstitution(context, institutions: institutions);
                           },
                           leading: Icon(Icons.edit),
                           title: Text("Modifier"),
@@ -80,7 +83,7 @@ class _WidgetListInstitutionState extends State<WidgetListInstitution> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            //_deleteAnnee(annee.idAnne);
+                            _deleteInstitution(institutions.idInst);
                           },
                           leading: Icon(Icons.delete, color: Colors.red),
                           title: Text("Supprimer"),
@@ -96,4 +99,14 @@ class _WidgetListInstitutionState extends State<WidgetListInstitution> {
       ),
     );
   }
+
+  void _deleteInstitution(String id) async {
+      await FirebaseFirestore.instance
+          .collection('institutions')
+          .doc(id)
+          .delete();
+      if (mounted) {
+        showSuccess(context, 'Suppression', 'Année supprimée avec succès');
+      }
+    }
 }

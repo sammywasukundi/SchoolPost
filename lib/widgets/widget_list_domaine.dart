@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:school_post/models/domaine_model.dart';
 import 'package:school_post/theme/app_colors.dart';
+import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/widgets/widget_domaine.dart';
 
 class WidgetListDomaine extends StatefulWidget {
@@ -44,7 +45,7 @@ class _WidgetListDomaineState extends State<WidgetListDomaine> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var doc = snapshot.data!.docs[index];
-              var nomDomaine =
+              var domaine =
                   Domaine.fromMap(doc.data() as Map<String, dynamic>);
 
               return Card(
@@ -57,10 +58,10 @@ class _WidgetListDomaineState extends State<WidgetListDomaine> {
                 elevation: 0.5,
                 child: ListTile(
                   title: Text(
-                    nomDomaine.Libelle,
+                    domaine.nomDomne,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
-                  subtitle: Text('Le domaine peut être modifée ou supprimée'),
+                  subtitle: Text(domaine.idInstitution ?? ''),
                   trailing: PopupMenuButton(
                     icon: const Icon(Icons.more_vert),
                     itemBuilder: (context) => [
@@ -69,7 +70,7 @@ class _WidgetListDomaineState extends State<WidgetListDomaine> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            FormDomaine().showFormDomaine(context);
+                            FormDomaine().showFormDomaine(context,domaine:domaine);
                           },
                           leading: Icon(Icons.edit),
                           title: Text("Modifier"),
@@ -80,7 +81,7 @@ class _WidgetListDomaineState extends State<WidgetListDomaine> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            //_deleteAnnee(annee.idAnne);
+                              _deleteDomaine(domaine.idDomne);
                           },
                           leading: Icon(Icons.delete, color: Colors.red),
                           title: Text("Supprimer"),
@@ -95,5 +96,12 @@ class _WidgetListDomaineState extends State<WidgetListDomaine> {
         },
       ),
     );
+  }
+
+  void _deleteDomaine(String id) async {
+    await FirebaseFirestore.instance.collection('domaines').doc(id).delete();
+    if (mounted) {
+      showSuccess(context, "Suppression", "Domaine supprimé avec succès");
+    }
   }
 }

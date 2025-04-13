@@ -1,16 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:school_post/models/institution_model.dart';
 import 'package:school_post/theme/app_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:school_post/theme/app_requirements.dart';
 import 'package:school_post/widgets/widget_list_institution.dart';
-
 import '../theme/app_colors.dart';
 
 class FormInstitution {
-
-
   final _formKey = GlobalKey<FormState>();
   final _nominstitutionController = TextEditingController();
 
-  void showFormInstitution(BuildContext context) {
+  Future<void> ajouterInstitution(BuildContext context) async {
+    if (_nominstitutionController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Veuillez remplir tous les champs.")),
+      );
+      return;
+    }
+
+    try {
+      String id =
+          FirebaseFirestore.instance.collection('institutions').doc().id;
+      Institution institution = Institution(
+        idInst: id,
+        Libelle: _nominstitutionController.text,
+      );
+      await Institution.create(institution);
+      if (context.mounted) {
+        showSuccess(context, "Succès", "Institution enregistrée avec succès");
+      }
+    } catch (e) {
+      showError(context, 'Erreur lors de l\'enregistrement', "${e.toString()}");
+      Navigator.pop(context);
+    }
+  }
+
+  Future<void> modifierInstitution(BuildContext context, String id) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('institutions')
+          .doc(id)
+          .update({
+        'Libelle': _nominstitutionController.text.trim(),
+      });
+
+      if (context.mounted) {
+        showSuccess(context, "Succès",
+            "Informations sur l'institution modifiées avec succès");
+      }
+    } catch (e) {
+      showError(context, 'Erreur', "Modification échouée: ${e.toString()}");
+    }
+  }
+
+  void showFormInstitution(BuildContext context, {Institution? institutions}) {
+    if (institutions != null) {
+      _nominstitutionController.text = institutions.Libelle;
+    } else {
+      _nominstitutionController.clear();
+      
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showModalBottomSheet(
         context: context,
@@ -26,7 +75,9 @@ class FormInstitution {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Ajouter une institution',
+                              institutions == null
+                                  ? 'Ajouter une institution'
+                                  : 'Modifier l\' institution',
                               style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w500,
@@ -34,7 +85,11 @@ class FormInstitution {
                             ),
                             IconButton(
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => WidgetListInstitution()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            WidgetListInstitution()));
                               },
                               icon: Icon(
                                 Icons.list_alt_outlined,
@@ -56,6 +111,10 @@ class FormInstitution {
                               fillColor: whiteColor,
                               filled: true,
                               prefixIcon: Icon(Icons.person_outlined)),
+                          validator: (val) => uValidator(
+                            value: val,
+                            isRequired: true,
+                          ),
                         ),
                         SizedBox(height: 16),
                         Padding(
@@ -64,8 +123,16 @@ class FormInstitution {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                showSuccess(context, "Succès",
-                                    "Enregistrement avec réussi avec succès");
+                                if (_formKey.currentState == null ||
+                                    !_formKey.currentState!.validate()) {
+                                  return;
+                                }
+
+                                if (institutions == null) {
+                                  ajouterInstitution(context);
+                                } else {
+                                  modifierInstitution(context, institutions.idInst);
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                 padding:
@@ -76,7 +143,7 @@ class FormInstitution {
                                 ),
                               ),
                               child: Text(
-                                "Ajouter",
+                                institutions == null ? "Ajouter" : "Modifier",
                                 style: TextStyle(color: whiteColor),
                               ),
                             ),
@@ -89,5 +156,4 @@ class FormInstitution {
       );
     });
   }
-
 }
