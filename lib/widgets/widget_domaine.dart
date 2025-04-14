@@ -64,7 +64,7 @@ Future<void> ajouterDomaine(BuildContext context) async {
       _selectedInstitution = domaine.idInstitution;
     } else {
       _nomdomaineController.clear();
-      _selectedInstitution;
+      _selectedInstitution = null;
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showModalBottomSheet(

@@ -3,6 +3,7 @@ import 'package:school_post/models/filiere_model.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:school_post/theme/app_requirements.dart';
 import 'package:school_post/widgets/widget_list_filiere.dart';
 
 class FormFiliere {
@@ -55,6 +56,13 @@ Future<void> ajouterFiliere(BuildContext context) async {
     }
   }
   void showFormFiliere(BuildContext context,{Filiere? Libelle}){
+    if (Libelle != null) {
+      _nomfiliereController.text = Libelle.Libelle;
+      _selectedDomaine = Libelle.idDomaine;
+    } else {
+      _nomfiliereController.clear();
+      _selectedDomaine = null;
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showModalBottomSheet(
         context: context,
@@ -70,7 +78,10 @@ Future<void> ajouterFiliere(BuildContext context) async {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Ajouter une filière',
+                              Libelle == null
+                                ? 'Ajouter une filière'
+                                : 'Modifeir la filière',
+                              
                               style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w500,
@@ -100,28 +111,48 @@ Future<void> ajouterFiliere(BuildContext context) async {
                               fillColor: whiteColor,
                               filled: true,
                               prefixIcon: Icon(Icons.person_outlined)),
+                              validator: (val) => uValidator(
+                                value: val,
+                                isRequired: true
+                              ),
                         ),
                         SizedBox(height: 16),
-                        DropdownButtonFormField<String>(
-                          value: _selectedDomaine,
-                          decoration: InputDecoration(
-                            labelText: 'Domaine',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
-                            ),
-                            fillColor: whiteColor,
-                            filled: true,
-                          ),
-                          items: <String>["pre-programmé", "A-programmer"]
-                              .map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            // Handle promotion selection
+                        FutureBuilder<QuerySnapshot>(
+                          future: FirebaseFirestore.instance.collection('filieres').get(),
+                          builder: (context, filieres) {
+                            if (filieres.connectionState == ConnectionState.waiting) {
+                              return CircularProgressIndicator(
+                                color: blueColor,
+                                strokeWidth: 2.0,
+                              );
+                            } else if (filieres.hasError) {
+                              return Text('Erreur de chargement des domaines');
+                            } else if (!filieres.hasData || filieres.data!.docs.isEmpty) {
+                              return Text('Aucun domaine trouvé');
+                            } else {
+                              List<DropdownMenuItem<String>> items = filieres.data!.docs.map((doc) {
+                                return DropdownMenuItem(
+                                  value: doc.id,
+                                  child: Text(doc['Libelle'] ?? 'sans nom'),
+                                );
+                              }).toList();
+                              return DropdownButtonFormField<String>(
+                                value: _selectedDomaine,
+                                decoration: InputDecoration(
+                                  labelText: 'Domaine',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  fillColor: whiteColor,
+                                  filled: true,
+                                ),
+                                items: items,
+                                onChanged: (String? newValue) {
+                                  _selectedDomaine = newValue;
+                                },
+                              );
+                            }
                           },
                         ),
                         SizedBox(height: 16),

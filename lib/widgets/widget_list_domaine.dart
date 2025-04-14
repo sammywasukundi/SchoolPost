@@ -61,7 +61,7 @@ class _WidgetListDomaineState extends State<WidgetListDomaine> {
                     domaine.nomDomne,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
-                  subtitle: Text(domaine.idInstitution ?? ''),
+                  subtitle: Text(domaine.idInstitution ?? 'Institution inconnue'),
                   trailing: PopupMenuButton(
                     icon: const Icon(Icons.more_vert),
                     itemBuilder: (context) => [

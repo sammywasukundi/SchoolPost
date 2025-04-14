@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:school_post/models/filiere_model.dart';
 import 'package:school_post/theme/app_colors.dart';
+import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/widgets/widget_filiere.dart';
 
 class WidgetListFiliere extends StatefulWidget {
@@ -44,9 +45,8 @@ class _WidgetListFiliereState extends State<WidgetListFiliere> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var doc = snapshot.data!.docs[index];
-              var nomFiliere =
+              var filiere =
                   Filiere.fromMap(doc.data() as Map<String, dynamic>);
-
               return Card(
                 color: greyColor,
                 shadowColor: blackColor,
@@ -57,7 +57,7 @@ class _WidgetListFiliereState extends State<WidgetListFiliere> {
                 elevation: 0.5,
                 child: ListTile(
                   title: Text(
-                    nomFiliere.Libelle,
+                    filiere.Libelle,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   subtitle: Text('La filière peut être modifée ou supprimée'),
@@ -69,7 +69,7 @@ class _WidgetListFiliereState extends State<WidgetListFiliere> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            FormFiliere().showFormFiliere(context);
+                            FormFiliere().showFormFiliere(context, Libelle: filiere);
                           },
                           leading: Icon(Icons.edit),
                           title: Text("Modifier"),
@@ -80,7 +80,7 @@ class _WidgetListFiliereState extends State<WidgetListFiliere> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            //_deleteAnnee(annee.idAnne);
+                            _deleteFiliere(filiere.idFlre);
                           },
                           leading: Icon(Icons.delete, color: Colors.red),
                           title: Text("Supprimer"),
@@ -95,5 +95,15 @@ class _WidgetListFiliereState extends State<WidgetListFiliere> {
         },
       ),
     );
+  }
+
+  void _deleteFiliere(String id) async {
+      await FirebaseFirestore.instance
+          .collection('filieres')
+          .doc(id)
+          .delete();
+      if (mounted) {
+        showSuccess(context, "Suppression", "Filière supprimée avec succès");
+      }
   }
 }

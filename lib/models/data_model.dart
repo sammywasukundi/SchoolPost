@@ -17,18 +17,5 @@ class Superadmin {
 }
 
 
-// class Institution {
-//   int? id;
-//   String nomInst;
-//   String fileAvatar;
-
-//   Institution({
-//     this.id,
-//     required this.nomInst,
-//     required this.fileAvatar,
-//   });
-
-//   static fromMap(Map<String, dynamic> data) {}
-// }
 
 
