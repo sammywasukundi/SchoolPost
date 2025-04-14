@@ -98,10 +98,7 @@ class _WidgetListAnneeState extends State<WidgetListAnnee> {
   }
 
   void _deleteAnnee(String id) async {
-    await FirebaseFirestore.instance
-        .collection('anneeAcadems')
-        .doc(id)
-        .delete();
+    await AnneeAcadem.delete(id);
     if (mounted) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Année supprimée avec succès')));

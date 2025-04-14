@@ -98,10 +98,7 @@ class _WidgetListFiliereState extends State<WidgetListFiliere> {
   }
 
   void _deleteFiliere(String id) async {
-      await FirebaseFirestore.instance
-          .collection('filieres')
-          .doc(id)
-          .delete();
+      await Filiere.delete(id);
       if (mounted) {
         showSuccess(context, "Suppression", "Filière supprimée avec succès");
       }

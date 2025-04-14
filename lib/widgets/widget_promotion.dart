@@ -27,8 +27,7 @@ class FormPromotion {
       );
       await Promotion.create(promotion);
       if (context.mounted) {
-        showSuccess(
-            context, "Succès", "Ptromotion enregistrée avec succès");
+        showSuccess(context, "Succès", "Ptromotion enregistrée avec succès");
       }
     } catch (e) {
       showError(context, 'Erreur lors de l\'enregistrement', "${e.toString()}");
@@ -38,25 +37,28 @@ class FormPromotion {
 
   Future<void> modifierPromotion(BuildContext context, String id) async {
     try {
-      await FirebaseFirestore.instance
-          .collection('promotions')
-          .doc(id)
-          .update({
+      await FirebaseFirestore.instance.collection('promotions').doc(id).update({
         'Libelle': _nompromotionController.text,
-     
-       
       });
 
       if (context.mounted) {
         //Navigator.pop(context);
-        showSuccess(context, "Succès", "informations sur la promotion  modifiées avec succès");
+        showSuccess(context, "Succès",
+            "informations sur la promotion  modifiées avec succès");
       }
     } catch (e) {
       showError(context, 'Erreur', "Modification échouée: ${e.toString()}");
     }
   }
 
-  void showFormPromotion(BuildContext context,{Promotion? Libelle}) {
+  void showFormPromotion(BuildContext context, {Promotion? promotion}) {
+    if (promotion != null) {
+      _nompromotionController.text = promotion.Libelle;
+      _selectedFiliere = promotion.idFiliere;
+    } else {
+      _nompromotionController.clear();
+      _selectedFiliere = null;
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showModalBottomSheet(
         context: context,
@@ -138,14 +140,14 @@ class FormPromotion {
                             child: ElevatedButton(
                               onPressed: () {
                                 if (_formKey.currentState == null ||
-                                      !_formKey.currentState!.validate()) {
-                                    return;
-                                  }
-                                  if (Libelle== null) {
-                                    ajouterPromotion(context);
-                                  } else {
-                                    modifierPromotion(context, Libelle.Libelle);
-                                  }
+                                    !_formKey.currentState!.validate()) {
+                                  return;
+                                }
+                                if (promotion == null) {
+                                  ajouterPromotion(context);
+                                } else {
+                                  modifierPromotion(context, promotion.Libelle);
+                                }
                               },
                               style: ElevatedButton.styleFrom(
                                 padding:
@@ -156,7 +158,7 @@ class FormPromotion {
                                 ),
                               ),
                               child: Text(
-                                Libelle== null ? "Ajouter" : "Modifier",
+                                promotion == null ? "Ajouter" : "Modifier",
                                 style: TextStyle(color: whiteColor),
                               ),
                             ),

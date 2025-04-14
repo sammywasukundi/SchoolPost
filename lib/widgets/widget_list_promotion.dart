@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:school_post/models/promotion_model.dart';
 import 'package:school_post/theme/app_colors.dart';
+import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/widgets/widget_promotion.dart';
 
 class WidgetListPromotion extends StatefulWidget {
@@ -71,7 +72,7 @@ class _WidgetListPromotionState extends State<WidgetListPromotion> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            FormPromotion().showFormPromotion(context);
+                            FormPromotion().showFormPromotion(context, promotion: nomPromotion);
                           },
                           leading: Icon(Icons.edit),
                           title: Text("Modifier"),
@@ -82,7 +83,7 @@ class _WidgetListPromotionState extends State<WidgetListPromotion> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            //_deleteAnnee(annee.idAnne);
+                            _deletePromotion(nomPromotion.idProm);
                           },
                           leading: Icon(Icons.delete, color: Colors.red),
                           title: Text("Supprimer"),
@@ -97,5 +98,13 @@ class _WidgetListPromotionState extends State<WidgetListPromotion> {
         },
       ),
     );
+  }
+  void _deletePromotion(String id) async {
+    try {
+      await Promotion.delete(id);
+      showSuccess(context, "Succès", "Promotion supprimée avec succès");
+    } catch (e) {
+      showError(context, 'Erreur', "Suppression échouée: ${e.toString()}");
+    }
   }
 }

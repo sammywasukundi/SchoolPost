@@ -99,7 +99,7 @@ class _WidgetListDomaineState extends State<WidgetListDomaine> {
   }
 
   void _deleteDomaine(String id) async {
-    await FirebaseFirestore.instance.collection('domaines').doc(id).delete();
+    await Domaine.delete(id);
     if (mounted) {
       showSuccess(context, "Suppression", "Domaine supprimé avec succès");
     }

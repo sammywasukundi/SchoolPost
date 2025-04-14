@@ -101,10 +101,7 @@ class _WidgetListInstitutionState extends State<WidgetListInstitution> {
   }
 
   void _deleteInstitution(String id) async {
-      await FirebaseFirestore.instance
-          .collection('institutions')
-          .doc(id)
-          .delete();
+      await Institution.delete(id);
       if (mounted) {
         showSuccess(context, 'Suppression', 'Année supprimée avec succès');
       }
