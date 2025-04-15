@@ -4,12 +4,13 @@ import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:school_post/theme/app_requirements.dart';
-import 'package:school_post/widgets/widget_list_domaine.dart';
+import 'package:school_post/widgets/widget_lists/widget_list_domaine.dart';
 
 class FormDomaine {
   final _nomdomaineController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();  
   String? _selectedInstitution;
+  String? nomInstitution;
 
 Future<void> ajouterDomaine(BuildContext context) async {
     if (_nomdomaineController.text.isEmpty) {
@@ -25,6 +26,7 @@ Future<void> ajouterDomaine(BuildContext context) async {
         idDomne: id,
         nomDomne: _nomdomaineController.text,
         idInstitution: _selectedInstitution,
+        nomInstitution: nomInstitution ?? '',
        
       );
       await Domaine.create(domaine);
@@ -46,6 +48,7 @@ Future<void> ajouterDomaine(BuildContext context) async {
           .update({
         'nomDomne': _nomdomaineController.text.trim(),
         'idInstitution': _selectedInstitution,
+        'nomInstitution': nomInstitution
        
       });
 
@@ -177,7 +180,7 @@ Future<void> ajouterDomaine(BuildContext context) async {
                                   if (domaine== null) {
                                     ajouterDomaine(context);
                                   } else {
-                                    modifierDomaine(context, domaine.nomDomne);
+                                    modifierDomaine(context, domaine.idDomne);
                                   }
                                 // showSuccess(context, "Succès",
                                 //     "Enregistrement avec réussi avec succès");

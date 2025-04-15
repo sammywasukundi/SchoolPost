@@ -4,25 +4,27 @@ class Domaine {
   String idDomne;
   String? idInstitution;
   String nomDomne;
-
+  String nomInstitution;
 
   Domaine({
     required this.idDomne,
     required this.nomDomne,
     required this.idInstitution,
-    
+    required this.nomInstitution
   });
 
   Domaine.empty()
       : idDomne = '',
         nomDomne = '',
-        idInstitution = '';
+        idInstitution = '',
+        nomInstitution = '';
 
   Map<String, dynamic> toMap() {
     return {
       'idDomne': idDomne,
       'nomDomne': nomDomne,
       'idInstitution': idInstitution,
+      'nomInstitution': nomInstitution
       
     };
   }
@@ -32,6 +34,7 @@ class Domaine {
       idDomne: map['idDomne'],
       nomDomne: map['nomDomne'],
       idInstitution: map['idInst'],
+      nomInstitution: map['nomInstitution'] ?? '',
      
     );
   }

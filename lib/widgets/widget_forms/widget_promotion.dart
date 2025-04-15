@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/theme/app_requirements.dart';
-import 'package:school_post/widgets/widget_list_promotion.dart';
+import 'package:school_post/widgets/widget_lists/widget_list_promotion.dart';
 import 'package:school_post/models/promotion_model.dart';
 
 class FormPromotion {
@@ -20,7 +20,7 @@ class FormPromotion {
     }
 
     try {
-      String id = FirebaseFirestore.instance.collection('promotions').doc().id;
+      String id = FirebaseFirestore.instance.collection('filières').doc().id;
       Promotion promotion = Promotion(
         idProm: id,
         idFiliere: _selectedFiliere,
@@ -117,30 +117,8 @@ class FormPromotion {
                               ),
                         ),
                         SizedBox(height: 16),
-                        // DropdownButtonFormField<String>(
-                        //   value: _selectedFiliere,
-                        //   decoration: InputDecoration(
-                        //     labelText: 'Filière',
-                        //     border: OutlineInputBorder(
-                        //       borderRadius: BorderRadius.circular(12),
-                        //       borderSide: BorderSide.none,
-                        //     ),
-                        //     fillColor: whiteColor,
-                        //     filled: true,
-                        //   ),
-                        //   items: <String>["pre-programmé", "A-programmer"]
-                        //       .map((String value) {
-                        //     return DropdownMenuItem<String>(
-                        //       value: value,
-                        //       child: Text(value),
-                        //     );
-                        //   }).toList(),
-                        //   onChanged: (String? newValue) {
-                        //     // Handle promotion selection
-                        //   },
-                        // ),
                         FutureBuilder<QuerySnapshot>(
-                          future: FirebaseFirestore.instance.collection('promotions').get(),
+                          future: FirebaseFirestore.instance.collection('filieres').get(),
                           builder: (context, promotion) {
                             if (promotion.connectionState == ConnectionState.waiting) {
                               return CircularProgressIndicator(
@@ -148,9 +126,9 @@ class FormPromotion {
                                 strokeWidth: 2.0,
                               );
                             } else if (promotion.hasError) {
-                              return Text('Erreur de chargement des promotions');
+                              return Text('Erreur de chargement des filières');
                             } else if (!promotion.hasData || promotion.data!.docs.isEmpty) {
-                              return Text('Aucune promotion trouvée');
+                              return Text('Aucune filière trouvée');
                             } else {
                               List<DropdownMenuItem<String>> items = promotion.data!.docs
                                   .map((doc) {
@@ -193,7 +171,7 @@ class FormPromotion {
                                 if (promotion == null) {
                                   ajouterPromotion(context);
                                 } else {
-                                  modifierPromotion(context, promotion.Libelle);
+                                  modifierPromotion(context, promotion.idProm);
                                 }
                               },
                               style: ElevatedButton.styleFrom(

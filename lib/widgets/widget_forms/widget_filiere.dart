@@ -4,7 +4,8 @@ import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:school_post/theme/app_requirements.dart';
-import 'package:school_post/widgets/widget_list_filiere.dart';
+
+import 'package:school_post/widgets/widget_lists/widget_list_filiere.dart';
 
 class FormFiliere {
   final _formKey = GlobalKey<FormState>();
@@ -118,7 +119,7 @@ Future<void> ajouterFiliere(BuildContext context) async {
                         ),
                         SizedBox(height: 16),
                         FutureBuilder<QuerySnapshot>(
-                          future: FirebaseFirestore.instance.collection('filieres').get(),
+                          future: FirebaseFirestore.instance.collection('domaines').get(),
                           builder: (context, filieres) {
                             if (filieres.connectionState == ConnectionState.waiting) {
                               return CircularProgressIndicator(
@@ -133,7 +134,7 @@ Future<void> ajouterFiliere(BuildContext context) async {
                               List<DropdownMenuItem<String>> items = filieres.data!.docs.map((doc) {
                                 return DropdownMenuItem(
                                   value: doc.id,
-                                  child: Text(doc['Libelle'] ?? 'sans nom'),
+                                  child: Text(doc['nomDomne'] ?? 'sans nom'),
                                 );
                               }).toList();
                               return DropdownButtonFormField<String>(
@@ -170,7 +171,7 @@ Future<void> ajouterFiliere(BuildContext context) async {
                                   if (Libelle== null) {
                                     ajouterFiliere(context);
                                   } else {
-                                    modifierFiliere(context, Libelle.Libelle);
+                                    modifierFiliere(context, Libelle.idFlre);
                                   }
                               },
                               style: ElevatedButton.styleFrom(

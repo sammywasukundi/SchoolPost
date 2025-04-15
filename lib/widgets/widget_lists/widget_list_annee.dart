@@ -1,24 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:school_post/models/promotion_model.dart';
+import 'package:school_post/models/AnneeAcadem_model.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
-import 'package:school_post/widgets/widget_promotion.dart';
+import 'package:school_post/widgets/widget_forms/widget_anneeacademique.dart';
 
-class WidgetListPromotion extends StatefulWidget {
-  const WidgetListPromotion({super.key});
+class WidgetListAnnee extends StatefulWidget {
+  const WidgetListAnnee({super.key});
 
   @override
-  State<WidgetListPromotion> createState() => _WidgetListPromotionState();
+  State<WidgetListAnnee> createState() => _WidgetListAnneeState();
 }
 
-class _WidgetListPromotionState extends State<WidgetListPromotion> {
+class _WidgetListAnneeState extends State<WidgetListAnnee> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Listes des promotions',
+          'Listes d\'années académiques',
           style: TextStyle(
             color: blueColor,
             fontSize: 24.0,
@@ -31,23 +31,20 @@ class _WidgetListPromotionState extends State<WidgetListPromotion> {
       ),
       body: StreamBuilder(
         stream:
-            FirebaseFirestore.instance.collection('promotions').snapshots(),
+            FirebaseFirestore.instance.collection('anneeAcadems').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-                child: CircularProgressIndicator(
-              color: blueColor,
-            ));
+            return Center(child: CircularProgressIndicator(color: blueColor,));
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(child: Text('Aucune promotion disponible.'));
+            return Center(child: Text('Aucune année académique disponible.'));
           }
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var doc = snapshot.data!.docs[index];
-              var nomPromotion =
-                  Promotion.fromMap(doc.data() as Map<String, dynamic>);
+              var annee =
+                  AnneeAcadem.fromMap(doc.data() as Map<String, dynamic>);
 
               return Card(
                 color: greyColor,
@@ -59,11 +56,11 @@ class _WidgetListPromotionState extends State<WidgetListPromotion> {
                 elevation: 0.5,
                 child: ListTile(
                   title: Text(
-                    nomPromotion.Libelle,
+                    annee.Libelle,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   subtitle:
-                      Text('La promotion peut être modifée ou supprimée'),
+                      Text('Début: ${annee.DateDebut} - Fin: ${annee.DateFin}'),
                   trailing: PopupMenuButton(
                     icon: const Icon(Icons.more_vert),
                     itemBuilder: (context) => [
@@ -72,7 +69,7 @@ class _WidgetListPromotionState extends State<WidgetListPromotion> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            FormPromotion().showFormPromotion(context, promotion: nomPromotion);
+                            FormAnneeAcademique().showFormAnnee(context, annee: annee);
                           },
                           leading: Icon(Icons.edit),
                           title: Text("Modifier"),
@@ -83,7 +80,7 @@ class _WidgetListPromotionState extends State<WidgetListPromotion> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            _deletePromotion(nomPromotion.idProm);
+                            _deleteAnnee(annee.idAnne);
                           },
                           leading: Icon(Icons.delete, color: Colors.red),
                           title: Text("Supprimer"),
@@ -99,12 +96,13 @@ class _WidgetListPromotionState extends State<WidgetListPromotion> {
       ),
     );
   }
-  void _deletePromotion(String id) async {
-    try {
-      await Promotion.delete(id);
-      showSuccess(context, "Succès", "Promotion supprimée avec succès");
-    } catch (e) {
-      showError(context, 'Erreur', "Suppression échouée: ${e.toString()}");
+
+  void _deleteAnnee(String id) async {
+    await AnneeAcadem.delete(id);
+    if (mounted) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Année supprimée avec succès')));
+      showSuccess(context, 'Suppression', 'Année supprimée avec succès');
     }
   }
 }

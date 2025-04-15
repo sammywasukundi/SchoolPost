@@ -1,11 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:school_post/widgets/widget_anneeacademique.dart';
-import 'package:school_post/widgets/widget_domaine.dart';
-import 'package:school_post/widgets/widget_filiere.dart';
+import 'package:school_post/widgets/widget_forms/widget_anneeacademique.dart';
+import 'package:school_post/widgets/widget_forms/widget_domaine.dart';
+import 'package:school_post/widgets/widget_forms/widget_filiere.dart';
 import 'package:school_post/widgets/widget_gridview.dart';
-import 'package:school_post/widgets/widget_institution.dart';
-import 'package:school_post/widgets/widget_promotion.dart';
+import 'package:school_post/widgets/widget_forms/widget_institution.dart';
+import 'package:school_post/widgets/widget_forms/widget_promotion.dart';
 import 'package:school_post/widgets/widget_publication.dart';
 import 'package:school_post/widgets/widget_type_pub.dart';
 

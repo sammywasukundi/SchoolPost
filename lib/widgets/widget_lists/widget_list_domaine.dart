@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:school_post/models/domaine_model.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
-import 'package:school_post/widgets/widget_domaine.dart';
+import 'package:school_post/widgets/widget_forms/widget_domaine.dart';
 
 class WidgetListDomaine extends StatefulWidget {
   const WidgetListDomaine({super.key});
@@ -61,7 +61,10 @@ class _WidgetListDomaineState extends State<WidgetListDomaine> {
                     domaine.nomDomne,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
-                  subtitle: Text(domaine.idInstitution ?? 'Institution inconnue'),
+                  subtitle: Text(
+                    //domaine.nomInstitution
+                    'domaine de ${domaine.nomInstitution}',
+                  ),
                   trailing: PopupMenuButton(
                     icon: const Icon(Icons.more_vert),
                     itemBuilder: (context) => [

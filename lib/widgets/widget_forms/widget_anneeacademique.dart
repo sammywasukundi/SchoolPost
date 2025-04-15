@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:school_post/models/AnneeAcadem_model.dart';
 import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/theme/app_requirements.dart';
-import 'package:school_post/widgets/widget_list_annee.dart';
-
-import '../theme/app_colors.dart';
+import 'package:school_post/widgets/widget_lists/widget_list_annee.dart';
+import '../../theme/app_colors.dart';
 
 class FormAnneeAcademique {
   final _formKey = GlobalKey<FormState>();

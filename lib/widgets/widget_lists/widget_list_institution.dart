@@ -1,24 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:school_post/models/filiere_model.dart';
+import 'package:school_post/models/institution_model.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
-import 'package:school_post/widgets/widget_filiere.dart';
+import 'package:school_post/widgets/widget_forms/widget_institution.dart';
 
-class WidgetListFiliere extends StatefulWidget {
-  const WidgetListFiliere({super.key});
+class WidgetListInstitution extends StatefulWidget {
+  const WidgetListInstitution({super.key});
 
   @override
-  State<WidgetListFiliere> createState() => _WidgetListFiliereState();
+  State<WidgetListInstitution> createState() => _WidgetListInstitutionState();
 }
 
-class _WidgetListFiliereState extends State<WidgetListFiliere> {
+class _WidgetListInstitutionState extends State<WidgetListInstitution> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Listes des filières',
+          'Listes des institutions',
           style: TextStyle(
             color: blueColor,
             fontSize: 24.0,
@@ -30,7 +30,8 @@ class _WidgetListFiliereState extends State<WidgetListFiliere> {
         iconTheme: IconThemeData(color: blueColor),
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('filieres').snapshots(),
+        stream:
+            FirebaseFirestore.instance.collection('institutions').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -39,14 +40,15 @@ class _WidgetListFiliereState extends State<WidgetListFiliere> {
             ));
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(child: Text('Aucune filère disponible.'));
+            return Center(child: Text('Aucune institution disponible.'));
           }
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var doc = snapshot.data!.docs[index];
-              var filiere =
-                  Filiere.fromMap(doc.data() as Map<String, dynamic>);
+              var institutions =
+                  Institution.fromMap(doc.data() as Map<String, dynamic>);
+
               return Card(
                 color: greyColor,
                 shadowColor: blackColor,
@@ -57,10 +59,11 @@ class _WidgetListFiliereState extends State<WidgetListFiliere> {
                 elevation: 0.5,
                 child: ListTile(
                   title: Text(
-                    filiere.Libelle,
+                    institutions.Libelle,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
-                  subtitle: Text('La filière peut être modifée ou supprimée'),
+                  subtitle:
+                      Text('L\'institution peut être modifée ou supprimée'),
                   trailing: PopupMenuButton(
                     icon: const Icon(Icons.more_vert),
                     itemBuilder: (context) => [
@@ -69,7 +72,7 @@ class _WidgetListFiliereState extends State<WidgetListFiliere> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            FormFiliere().showFormFiliere(context, Libelle: filiere);
+                            FormInstitution().showFormInstitution(context, institutions: institutions);
                           },
                           leading: Icon(Icons.edit),
                           title: Text("Modifier"),
@@ -80,7 +83,7 @@ class _WidgetListFiliereState extends State<WidgetListFiliere> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            _deleteFiliere(filiere.idFlre);
+                            _deleteInstitution(institutions.idInst);
                           },
                           leading: Icon(Icons.delete, color: Colors.red),
                           title: Text("Supprimer"),
@@ -97,10 +100,10 @@ class _WidgetListFiliereState extends State<WidgetListFiliere> {
     );
   }
 
-  void _deleteFiliere(String id) async {
-      await Filiere.delete(id);
+  void _deleteInstitution(String id) async {
+      await Institution.delete(id);
       if (mounted) {
-        showSuccess(context, "Suppression", "Filière supprimée avec succès");
+        showSuccess(context, 'Suppression', 'Année supprimée avec succès');
       }
-  }
+    }
 }
