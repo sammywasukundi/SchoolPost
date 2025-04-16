@@ -6,42 +6,97 @@ class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Function to handle user signup
+  // Future<String?> signup({
+  //   required String name,
+  //   required String postname,
+  //   required String email,
+  //   required String password,
+  //   required String institution,
+  //   required String matricule,
+  //   required String promotion,
+  //   required String role,
+  //   String? imageUrl,
+  //   String? field,
+  // }) async {
+  //   try {
+  //     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+  //       email: email.trim(),
+  //       password: password.trim(),
+  //     );
+  //     String uid = userCredential.user!.uid;
+
+  //     // Save additional user data (name, role) in Firestore
+  //     await _firestore.collection('identite').doc(uid).set({
+  //       'uid': uid,
+  //       'name': name.trim(),
+  //       'postname': postname.trim(),
+  //       'institution': institution.trim(),
+  //       'matricule': matricule.trim(),
+  //       'promotion': promotion.trim(),
+  //       'field': field?.trim(),
+  //       //'imageUrl': imageUrl,
+  //       'email': email.trim(),
+  //       'role': role, // Admin or User
+  //     });
+
+  //     return null;
+  //   } catch (e) {
+  //     return e.toString();
+  //   }
+  // }
+
   Future<String?> signup({
     required String name,
     required String postname,
     required String email,
     required String password,
-    required String institution,
+    //required String institution,
     required String matricule,
     required String promotion,
     required String role,
+    required String anneeAcademique,
     String? imageUrl,
     String? field,
   }) async {
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      // Création du compte utilisateur
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
         email: email.trim(),
         password: password.trim(),
       );
       String uid = userCredential.user!.uid;
 
-      // Save additional user data (name, role) in Firestore
-      await _firestore.collection('users').doc(uid).set({
+      // 1. Création de l'identité
+      await _firestore.collection('identite').doc(uid).set({
         'uid': uid,
         'name': name.trim(),
         'postname': postname.trim(),
-        'institution': institution.trim(),
-        'matricule': matricule.trim(),
-        'promotion': promotion.trim(),
-        'field': field?.trim(),
-        //'imageUrl': imageUrl,
+        //'institution': institution.trim(),
         'email': email.trim(),
-        'role': role, // Admin or User
+        'role': role,
+        'imageUrl': imageUrl,
       });
 
-      return null; 
+      // 2. Enregistrement spécifique selon le rôle
+      if (role == 'Etudiant') {
+        await _firestore.collection('etudiants').doc(uid).set({
+          'id_identite': uid,
+          'id_promotion': promotion,
+          'id_anneeAcademique': anneeAcademique,
+          'matricule': matricule.trim(),
+        });
+      } else if (role == 'Enseignant') {
+        await _firestore.collection('enseignants').doc(uid).set({
+          'id_identite': uid,
+          'id_anneeAcademique': anneeAcademique,
+          'id_domaine': field,
+        });
+      }
+
+      return null; // Succès
     } catch (e) {
-      return e.toString(); 
+      return e.toString(); // Gestion d’erreur
     }
   }
 
@@ -59,7 +114,7 @@ class AuthService {
 
       // Fetch the user's role from Firestore to determine access level
       DocumentSnapshot userDoc = await _firestore
-          .collection('users')
+          .collection('identite')
           .doc(userCredential.user!.uid)
           .get();
 

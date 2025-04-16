@@ -72,7 +72,8 @@ class InputFieldState extends State<InputField> {
           builder: (_) => const UserScreen(),
         ),
       );
-    } else if (_emailController.text =='administrateur@gmail.com' && _passwordController.text == 'administrateur') {
+    } else if (_emailController.text == 'administrateur@gmail.com' &&
+        _passwordController.text == 'administrateur') {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -154,7 +155,13 @@ class InputFieldState extends State<InputField> {
             ),
             const SizedBox(height: 10),
             _isLoadingButton
-                ? Center(child: CircularProgressIndicator( color: blueColor,))
+                ? Center(
+                    child: SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          color: blueColor,
+                        )))
                 : ElevatedButton(
                     onPressed: _login,
                     style: ElevatedButton.styleFrom(

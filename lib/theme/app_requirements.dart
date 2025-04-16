@@ -1,6 +1,6 @@
 //here I use the type final instead of string for the variable value
 String? uValidator({
-  required final value,
+  required String? value,
   bool isRequired = false,
   bool isEmail = false,
   int? minLength,
@@ -9,19 +9,19 @@ String? uValidator({
   DateTime? minDate,
 }) {                                                   
   if (isRequired) {
-    if (value.isEmpty) {
+    if (value == null || value.isEmpty) {
       return 'Champ obligatoire';
     }
   }
 
   if (isEmail) {
-    if (!value.contains('@') || !value.contains('.')) {
+    if (!value!.contains('@') || !value.contains('.')) {
       return 'Email invalide';
     }
   }
 
   if (minLength != null) {
-    if (value.length < minLength) {
+    if (value!.length < minLength) {
       return 'Aumoins $minLength caractères ';
     }
   }
@@ -35,14 +35,14 @@ String? uValidator({
   }
 
   if (lengthMatri != null) {
-    if (value.length != 4) {
+    if (value!.length != 4) {
       return 'Tapez un matricule de 4 chiffres ';
     }
     
   }
 
   if (minDate != null) {
-    if (DateTime.parse(value).isBefore(minDate)) {
+    if (DateTime.parse(value!).isBefore(minDate)) {
       return 'Date invalide';
     }
   }
