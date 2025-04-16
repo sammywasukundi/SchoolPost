@@ -22,6 +22,7 @@ class InputFieldState extends State<InputField> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoadingButton = false;
+  bool _rememberMe = false;
 
   void _login() async {
     setState(() {
@@ -58,7 +59,7 @@ class InputFieldState extends State<InputField> {
     });
 
     // Navigate based on role or show error message
-    if (result == 'Personnel') {
+    if (result == 'Enseignant') {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -91,6 +92,7 @@ class InputFieldState extends State<InputField> {
   }
 
   bool _obscureText = true;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -128,54 +130,69 @@ class InputFieldState extends State<InputField> {
               keyboardType: TextInputType.text,
               obscureText: _obscureText,
               decoration: InputDecoration(
-                hintText: "Mot de passe",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(18),
-                  borderSide: BorderSide.none,
+              hintText: "Mot de passe",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(18),
+                borderSide: BorderSide.none,
+              ),
+              fillColor: greyColor,
+              filled: true,
+              prefixIcon: const Icon(Icons.lock_outlined),
+              suffixIcon: IconButton(
+                icon: Icon(
+                _obscureText
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+                color: blackColor,
                 ),
-                fillColor: greyColor,
-                filled: true,
-                prefixIcon: const Icon(Icons.lock_outlined),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscureText
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: blackColor,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _obscureText = !_obscureText;
-                    });
-                  },
-                ),
+                onPressed: () {
+                setState(() {
+                  _obscureText = !_obscureText;
+                });
+                },
+              ),
               ),
               validator: (val) =>
-                  uValidator(value: val, isRequired: true, minLength: 6),
+                uValidator(value: val, isRequired: true, minLength: 6),
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+              Checkbox(
+                value: _rememberMe,
+                onChanged: (bool? value) {
+                setState(() {
+                  _rememberMe = value ?? false;
+                });
+                },
+              ),
+              const Text("Se souvenir de moi"),
+              ],
             ),
             const SizedBox(height: 10),
             _isLoadingButton
-                ? Center(
-                    child: SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          color: blueColor,
-                        )))
-                : ElevatedButton(
-                    onPressed: _login,
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor: blueColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: Text(
-                      "Se connecter",
-                      style: TextStyle(color: whiteColor),
-                    ),
+              ? Center(
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: blueColor,
+                  )))
+              : ElevatedButton(
+                onPressed: _login,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  backgroundColor: blueColor,
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                   ),
+                ),
+                child: Text(
+                  "Se connecter",
+                  style: TextStyle(color: whiteColor),
+                ),
+                ),
             const SizedBox(
               height: 25,
             ),

@@ -29,7 +29,6 @@ class _SignInScreenState extends State<SigninScreenOne> {
   final _confirmpwdController = TextEditingController();
 
   String _selectedOption = "Enseignant";
-  //String? _selectedInstitution;
   String? _selectedDomaine;
   String? _selectedPromotion;
   String? _selectedAnneeAcademique;
