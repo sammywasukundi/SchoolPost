@@ -6,6 +6,7 @@ import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/theme/app_requirements.dart';
 import 'package:school_post/view/auth/signin_view_one.dart';
 import 'package:school_post/view/bottom_nav/home_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/auth_service.dart';
 
@@ -23,6 +24,33 @@ class InputFieldState extends State<InputField> {
   final _passwordController = TextEditingController();
   bool _isLoadingButton = false;
   bool _rememberMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkRememberMe();
+  }
+
+  void _checkRememberMe() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? rememberMe = prefs.getBool('rememberMe');
+    if (rememberMe == true) {
+      String? email = prefs.getString('email');
+      String? password = prefs.getString('password');
+      if (email != null && password != null) {
+        // Connecter automatiquement l'utilisateur
+        String? result = await _authService.login(email: email, password: password);
+        if (result != null) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const HomeScreen(),
+            ),
+          );
+        }
+      }
+    }
+  }
 
   void _login() async {
     setState(() {
@@ -58,41 +86,47 @@ class InputFieldState extends State<InputField> {
       _isLoadingButton = false; // Hide spinner
     });
 
-    // Navigate based on role or show error message
-    if (result == 'Enseignant') {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
-        ),
-      );
-    } else if (result == 'Etudiant') {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const UserScreen(),
-        ),
-      );
-    } else if (_emailController.text == 'administrateur@gmail.com' &&
-        _passwordController.text == 'administrateur') {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const AdminScreen(),
-        ),
-      );
-    } else {
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      //   content: Text('Login Failed: $result'), // Show error message
-      // ));
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        showError(context, 'Erreur', 'Mauvais identifiants ou mot de passe');
-      });
+    if (result != null) {
+      // Sauvegarder l'état de connexion si "Se souvenir de moi" est coché
+      if (_rememberMe) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('rememberMe', true);
+        await prefs.setString('email', _emailController.text);
+        await prefs.setString('password', _passwordController.text);
+      }
+
+      // Navigate based on role
+      if (result == 'Enseignant') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const HomeScreen(),
+          ),
+        );
+      } else if (result == 'Etudiant') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const UserScreen(),
+          ),
+        );
+      } else if (_emailController.text == 'administrateur@gmail.com' &&
+          _passwordController.text == 'administrateur') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const AdminScreen(),
+          ),
+        );
+      } else {
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          showError(context, 'Erreur', 'Mauvais identifiants ou mot de passe');
+        });
+      }
     }
   }
 
   bool _obscureText = true;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -130,69 +164,69 @@ class InputFieldState extends State<InputField> {
               keyboardType: TextInputType.text,
               obscureText: _obscureText,
               decoration: InputDecoration(
-              hintText: "Mot de passe",
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: BorderSide.none,
-              ),
-              fillColor: greyColor,
-              filled: true,
-              prefixIcon: const Icon(Icons.lock_outlined),
-              suffixIcon: IconButton(
-                icon: Icon(
-                _obscureText
-                  ? Icons.visibility_off_outlined
-                  : Icons.visibility_outlined,
-                color: blackColor,
+                hintText: "Mot de passe",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: BorderSide.none,
                 ),
-                onPressed: () {
-                setState(() {
-                  _obscureText = !_obscureText;
-                });
-                },
-              ),
+                fillColor: greyColor,
+                filled: true,
+                prefixIcon: const Icon(Icons.lock_outlined),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureText
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: blackColor,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                ),
               ),
               validator: (val) =>
-                uValidator(value: val, isRequired: true, minLength: 6),
+                  uValidator(value: val, isRequired: true, minLength: 6),
             ),
             const SizedBox(height: 10),
             Row(
               children: [
-              Checkbox(
-                value: _rememberMe,
-                onChanged: (bool? value) {
-                setState(() {
-                  _rememberMe = value ?? false;
-                });
-                },
-              ),
-              const Text("Se souvenir de moi"),
+                Checkbox(
+                  value: _rememberMe,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      _rememberMe = value ?? false;
+                    });
+                  },
+                ),
+                const Text("Se souvenir de moi"),
               ],
             ),
             const SizedBox(height: 10),
             _isLoadingButton
-              ? Center(
-                child: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: blueColor,
-                  )))
-              : ElevatedButton(
-                onPressed: _login,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: blueColor,
-                  shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                ? Center(
+                    child: SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: blueColor,
+                        )))
+                : ElevatedButton(
+                    onPressed: _login,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      backgroundColor: blueColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      "Se connecter",
+                      style: TextStyle(color: whiteColor),
+                    ),
                   ),
-                ),
-                child: Text(
-                  "Se connecter",
-                  style: TextStyle(color: whiteColor),
-                ),
-                ),
             const SizedBox(
               height: 25,
             ),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -84,6 +85,8 @@ class AuthService {
 
   // for user log out
   signOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
     _auth.signOut();
   }
 }
