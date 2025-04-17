@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:school_post/widgets/widget_forms/widget_anneeacademique.dart';
 import 'package:school_post/widgets/widget_forms/widget_domaine.dart';
@@ -7,7 +6,7 @@ import 'package:school_post/widgets/widget_gridview.dart';
 import 'package:school_post/widgets/widget_forms/widget_institution.dart';
 import 'package:school_post/widgets/widget_forms/widget_promotion.dart';
 import 'package:school_post/widgets/widget_publication.dart';
-import 'package:school_post/widgets/widget_type_pub.dart';
+import 'package:school_post/widgets/widget_forms/widget_type_pub.dart';
 
 class DashAdminView extends StatefulWidget {
   const DashAdminView({super.key});
@@ -67,25 +66,31 @@ class _AddScrennState extends State<DashAdminView> {
         FormTypePub().showFormTypePub(context);
       },
     ),
+    MenuItem(
+        icon: Icons.people_alt_outlined,
+        text: 'Portée de publication',
+        onTap: (BuildContext context) {
+          //FormPorteePub().showFormPorteePub(context);
+        }),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 6.0,
             mainAxisSpacing: 6.0,
-            childAspectRatio: 1.25, // Adjust the aspect ratio to reduce size
+            childAspectRatio: 1.15, // Adjust the aspect ratio to reduce size
           ),
           itemCount: menuItems.length,
           itemBuilder: (context, index) {
             final item = menuItems[index];
             return buildButtonBudget(context, item.icon, item.text,
-          onTap: () => item.onTap(context));
+                onTap: () => item.onTap(context));
           },
         ),
       ),

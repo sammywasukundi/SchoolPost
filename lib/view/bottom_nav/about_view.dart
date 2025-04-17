@@ -11,18 +11,18 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
         title: SchoolPostTitle(blueColor: blueColor, yellowColor: yellowColor),
       ),
       body: Container(
         decoration: BoxDecoration(
-          //color: whiteColor,
+          color: whiteColor,
           borderRadius: BorderRadius.circular(4)
         ),
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.only(top: 30.0,left: 12.0),
               child: Text(
                 'SchoolPost est une Plateforme mobile conçu dans l\'objectif d\'aider tous les étudiants de L\'UNILUK,L\'ISTA et L\'ISTM lukanga de chaque fois avoir les informations concernant l\'institution et leurs filières en temps réel.La plateforme remplit les rôles d\'une valve électronique',
                 style: TextStyle(

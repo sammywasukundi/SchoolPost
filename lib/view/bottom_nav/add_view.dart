@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:school_post/widgets/widget_forms.dart';
 import 'package:school_post/widgets/widget_gridview.dart';
+import 'package:school_post/widgets/widget_notification.dart';
+import 'package:school_post/widgets/widget_publication.dart';
 
 class AddScrenn extends StatefulWidget {
   const AddScrenn({super.key});
@@ -12,55 +13,45 @@ class AddScrenn extends StatefulWidget {
 class _AddScrennState extends State<AddScrenn> {
   final List<MenuItem> menuItems = [
     MenuItem(
-      icon: Icons.schedule_outlined,
-      text: 'Horaire',
-      onTap: (BuildContext context) {
-        FormHoraire().showFormHoraire(context);
-      },
-    ),
-    MenuItem(
-      icon: Icons.book_outlined,
-      text: 'Cours',
-      onTap: (BuildContext context) {
-        FormHoraire.showFormCours(context);
-      },
-    ),
-    MenuItem(
-      icon: Icons.school_outlined,
-      text: 'Unité d\'enseignement',
-      onTap: (BuildContext context) {
-        FormHoraire.showFormUE(context);
-      },
-    ),
-    MenuItem(
-      icon: Icons.room_outlined,
-      text: 'Salle',
-      onTap: (BuildContext context) {
-        FormHoraire.showFormSalle(context);
-      },
-    ),
-    MenuItem(
-      icon: Icons.domain_outlined,
-      text: 'Dommaine',
-      onTap: (BuildContext context) {},
-    ),
-    MenuItem(
       icon: Icons.post_add_outlined,
-      text: 'Post',
-      onTap: (BuildContext context) {},
+      text: 'Publier',
+      onTap: (BuildContext context) {
+        FormPublication().showFormPublication(context);
+      },
     ),
+    MenuItem(
+      icon: Icons.published_with_changes_outlined,
+      text: 'Publications',
+      onTap: (BuildContext context) {
+        
+      },
+    ),
+    MenuItem(
+      icon: Icons.notification_important_outlined,
+      text: 'Notifiications',
+      onTap: (BuildContext context) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NotificationScreen(),
+          ),
+        );
+      },
+    ),
+     
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 50.0,horizontal: 20.0),
+        padding: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 20.0,
-            mainAxisSpacing: 20.0,
+            crossAxisSpacing: 6.0,
+            mainAxisSpacing: 6.0,
+            childAspectRatio: 1.15,
           ),
           itemCount: menuItems.length,
           itemBuilder: (context, index) {

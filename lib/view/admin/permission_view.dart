@@ -30,7 +30,7 @@ class _PermissionViewState extends State<PermissionView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,

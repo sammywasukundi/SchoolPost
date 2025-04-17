@@ -6,7 +6,7 @@ import 'package:school_post/view/admin/permission_view.dart';
 import 'package:school_post/view/bottom_nav/add_view.dart';
 import 'package:school_post/view/bottom_nav/communicate_view.dart';
 import 'package:school_post/view/bottom_nav/dash_view.dart';
-import 'package:school_post/view/drawer/about_view.dart';
+import 'package:school_post/view/bottom_nav/about_view.dart';
 import 'package:school_post/view/drawer/account_view.dart';
 import 'package:school_post/widgets/widget_forms.dart';
 import 'package:school_post/widgets/widget_notification.dart';
@@ -14,8 +14,6 @@ import 'package:school_post/widgets/widget_notification_button.dart';
 import 'package:school_post/widgets/widget_profil_button.dart';
 import 'package:school_post/widgets/widget_search_button.dart';
 import 'package:school_post/widgets/widget_title.dart';
-
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -37,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _children = [
     const DashScreen(),
     const AddScrenn(),
-    const CommunicateScreen()
+    const AboutScreen(),
   ];
 
   @override
@@ -45,9 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4)
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           elevation: 2.0,
           backgroundColor: bgColor,
           shadowColor: bgColor,
@@ -63,7 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
               iconColor: blueColor,
               notificationCount: 3,
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NotificationScreen()));
               },
             ),
             ProfileButton(
@@ -85,15 +84,15 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-                DrawerHeader(
-                curve: Curves.easeInOut,
+              DrawerHeader(
+                  curve: Curves.easeInOut,
                   decoration: BoxDecoration(
-                    color: whiteColor, borderRadius: BorderRadius.zero),
+                      color: whiteColor, borderRadius: BorderRadius.zero),
                   child: SchoolPostTitle(
-                  blueColor: blueColor,
-                  yellowColor: yellowColor,
+                    blueColor: blueColor,
+                    yellowColor: yellowColor,
                   )),
-                ListTile(
+              ListTile(
                 leading: const Icon(Icons.home_outlined),
                 title: const Text('Accueil'),
                 onTap: () {
@@ -102,10 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                   Navigator.pop(context); // Close the drawer
                 },
-                ),
+              ),
               ListTile(
                 leading: const Icon(Icons.dashboard_customize_outlined),
-                title: const Text('Posts'),
+                title: const Text('Géneral'),
                 onTap: () {
                   setState(() {
                     _currentIndex = 1; // Update to the index of the AddScrenn
@@ -114,27 +113,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.comment_outlined),
-                title: const Text('Communications'),
+                leading: const Icon(Icons.info_outline),
+                title: const Text('Qui sommes-nous ?'),
                 onTap: () {
                   setState(() {
-                    _currentIndex = 2; // Update to the index of the CommunicateScreen
+                    _currentIndex =
+                        2; 
                   });
-                  Navigator.pop(context); // Close the drawer
+                  Navigator.pop(context); 
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.person_outline),
                 title: const Text('Mon compte'),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountScreen()));
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.info_outline),
-                title: const Text('À propos'),
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AccountScreen()));
                 },
               ),
               ListTile(
@@ -158,8 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
           currentIndex: _currentIndex,
           items: [
             _bottomNavItem(Icons.home_outlined, 'Accueil'),
-            _bottomNavItem(Icons.dashboard_customize_outlined, 'Posts'),
-            _bottomNavItem(Icons.comment_outlined, 'Communications')
+            _bottomNavItem(Icons.dashboard_customize_outlined, 'Géneral'),
+            _bottomNavItem(Icons.question_mark_outlined, 'Qui sommes-nous ?')
           ],
           onTap: onTabTapped,
         ),
@@ -189,8 +185,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-
-
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
 
@@ -219,9 +213,7 @@ class _AdminScreenState extends State<AdminScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4)
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           elevation: 2.0,
           backgroundColor: bgColor,
           shadowColor: bgColor,
@@ -237,7 +229,10 @@ class _AdminScreenState extends State<AdminScreen> {
               iconColor: blueColor,
               notificationCount: 3,
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NotificationScreen()));
               },
             ),
             ProfileButton(
@@ -259,15 +254,15 @@ class _AdminScreenState extends State<AdminScreen> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-                DrawerHeader(
-                curve: Curves.easeInOut,
+              DrawerHeader(
+                  curve: Curves.easeInOut,
                   decoration: BoxDecoration(
-                    color: whiteColor, borderRadius: BorderRadius.zero),
+                      color: whiteColor, borderRadius: BorderRadius.zero),
                   child: SchoolPostTitle(
-                  blueColor: blueColor,
-                  yellowColor: yellowColor,
+                    blueColor: blueColor,
+                    yellowColor: yellowColor,
                   )),
-                ListTile(
+              ListTile(
                 leading: const Icon(Icons.home_outlined),
                 title: const Text('Accueil'),
                 onTap: () {
@@ -276,9 +271,9 @@ class _AdminScreenState extends State<AdminScreen> {
                   });
                   Navigator.pop(context); // Close the drawer
                 },
-                ),
+              ),
               ListTile(
-                leading: const Icon(Icons.settings_accessibility_outlined),
+                leading: const Icon(Icons.settings_outlined),
                 title: const Text('Paramètres'),
                 onTap: () {
                   setState(() {
@@ -292,7 +287,8 @@ class _AdminScreenState extends State<AdminScreen> {
                 title: const Text('Permissions'),
                 onTap: () {
                   setState(() {
-                    _currentIndex = 2; // Update to the index of the CommunicateScreen
+                    _currentIndex =
+                        2; // Update to the index of the CommunicateScreen
                   });
                   Navigator.pop(context); // Close the drawer
                 },
@@ -301,14 +297,20 @@ class _AdminScreenState extends State<AdminScreen> {
                 leading: const Icon(Icons.person_outline),
                 title: const Text('Mon compte'),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AccountScreen()));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.info_outline),
                 title: const Text('À propos'),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AboutScreen()));
                 },
               ),
               ListTile(
@@ -332,7 +334,7 @@ class _AdminScreenState extends State<AdminScreen> {
           currentIndex: _currentIndex,
           items: [
             _bottomNavItem(Icons.home_outlined, 'Accueil'),
-            _bottomNavItem(Icons.settings_accessibility_outlined, 'Paremètres'),
+            _bottomNavItem(Icons.settings_outlined, 'Paremètres'),
             _bottomNavItem(Icons.admin_panel_settings_outlined, 'Permissions')
           ],
           onTap: onTabTapped,
@@ -363,7 +365,6 @@ class _AdminScreenState extends State<AdminScreen> {
   }
 }
 
-
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
 
@@ -392,9 +393,7 @@ class _UserScreenState extends State<UserScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4)
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           elevation: 2.0,
           backgroundColor: bgColor,
           shadowColor: bgColor,
@@ -410,7 +409,10 @@ class _UserScreenState extends State<UserScreen> {
               iconColor: blueColor,
               notificationCount: 3,
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NotificationScreen()));
               },
             ),
             ProfileButton(
@@ -433,7 +435,7 @@ class _UserScreenState extends State<UserScreen> {
             padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
-                curve: Curves.easeInOut,
+                  curve: Curves.easeInOut,
                   decoration: BoxDecoration(
                       color: whiteColor, borderRadius: BorderRadius.zero),
                   child: SchoolPostTitle(
@@ -464,14 +466,20 @@ class _UserScreenState extends State<UserScreen> {
                 leading: const Icon(Icons.person_outline),
                 title: const Text('Mon compte'),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AccountScreen()));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.info_outline),
                 title: const Text('À propos'),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AboutScreen()));
                 },
               ),
               ListTile(

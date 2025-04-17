@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:school_post/models/TypePublication_model.dart';
 import 'package:school_post/theme/app_colors.dart';
+import 'package:school_post/theme/app_dialog.dart';
+import 'package:school_post/widgets/widget_forms/widget_type_pub.dart';
 
 class WidgetListTypePub extends StatefulWidget {
   const WidgetListTypePub({super.key});
@@ -16,7 +18,7 @@ class _WidgetListTypePubState extends State<WidgetListTypePub> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Listes de types des publications',
+          'Liste de types',
           style: TextStyle(
             color: blueColor,
             fontSize: 24.0,
@@ -43,7 +45,7 @@ class _WidgetListTypePubState extends State<WidgetListTypePub> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var doc = snapshot.data!.docs[index];
-              var nomTypePub =
+              var typePub =
                   TypePub.fromMap(doc.data() as Map<String, dynamic>);
 
               return Card(
@@ -56,7 +58,7 @@ class _WidgetListTypePubState extends State<WidgetListTypePub> {
                 elevation: 0.5,
                 child: ListTile(
                   title: Text(
-                    nomTypePub.Libelle,
+                    typePub.Libelle,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   subtitle: Text('Le type de publication peut être modifée ou supprimée'),
@@ -68,6 +70,7 @@ class _WidgetListTypePubState extends State<WidgetListTypePub> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
+                            FormTypePub().showFormTypePub(context, typePub: typePub);
                           },
                           leading: Icon(Icons.edit),
                           title: Text("Modifier"),
@@ -78,7 +81,7 @@ class _WidgetListTypePubState extends State<WidgetListTypePub> {
                         child: ListTile(
                           onTap: () {
                             Navigator.pop(context);
-                            //_deleteAnnee(annee.idAnne);
+                            _deleteType(typePub.idType);
                           },
                           leading: Icon(Icons.delete, color: Colors.red),
                           title: Text("Supprimer"),
@@ -94,4 +97,17 @@ class _WidgetListTypePubState extends State<WidgetListTypePub> {
       ),
     );
   }
+
+  void _deleteType(String id) async {
+    try {
+      await TypePub
+          .delete(id);
+      if (context.mounted) {
+        showSuccess(context, "Succès", "Type de publication supprimé avec succès");
+      }
+    } catch (e) {
+      showError(context, 'Erreur', "Suppression échouée: ${e.toString()}");
+    }
+  }
+
 }
