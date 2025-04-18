@@ -4,8 +4,7 @@ import 'package:school_post/models/TypePublication_model.dart';
 import 'package:school_post/theme/app_colors.dart';
 import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/theme/app_requirements.dart';
-
-import '../widget_type_pub_list.dart';
+import 'package:school_post/widgets/widget_lists/widget_type_pub_list.dart';
 
 class FormTypePub {
   final _formKey = GlobalKey<FormState>();

@@ -4,7 +4,6 @@ import 'package:school_post/theme/app_dialog.dart';
 import 'package:school_post/view/admin/dash_admin_view.dart';
 import 'package:school_post/view/admin/permission_view.dart';
 import 'package:school_post/view/bottom_nav/add_view.dart';
-import 'package:school_post/view/bottom_nav/communicate_view.dart';
 import 'package:school_post/view/bottom_nav/dash_view.dart';
 import 'package:school_post/view/bottom_nav/about_view.dart';
 import 'package:school_post/view/drawer/account_view.dart';
@@ -304,16 +303,6 @@ class _AdminScreenState extends State<AdminScreen> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.info_outline),
-                title: const Text('À propos'),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AboutScreen()));
-                },
-              ),
-              ListTile(
                 leading: const Icon(Icons.logout_outlined),
                 title: const Text('Déconnexion'),
                 onTap: () {
@@ -384,8 +373,8 @@ class _UserScreenState extends State<UserScreen> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     const DashScreen(),
-    //const AddScrenn(),
-    const CommunicateScreen()
+    const AddScrenn(),
+    const AboutScreen()
   ];
 
   @override
@@ -447,19 +436,30 @@ class _UserScreenState extends State<UserScreen> {
                 title: const Text('Accueil'),
                 onTap: () {
                   setState(() {
-                    _currentIndex = 0; // Update to the index of the DashScreen
+                    _currentIndex = 0; 
                   });
-                  Navigator.pop(context); // Close the drawer
+                  Navigator.pop(context); 
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.comment_outlined),
-                title: const Text('Communications'),
+                leading: const Icon(Icons.dashboard_customize_outlined),
+                title: const Text('Géneral'),
                 onTap: () {
                   setState(() {
-                    _currentIndex = 1; // Update to the index of the DashScreen
+                    _currentIndex = 1; 
                   });
-                  Navigator.pop(context); // Close the drawer
+                  Navigator.pop(context); 
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.question_mark_outlined),
+                title: const Text('Qui sommes-nous ?'),
+                onTap: () {
+                  setState(() {
+                    _currentIndex =
+                        2; 
+                  });
+                  Navigator.pop(context); 
                 },
               ),
               ListTile(
@@ -470,16 +470,6 @@ class _UserScreenState extends State<UserScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => const AccountScreen()));
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.info_outline),
-                title: const Text('À propos'),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AboutScreen()));
                 },
               ),
               ListTile(
@@ -503,7 +493,8 @@ class _UserScreenState extends State<UserScreen> {
           currentIndex: _currentIndex,
           items: [
             _bottomNavItem(Icons.home_outlined, 'Accueil'),
-            _bottomNavItem(Icons.comment_outlined, 'Communications')
+            _bottomNavItem(Icons.post_add_outlined, 'Géneral'),
+            _bottomNavItem(Icons.question_mark_rounded, 'Qui sommes-nous ?')
           ],
           onTap: onTabTapped,
         ),

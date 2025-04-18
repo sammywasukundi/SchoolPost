@@ -193,6 +193,7 @@ class InputFieldState extends State<InputField> {
             Row(
               children: [
                 Checkbox(
+                  activeColor: blueColor,
                   value: _rememberMe,
                   onChanged: (bool? value) {
                     setState(() {
